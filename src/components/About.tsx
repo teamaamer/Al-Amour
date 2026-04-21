@@ -1,10 +1,14 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { Award, Building2, Globe2, ShieldCheck, Sparkles } from 'lucide-react';
-import { Plyr } from 'plyr-react';
 import 'plyr-react/plyr.css';
+
+const Plyr = dynamic(() => import('plyr-react').then((mod) => mod.Plyr), {
+  ssr: false,
+});
 
 const About = () => {
   const { t } = useLanguage();
