@@ -1,14 +1,8 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { Award, Building2, Globe2, ShieldCheck, Sparkles } from 'lucide-react';
-import 'plyr-react/plyr.css';
-
-const Plyr = dynamic(() => import('plyr-react').then((mod) => mod.Plyr), {
-  ssr: false,
-});
 
 const About = () => {
   const { t } = useLanguage();
@@ -66,21 +60,15 @@ const About = () => {
             transition={{ duration: 0.6 }}
             className="h-[320px] overflow-hidden rounded-2xl border border-gray-200 bg-white p-2 shadow-lg md:h-[420px] lg:h-[560px]"
           >
-            <div className="about-video-player h-full w-full overflow-hidden rounded-xl">
-              <Plyr
-                source={{
-                  type: 'video',
-                  sources: [{
-                    src: '/aboutus.mp4',
-                    type: 'video/mp4',
-                  }],
-                }}
-                options={{
-                  autoplay: true,
-                  muted: true,
-                  loop: { active: true },
-                  controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
-                }}
+            <div className="h-full w-full overflow-hidden rounded-xl">
+              <video
+                src="/aboutus.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+                className="h-full w-full object-cover"
               />
             </div>
           </motion.div>

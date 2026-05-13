@@ -3,7 +3,7 @@ import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
 
 export const metadata: Metadata = {
-  title: "شركة العمور - منتجات دهانات متميزة وحلول تجارية | Al-Amour Company",
+  title: "شركة العامور - منتجات دهانات متميزة وحلول تجارية | Al-Amour Company",
   description: "مورد رائد لمنتجات الدهانات المتميزة وحلول التشطيب في فلسطين | Leading supplier of premium paint products in Palestine",
 };
 

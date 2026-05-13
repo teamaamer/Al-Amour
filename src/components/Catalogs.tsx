@@ -130,6 +130,14 @@ const Catalogs = () => {
       fileName: 'TOOLING SYSTEM (1).pdf',
       color: 'bg-primary',
     },
+    {
+      id: 7,
+      titleKey: 'polytekCatalogTitle',
+      descriptionKey: 'polytekCatalogDesc',
+      fileSize: '22 MB',
+      fileName: 'POLITEK CATALOG.pdf',
+      color: 'bg-cyan-500',
+    },
   ];
 
   useEffect(() => {
