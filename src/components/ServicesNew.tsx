@@ -1,168 +1,137 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 
-interface CategoryCardProps {
-  title: string;
-  description: string;
-  image: string;
-  index: number;
-}
-
-const CategoryCard = ({ title, description, image, index }: CategoryCardProps) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="group relative h-[400px] rounded-2xl overflow-hidden cursor-pointer"
-    >
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <Image
-          src={image}
-          alt={title}
-          fill
-          className="object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-      </div>
-
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent opacity-90 group-hover:opacity-95 transition-opacity duration-500" />
-
-      {/* Blue Accent Glow */}
-      <div className="absolute inset-0 bg-gradient-to-t from-blue-500/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-      {/* Content */}
-      <div className="absolute inset-0 p-8 flex flex-col justify-end">
-        <motion.div
-          initial={{ y: 20 }}
-          whileInView={{ y: 0 }}
-          transition={{ duration: 0.5, delay: index * 0.1 + 0.2 }}
-        >
-          <h3 className="text-2xl lg:text-3xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors duration-300">
-            {title}
-          </h3>
-          <p className="text-gray-300 text-sm lg:text-base leading-relaxed mb-4">
-            {description}
-          </p>
-        </motion.div>
-
-        {/* Arrow Button */}
-        <motion.div
-          className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:bg-blue-500 group-hover:border-blue-500 transition-all duration-300"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-        >
-          <ArrowUpRight className="w-5 h-5 text-white" />
-        </motion.div>
-      </div>
-
-      {/* Hover Border Glow */}
-      <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-blue-500/50 transition-all duration-500" />
-    </motion.div>
-  );
-};
+// No dedicated category pages yet — every category points to the catalogs section
+const CATEGORY_HREF = '#catalogs';
+const IMAGE_SIZES = '(max-width: 760px) 80vw, 380px';
 
 const ServicesNew = () => {
   const { t } = useLanguage();
+  const reduceMotion = useReducedMotion();
+  const [active, setActive] = useState(0);
 
   const categories = [
-    {
-      id: 1,
-      title: t('woodCoatings'),
-      description: t('woodCoatingsDesc'),
-      image: '/cats/wood-coatings.png',
-    },
-    {
-      id: 2,
-      title: t('carPaints'),
-      description: t('carPaintsDesc'),
-      image: '/cats/car-paints.png',
-    },
-    {
-      id: 3,
-      title: t('resinsGelcoats'),
-      description: t('resinsGelcoatsDesc'),
-      image: '/cats/resins-and-gelcoats.png',
-    },
-    {
-      id: 4,
-      title: t('toolingSystems'),
-      description: t('toolingSystemsDesc'),
-      image: '/cats/tooling.png',
-    },
-    {
-      id: 5,
-      title: t('colorMixing'),
-      description: t('colorMixingDescShort'),
-      image: '/cats/color-mixing.png',
-    },
-    {
-      id: 6,
-      title: t('carpenterSupplies'),
-      description: t('carpenterSuppliesDescShort'),
-      image: '/cats/carpenter.png',
-    },
+    { id: 1, title: t('woodCoatings'), description: t('woodCoatingsDesc'), image: '/cats/wood-coatings.png' },
+    { id: 2, title: t('carPaints'), description: t('carPaintsDesc'), image: '/cats/car-paints.png' },
+    { id: 3, title: t('resinsGelcoats'), description: t('resinsGelcoatsDesc'), image: '/cats/resins-and-gelcoats.png' },
+    { id: 4, title: t('toolingSystems'), description: t('toolingSystemsDesc'), image: '/cats/tooling.png' },
+    { id: 5, title: t('colorMixing'), description: t('colorMixingDescShort'), image: '/cats/color-mixing.png' },
+    { id: 6, title: t('carpenterSupplies'), description: t('carpenterSuppliesDescShort'), image: '/cats/carpenter.png' },
   ];
 
+  const current = categories[active];
+  const indexLabel = (i: number) => String(i + 1).padStart(2, '0');
+
+  const handleClick = (i: number) => {
+    if (i === active) {
+      window.location.href = CATEGORY_HREF;
+    } else {
+      setActive(i);
+    }
+  };
+
   return (
-    <section id="products" className="py-20 lg:py-32 bg-gradient-to-b from-gray-50 to-white">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-        {/* Section Header */}
-        <div className="text-center mb-16 lg:mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="inline-block mb-4"
-          >
-            <div className="flex items-center gap-2">
-              <div className="h-px w-12 bg-gradient-to-r from-transparent to-blue-500" />
-              <span className="text-blue-500 text-sm lg:text-base font-semibold tracking-widest uppercase">
-                {t('ourProducts')}
-              </span>
-              <div className="h-px w-12 bg-gradient-to-l from-transparent to-blue-500" />
-            </div>
-          </motion.div>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-navy mb-6"
-          >
+    <section id="products" className="bg-navy text-white py-24 overflow-hidden">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header row */}
+        <div className="flex flex-wrap items-start justify-between gap-6 mb-14">
+          <h2 className="flex items-center gap-3 text-sm lg:text-base font-semibold text-[#6FD3F2]">
+            <span className="w-10 h-0.5 bg-[#6FD3F2] shrink-0" />
             {t('productCategories')}
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
-          >
+          </h2>
+          <p className="text-lg lg:text-xl leading-relaxed text-[#C9CADB] max-w-[460px]">
             {t('productCategoriesDesc')}
-          </motion.p>
+          </p>
         </div>
 
-        {/* Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {categories.map((category, index) => (
-            <CategoryCard
-              key={category.id}
-              title={category.title}
-              description={category.description}
-              image={category.image}
-              index={index}
-            />
-          ))}
+        {/* Body */}
+        <div className="flex flex-wrap items-center gap-[72px]">
+          {/* Category list */}
+          <ul className="flex-[999_1_520px] min-w-0 border-t border-white/[0.18]">
+            {categories.map((category, i) => {
+              const isActive = i === active;
+              return (
+                <li key={category.id} className="border-b border-white/[0.18]">
+                  <button
+                    type="button"
+                    aria-pressed={isActive}
+                    onMouseEnter={() => setActive(i)}
+                    onFocus={() => setActive(i)}
+                    onClick={() => handleClick(i)}
+                    className="w-full flex items-center gap-5 py-4 lg:py-5 text-start rounded-sm focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-[#6FD3F2] focus-visible:outline-offset-4"
+                  >
+                    <span className="w-9 shrink-0 text-sm font-semibold text-[#6FD3F2]">
+                      {indexLabel(i)}
+                    </span>
+                    <span
+                      className={`flex-1 min-w-0 font-bold text-2xl md:text-3xl lg:text-4xl leading-snug transition-[color,transform] [transition-duration:.3s,.45s] [transition-timing-function:ease,cubic-bezier(.2,.8,.2,1)] motion-reduce:transition-none ${
+                        isActive
+                          ? 'text-[#6FD3F2] ltr:translate-x-[18px] rtl:-translate-x-[18px]'
+                          : 'text-[#8E8FAE]'
+                      }`}
+                    >
+                      {category.title}
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className={`w-11 h-11 shrink-0 rounded-full bg-[#6FD3F2] flex items-center justify-center transition-opacity duration-300 motion-reduce:transition-none ${
+                        isActive ? 'opacity-100' : 'opacity-0'
+                      }`}
+                    >
+                      <ArrowUpRight className="w-5 h-5 text-navy rtl:-scale-x-100" strokeWidth={2.5} />
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+
+          {/* Preview stage */}
+          <div className="relative flex-[1_1_340px] min-h-[420px] min-[761px]:min-h-[620px] flex items-center justify-center">
+            {/* Blue back panel */}
+            <div className="absolute w-[78%] max-w-[360px] aspect-[3/4] rounded-[10px] bg-[#1B9CC4] rotate-[5deg] translate-y-[3%] ltr:translate-x-[6%] rtl:-translate-x-[6%]" />
+
+            {/* Polaroid card — keyed so the entrance animation replays on change */}
+            <motion.div
+              key={current.id}
+              initial={reduceMotion ? false : { opacity: 0, rotate: 3, y: 28, scale: 0.96 }}
+              animate={{ opacity: 1, rotate: -3, y: 0, scale: 1 }}
+              transition={{ duration: reduceMotion ? 0 : 0.55, ease: [0.2, 0.8, 0.2, 1] }}
+              className="relative w-[82%] max-w-[380px] bg-white text-navy rounded-[10px] p-3.5 shadow-[0_30px_60px_rgba(0,0,0,0.45)]"
+            >
+              <div className="relative w-full aspect-[4/4.2] rounded-md overflow-hidden">
+                <Image src={current.image} alt={current.title} fill sizes={IMAGE_SIZES} className="object-cover" />
+                <span className="absolute top-2 start-3 text-5xl leading-none font-extrabold text-navy drop-shadow-[0_2px_10px_rgba(255,255,255,0.6)]">
+                  {indexLabel(active)}
+                </span>
+              </div>
+
+              <p className="mt-4 text-base leading-relaxed min-h-[52px]">{current.description}</p>
+
+              <div className="mt-4 flex items-center justify-between gap-3">
+                <a
+                  href={CATEGORY_HREF}
+                  className="inline-flex items-center min-h-[46px] px-6 rounded-full bg-[#6FD3F2] hover:bg-white border-2 border-navy text-navy font-bold text-sm transition-colors motion-reduce:transition-none focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-[#6FD3F2] focus-visible:outline-offset-2"
+                >
+                  {t('exploreCategory')}
+                </a>
+              </div>
+            </motion.div>
+
+            {/* Preload every category image so switching is instant */}
+            <div aria-hidden="true" className="absolute w-px h-px overflow-hidden opacity-0 pointer-events-none">
+              {categories.map((category) => (
+                <div key={category.id} className="relative w-[380px] h-[400px]">
+                  <Image src={category.image} alt="" fill sizes={IMAGE_SIZES} />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

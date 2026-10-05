@@ -83,6 +83,30 @@ const Catalogs = () => {
 
   const catalogs = [
     {
+      id: 8,
+      titleKey: 'ilvaCatalogTitle',
+      descriptionKey: 'ilvaCatalogDesc',
+      fileSize: '5.6 MB',
+      fileName: 'ilva.pdf',
+      color: 'bg-emerald-500',
+    },
+    {
+      id: 9,
+      titleKey: 'ercoCatalogTitle',
+      descriptionKey: 'ercoCatalogDesc',
+      fileSize: '4.8 MB',
+      fileName: 'ERCO.pdf',
+      color: 'bg-orange-500',
+    },
+    {
+      id: 10,
+      titleKey: 'politekFullCatalogTitle',
+      descriptionKey: 'politekFullCatalogDesc',
+      fileSize: '7.6 MB',
+      fileName: 'politek (1).pdf',
+      color: 'bg-cyan-600',
+    },
+    {
       id: 1,
       titleKey: 'gelcoatSystemsTitle',
       descriptionKey: 'gelcoatSystemsDesc',
@@ -143,7 +167,7 @@ const Catalogs = () => {
   useEffect(() => {
     const interval = window.setInterval(() => {
       setActiveIndex((currentIndex) => (currentIndex + 1) % catalogs.length);
-    }, 5000);
+    }, 10000);
 
     return () => window.clearInterval(interval);
   }, [catalogs.length]);
@@ -157,7 +181,7 @@ const Catalogs = () => {
   };
 
   return (
-    <section id="catalogs" className="py-20 lg:py-32 bg-gradient-to-b from-white to-gray-50 overflow-hidden">
+    <section id="catalogs" className="py-20 lg:py-32 bg-white overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         {/* Section Header */}
         <div className="text-center mb-16 lg:mb-20">
@@ -261,7 +285,7 @@ const Catalogs = () => {
                 initial={{ opacity: 0, x: 80 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -80 }}
-                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.18}
@@ -298,7 +322,7 @@ const Catalogs = () => {
                   initial={{ opacity: 0, x: 80 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -80 }}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                   className="grid grid-cols-4 gap-6"
                 >
                   {Array.from({ length: 4 }, (_, offset) => catalogs[(activeIndex + offset) % catalogs.length]).map((catalog) => (

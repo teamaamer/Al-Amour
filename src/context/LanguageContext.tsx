@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
 type Language = 'ar' | 'en';
 
@@ -58,6 +58,12 @@ const translations = {
     toolingSystemsDesc: 'حلول احترافية لصناعة القوالب وأنظمة الأدوات.',
     polytekCatalogTitle: 'كتالوج Politek',
     polytekCatalogDesc: 'الكتالوج الشامل لمنتجات Politek — دهانات خشب، مواد تشطيب، وحلول طلاء متقدمة.',
+    ilvaCatalogTitle: 'كتالوج ILVA',
+    ilvaCatalogDesc: 'كتالوج منتجات ILVA — دهانات وتشطيبات خشب احترافية بجودة إيطالية.',
+    ercoCatalogTitle: 'كتالوج ERCO',
+    ercoCatalogDesc: 'كتالوج منتجات ERCO — أساسات ودهانات خشب تركية بمعايير عالمية.',
+    politekFullCatalogTitle: 'كتالوج Politek الكامل',
+    politekFullCatalogDesc: 'الإصدار الكامل من كتالوج Politek بجميع المنتجات والمواصفات.',
     needHelp: 'تحتاج مساعدة؟',
     contactSupport: 'اتصل بفريق الدعم الفني لدينا',
     trustedQuality: 'جودة موثوقة',
@@ -80,6 +86,7 @@ const translations = {
     
     // Product Categories
     ourProducts: 'منتجاتنا',
+    exploreCategory: 'استكشف الفئة',
     productCategories: 'فئات المنتجات',
     productCategoriesDesc: 'استكشف مجموعة العامور المتميزة من الطلاءات والدهانات وأنظمة الراتنج والحلول التقنية.',
     woodCoatings: 'طلاءات الخشب',
@@ -150,6 +157,35 @@ const translations = {
     privacyPolicy: 'سياسة الخصوصية',
     termsOfService: 'شروط الخدمة',
     trustedByLeadingBrands: 'موثوق به من قبل العلامات التجارية الرائدة',
+
+    // Hero
+    heroSince: 'منذ عام 1999',
+    heroTitleLine1: 'حلول طلاء و',
+    heroTitleLine2: 'منتجات ',
+    heroTitleHighlight: 'متقدمة',
+    premiumHeroDescription: 'منتجات متميزة وأنظمة تقنية للتطبيقات الصناعية والسيارات والبحرية وتشطيب الأثاث.',
+    premiumProductsBadge: 'منتجات متميزة',
+    switchLanguage: 'English',
+
+    // Footer links
+    footerWoodPaints: 'دهانات الخشب',
+    footerCarPaints: 'دهانات السيارات',
+    footerFurnitureFinishing: 'تشطيب الأثاث',
+    footerCarpenterSupplies: 'مستلزمات النجارة',
+    footerColorMixing: 'مزج الألوان',
+    palestine: 'فلسطين',
+    companyName: 'شركة العامور',
+    whatsappLabel: 'تواصل معنا عبر واتساب',
+
+    // Blog posts
+    blogPost1Title: 'مجموعة دهانات الخشب الجديدة من ILVA',
+    blogPost1Excerpt: 'اكتشف أحدث منتجات تشطيب الخشب المتميزة من ILVA...',
+    blogPost2Title: 'نجاح ورشة مزج الألوان',
+    blogPost2Excerpt: 'شكرا لكل من حضر ورشة مزج الألوان الخاصة بنا...',
+    blogPost3Title: 'حلول دهانات سيارات احترافية',
+    blogPost3Excerpt: 'استكشف مجموعتنا من منتجات دهانات السيارات للورش...',
+    blogPost4Title: 'نصائح لتشطيب الأثاث',
+    blogPost4Excerpt: 'تعلم أفضل التقنيات للحصول على تشطيب مثالي للأثاث...',
   },
   en: {
     // Navbar
@@ -198,6 +234,12 @@ const translations = {
     toolingSystemsDesc: 'Professional tooling and mold-making system solutions.',
     polytekCatalogTitle: 'Politek Catalog',
     polytekCatalogDesc: 'Full Politek product catalog — wood coatings, finishing materials, and advanced coating solutions.',
+    ilvaCatalogTitle: 'ILVA Catalog',
+    ilvaCatalogDesc: 'ILVA product catalog — professional Italian wood coatings and finishes.',
+    ercoCatalogTitle: 'ERCO Catalog',
+    ercoCatalogDesc: 'ERCO product catalog — Turkish wood primers and coatings built to global standards.',
+    politekFullCatalogTitle: 'Politek Full Catalog',
+    politekFullCatalogDesc: 'The complete Politek catalog with all products and specifications.',
     needHelp: 'Need Help?',
     contactSupport: 'Contact our technical support team',
     trustedQuality: 'Trusted Quality',
@@ -220,6 +262,7 @@ const translations = {
     
     // Product Categories
     ourProducts: 'Our Products',
+    exploreCategory: 'Explore Category',
     productCategories: 'Product Categories',
     productCategoriesDesc: "Explore Al-Amour's premium range of coatings, paints, resin systems, and technical product solutions.",
     woodCoatings: 'Wood Coatings',
@@ -290,13 +333,65 @@ const translations = {
     privacyPolicy: 'Privacy Policy',
     termsOfService: 'Terms of Service',
     trustedByLeadingBrands: 'Trusted by leading brands',
+
+    // Hero
+    heroSince: 'SINCE 1999',
+    heroTitleLine1: 'Advanced Coating',
+    heroTitleLine2: '& Product ',
+    heroTitleHighlight: 'Solutions',
+    premiumHeroDescription: 'Premium products and technical systems for industrial, automotive, marine and furniture finishing applications.',
+    premiumProductsBadge: 'Premium Products',
+    switchLanguage: 'العربية',
+
+    // Footer links
+    footerWoodPaints: 'Wood Paints',
+    footerCarPaints: 'Car Paints',
+    footerFurnitureFinishing: 'Furniture Finishing',
+    footerCarpenterSupplies: 'Carpenter Supplies',
+    footerColorMixing: 'Color Mixing',
+    palestine: 'Palestine',
+    companyName: 'Al-Amour Company',
+    whatsappLabel: 'Contact us on WhatsApp',
+
+    // Blog posts
+    blogPost1Title: 'New ILVA Wood Paint Collection',
+    blogPost1Excerpt: 'Discover our latest premium wood finishing products from ILVA...',
+    blogPost2Title: 'Color Mixing Workshop Success',
+    blogPost2Excerpt: 'Thank you to everyone who attended our color mixing workshop...',
+    blogPost3Title: 'Professional Car Paint Solutions',
+    blogPost3Excerpt: 'Explore our range of automotive paint products for workshops...',
+    blogPost4Title: 'Furniture Finishing Tips',
+    blogPost4Excerpt: 'Learn the best techniques for achieving perfect furniture finishes...',
   },
 };
+
+const STORAGE_KEY = 'al-amour-language';
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>('ar'); // Arabic as default
+  const [language, setLanguageState] = useState<Language>('ar'); // Arabic as default
+
+  // Restore the visitor's last choice
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved === 'ar' || saved === 'en') setLanguageState(saved);
+    } catch {}
+  }, []);
+
+  // Keep <html lang/dir> in sync with the selected language
+  useEffect(() => {
+    document.documentElement.lang = language;
+    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+  }, [language]);
+
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
+    try {
+      localStorage.setItem(STORAGE_KEY, lang);
+    } catch {}
+  };
 
   const t = (key: string): string => {
     return translations[language][key as keyof typeof translations.ar] || key;

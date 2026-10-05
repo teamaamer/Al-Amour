@@ -17,6 +17,7 @@ const PARTICLES = [
 
 export default function PremiumHero() {
   const { language, setLanguage, t } = useLanguage();
+  const isRTL = language === 'ar';
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -144,7 +145,7 @@ export default function PremiumHero() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         className="relative z-50 px-8 py-6 lg:px-14"
-        dir="rtl"
+        dir={isRTL ? 'rtl' : 'ltr'}
       >
         <div className="mx-auto flex max-w-[1700px] items-center justify-between">
           {/* Logo — right side in RTL */}
@@ -154,7 +155,7 @@ export default function PremiumHero() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="flex items-center gap-3"
           >
-            <div className="hidden md:block text-right">
+            <div className="hidden md:block text-start">
               <div className="text-lg font-bold tracking-[0.12em] text-white lg:text-xl">AL-AMOUR</div>
               <div className="text-[10px] tracking-[0.28em] text-blue-400/80">GENERAL TRADING CO.</div>
             </div>
@@ -174,10 +175,11 @@ export default function PremiumHero() {
             className="flex items-center gap-3"
           >
             <button
-              onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
-              className="hidden rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white/75 backdrop-blur-md transition-all hover:border-blue-400/40 hover:bg-blue-500/10 hover:text-white md:block"
+              onClick={() => setLanguage(isRTL ? 'en' : 'ar')}
+              lang={isRTL ? 'en' : 'ar'}
+              className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white/75 backdrop-blur-md transition-all hover:border-blue-400/40 hover:bg-blue-500/10 hover:text-white"
             >
-              {language === 'en' ? 'العربية' : 'English'}
+              {t('switchLanguage')}
             </button>
             <button className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/5 backdrop-blur-md transition-all hover:border-blue-400/40 hover:bg-blue-500/10">
               <Menu className="h-4 w-4 text-white/75" />
@@ -197,7 +199,7 @@ export default function PremiumHero() {
           <motion.div
             style={{ x: txtX }}
             className="flex flex-col gap-5 lg:gap-6"
-            dir="rtl"
+            dir={isRTL ? 'rtl' : 'ltr'}
           >
             {/* Eyebrow */}
             <motion.div
@@ -210,9 +212,9 @@ export default function PremiumHero() {
                 className="text-xs font-bold tracking-[0.30em] text-cyan-400 lg:text-sm"
                 style={{ filter: 'drop-shadow(0 0 8px rgba(6,182,212,0.6))' }}
               >
-                منذ عام 1999
+                {t('heroSince')}
               </span>
-              <div className="h-px w-14 bg-gradient-to-l from-cyan-400/60 to-transparent" />
+              <div className="h-px w-14 bg-gradient-to-r rtl:bg-gradient-to-l from-cyan-400/60 to-transparent" />
             </motion.div>
 
             {/* Heading */}
@@ -224,7 +226,7 @@ export default function PremiumHero() {
                 className="font-black leading-[1.08] text-white"
                 style={{ fontSize: 'clamp(2.4rem, 5vw, 4.2rem)', letterSpacing: '-0.02em' }}
               >
-                حلول طلاء و
+                {t('heroTitleLine1')}
               </motion.h1>
               <motion.h1
                 initial={{ opacity: 0, y: 28 }}
@@ -233,12 +235,12 @@ export default function PremiumHero() {
                 className="font-black leading-[1.08]"
                 style={{ fontSize: 'clamp(2.4rem, 5vw, 4.2rem)', letterSpacing: '-0.02em' }}
               >
-                <span className="text-white">منتجات </span>
+                <span className="text-white">{t('heroTitleLine2')}</span>
                 <span
                   className="bg-gradient-to-l from-cyan-300 via-sky-400 to-cyan-400 bg-clip-text text-transparent"
                   style={{ filter: 'drop-shadow(0 0 22px rgba(6,182,212,0.65))' }}
                 >
-                  متقدمة
+                  {t('heroTitleHighlight')}
                 </span>
               </motion.h1>
             </div>
@@ -250,7 +252,7 @@ export default function PremiumHero() {
               transition={{ duration: 0.8, delay: 0.85 }}
               className="max-w-[400px] text-sm leading-[1.80] text-white/55 lg:text-base"
             >
-              منتجات متميزة وأنظمة تقنية للتطبيقات الصناعية والسيارات والبحرية وتشطيب الأثاث.
+              {t('premiumHeroDescription')}
             </motion.p>
 
             {/* Buttons */}
@@ -276,7 +278,7 @@ export default function PremiumHero() {
                   animate={{ x: ['-100%', '220%'] }}
                   transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 4, ease: 'easeInOut' }}
                 />
-                <span className="relative z-10">استكشف المنتجات</span>
+                <span className="relative z-10">{t('exploreProducts')}</span>
               </motion.a>
 
               <motion.a
@@ -287,7 +289,7 @@ export default function PremiumHero() {
                 style={{ background: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.16)' }}
               >
                 <Download className="h-3.5 w-3.5 text-cyan-400" />
-                تحميل الكتالوجات
+                {t('downloadCatalogs')}
               </motion.a>
             </motion.div>
 
@@ -299,9 +301,9 @@ export default function PremiumHero() {
               className="flex flex-wrap items-center gap-5"
             >
               {([
-                [Shield,     'جودة موثوقة'],
-                [Award,      'منتجات متميزة'],
-                [Headphones, 'دعم فني'],
+                [Shield,     t('trustedQuality')],
+                [Award,      t('premiumProductsBadge')],
+                [Headphones, t('technicalSupport')],
               ] as const).map(([Icon, label]) => (
                 <div key={label} className="flex items-center gap-2">
                   <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-500/20">
@@ -319,7 +321,7 @@ export default function PremiumHero() {
               transition={{ duration: 0.8, delay: 1.28 }}
               className="flex flex-wrap gap-2"
             >
-              {([['المنتجات','#products'],['الكتالوجات','#catalogs'],['اتصل بنا','#contact']] as const).map(([label, href]) => (
+              {([[t('products'),'#products'],[t('catalogs'),'#catalogs'],[t('contact'),'#contact']] as const).map(([label, href]) => (
                 <a
                   key={label}
                   href={href}

@@ -2,8 +2,10 @@
 
 import { motion } from 'framer-motion';
 import { MessageCircle } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const WhatsAppFloat = () => {
+  const { t } = useLanguage();
   return (
     <div className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50">
       {/* Ripple effect */}
@@ -36,7 +38,7 @@ const WhatsAppFloat = () => {
         whileHover={{ scale: 1.15, rotate: 5 }}
         whileTap={{ scale: 0.9 }}
         className="relative w-14 h-14 md:w-16 md:h-16 bg-[#25D366] rounded-full flex items-center justify-center shadow-2xl hover:shadow-[0_0_30px_rgba(37,211,102,0.6)] transition-all"
-        aria-label="Contact us on WhatsApp"
+        aria-label={t('whatsappLabel')}
       >
         {/* Glow effect */}
         <div className="absolute inset-0 bg-[#25D366] rounded-full blur-xl opacity-50" />

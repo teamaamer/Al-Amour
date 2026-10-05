@@ -6,36 +6,36 @@ import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 
 const Blog = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const blogPosts = [
     {
       id: 1,
-      title: 'New ILVA Wood Paint Collection',
-      excerpt: 'Discover our latest premium wood finishing products from ILVA...',
+      title: t('blogPost1Title'),
+      excerpt: t('blogPost1Excerpt'),
       image: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=600&q=80',
       date: '2026-04-05',
       platform: 'instagram',
     },
     {
       id: 2,
-      title: 'Color Mixing Workshop Success',
-      excerpt: 'Thank you to everyone who attended our color mixing workshop...',
+      title: t('blogPost2Title'),
+      excerpt: t('blogPost2Excerpt'),
       image: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=600&q=80',
       date: '2026-04-03',
       platform: 'facebook',
     },
     {
       id: 3,
-      title: 'Professional Car Paint Solutions',
-      excerpt: 'Explore our range of automotive paint products for workshops...',
+      title: t('blogPost3Title'),
+      excerpt: t('blogPost3Excerpt'),
       image: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&q=80',
       date: '2026-04-01',
       platform: 'instagram',
     },
     {
       id: 4,
-      title: 'Furniture Finishing Tips',
-      excerpt: 'Learn the best techniques for achieving perfect furniture finishes...',
+      title: t('blogPost4Title'),
+      excerpt: t('blogPost4Excerpt'),
       image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80',
       date: '2026-03-28',
       platform: 'facebook',
@@ -98,7 +98,7 @@ const Blog = () => {
               <div className="p-6">
                 <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
                   <Calendar size={16} />
-                  <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                  <span>{new Date(post.date).toLocaleDateString(language === 'ar' ? 'ar' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                 </div>
 
                 <h3 className="text-xl font-bold text-navy mb-2 group-hover:text-primary transition-colors line-clamp-2">

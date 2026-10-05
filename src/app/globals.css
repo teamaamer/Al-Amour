@@ -104,3 +104,28 @@ button, a {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
+
+/* Infinite logo marquee (LogoTicker) */
+@keyframes logo-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+.logo-marquee-track {
+  animation: logo-marquee 60s linear infinite;
+  will-change: transform;
+}
+
+@media (hover: hover) {
+  .logo-marquee:hover .logo-marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-marquee-track {
+    animation: none;
+    width: 100%;
+    justify-content: center;
+  }
+}

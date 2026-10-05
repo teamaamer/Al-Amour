@@ -85,7 +85,7 @@ const Stats = () => {
 
   return (
     <section className="bg-navy py-4 md:py-6">
-      <div className="max-w-[1000px] mx-auto px-4">
+      <div className="w-full px-6 lg:px-12">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -96,7 +96,7 @@ const Stats = () => {
           {t('performanceSnapshot')}
         </motion.h2>
 
-        <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-5 items-center gap-4 md:gap-0 md:divide-x md:divide-white/10 rtl:md:divide-x-reverse">
           {stats.map((stat, index) => (
             <StatCard
               key={index}
