@@ -5,6 +5,7 @@ import ServicesNew from '@/components/ServicesNew';
 import Catalogs from '@/components/Catalogs';
 import About from '@/components/About';
 import Blog from '@/components/Blog';
+import FAQ from '@/components/FAQ';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
 import Footer from '@/components/Footer';
 
@@ -18,6 +19,7 @@ export default function Home() {
       <Catalogs />
       <About />
       <Blog />
+      <FAQ />
       <WhatsAppFloat />
       <Footer />
     </main>
