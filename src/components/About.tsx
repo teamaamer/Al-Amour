@@ -1,11 +1,14 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { Award, Building2, Globe2, ShieldCheck, Sparkles } from 'lucide-react';
 
 const About = () => {
   const { t } = useLanguage();
+  const videoRef = useRef<HTMLDivElement | null>(null);
+  const shouldLoadVideo = useInView(videoRef, { once: true, margin: '200px 0px' });
 
   const aboutCards = [
     {
@@ -54,6 +57,7 @@ const About = () => {
 
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(280px,360px)_1fr] lg:items-stretch lg:gap-10">
           <motion.div
+            ref={videoRef}
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -61,15 +65,22 @@ const About = () => {
             className="h-[320px] overflow-hidden rounded-2xl border border-gray-200 bg-white p-2 shadow-lg md:h-[420px] lg:h-[560px]"
           >
             <div className="h-full w-full overflow-hidden rounded-xl">
-              <video
-                src="/aboutus.mp4"
-                autoPlay
-                muted
-                loop
-                playsInline
-                controls
-                className="h-full w-full object-cover"
-              />
+              {shouldLoadVideo ? (
+                <video
+                  src="/aboutus.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="none"
+                  poster="/heroam.png"
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">
+                  Loading media
+                </div>
+              )}
             </div>
           </motion.div>
 

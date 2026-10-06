@@ -12,9 +12,10 @@ interface CatalogCardProps {
   fileName: string;
   color: string;
   t: (key: string) => string;
+  loadPreview?: boolean;
 }
 
-const CatalogCard = ({ title, description, fileSize, fileName, color, t }: CatalogCardProps) => {
+const CatalogCard = ({ title, description, fileSize, fileName, color, t, loadPreview = true }: CatalogCardProps) => {
   const handleDownload = () => {
     const link = document.createElement('a');
     link.href = `/catgs/${fileName}`;
@@ -37,11 +38,17 @@ const CatalogCard = ({ title, description, fileSize, fileName, color, t }: Catal
             </div>
 
             <div className="pt-11">
-              <iframe
-                src={`/catgs/${encodeURIComponent(fileName)}#toolbar=0&navpanes=0&scrollbar=0`}
-                title={`${title} PDF preview`}
-                className="h-[280px] w-full bg-white sm:h-[300px] lg:h-[320px]"
-              />
+              {loadPreview ? (
+                <iframe
+                  src={`/catgs/${encodeURIComponent(fileName)}#toolbar=0&navpanes=0&scrollbar=0`}
+                  title={`${title} PDF preview`}
+                  className="h-[280px] w-full bg-white sm:h-[300px] lg:h-[320px]"
+                />
+              ) : (
+                <div className="flex h-[280px] w-full items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 text-center text-xs font-medium uppercase tracking-[0.24em] text-slate-500 sm:h-[300px] lg:h-[320px]">
+                  {t('pdfPreview')}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -310,6 +317,7 @@ const Catalogs = () => {
                     fileName={catalogs[activeIndex].fileName}
                     color={catalogs[activeIndex].color}
                     t={t}
+                    loadPreview={true}
                   />
                 </div>
               </motion.div>
@@ -325,7 +333,7 @@ const Catalogs = () => {
                   transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                   className="grid grid-cols-4 gap-6"
                 >
-                  {Array.from({ length: 4 }, (_, offset) => catalogs[(activeIndex + offset) % catalogs.length]).map((catalog) => (
+                  {Array.from({ length: 4 }, (_, offset) => catalogs[(activeIndex + offset) % catalogs.length]).map((catalog, offset) => (
                     <div key={`${catalog.id}-${activeIndex}`} className="h-full">
                       <CatalogCard
                         title={t(catalog.titleKey)}
@@ -334,6 +342,7 @@ const Catalogs = () => {
                         fileName={catalog.fileName}
                         color={catalog.color}
                         t={t}
+                        loadPreview={offset === 0}
                       />
                     </div>
                   ))}

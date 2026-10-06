@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import { AnimatePresence, motion, useMotionValue, useTransform, useSpring, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
-import { Download, Menu, Shield, Award, Headphones } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { Download, Menu, Shield, Award, Headphones, X } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
 const PARTICLES = [
@@ -18,6 +19,22 @@ const PARTICLES = [
 export default function PremiumHero() {
   const { language, setLanguage, t } = useLanguage();
   const isRTL = language === 'ar';
+  const shouldReduceMotion = useReducedMotion();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const menuItems = [
+    { label: t('home'), href: '#home' },
+    { label: t('about'), href: '#about' },
+    { label: t('products'), href: '#products' },
+    { label: t('catalogs'), href: '#catalogs' },
+    { label: t('faqLabel'), href: '#faq' },
+    { label: t('contact'), href: '#contact' },
+  ];
+
+  const stableParticles = useMemo(
+    () => PARTICLES,
+    []
+  );
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -33,7 +50,7 @@ export default function PremiumHero() {
   const arcsY = useTransform(sY, [-1, 1], [ -5,   5]);
   const txtX  = useTransform(sX, [-1, 1], [  4,  -4]);
 
-  const onMove = (e: React.MouseEvent<HTMLElement>) => {
+  const onMove = shouldReduceMotion ? undefined : (e: React.MouseEvent<HTMLElement>) => {
     const r = e.currentTarget.getBoundingClientRect();
     mouseX.set((e.clientX - r.left - r.width  / 2) / (r.width  / 2));
     mouseY.set((e.clientY - r.top  - r.height / 2) / (r.height / 2));
@@ -41,12 +58,18 @@ export default function PremiumHero() {
 
   return (
     <section
+      id="home"
       className="relative h-screen w-full overflow-hidden bg-[#05030d]"
       onMouseMove={onMove}
-      onMouseLeave={() => { mouseX.set(0); mouseY.set(0); }}
+      onMouseLeave={() => {
+        if (!shouldReduceMotion) {
+          mouseX.set(0);
+          mouseY.set(0);
+        }
+      }}
     >
       {/* ── FULL SCREEN BACKGROUND IMAGE ── */}
-      <motion.div style={{ x: bgX, y: bgY }} className="absolute inset-[-4%] z-0">
+      <motion.div style={{ x: shouldReduceMotion ? 0 : bgX, y: shouldReduceMotion ? 0 : bgY }} className="absolute inset-[-4%] z-0">
         <Image
           src="/heroam.png"
           alt="Al-Amour facility"
@@ -90,7 +113,7 @@ export default function PremiumHero() {
       }} />
 
       {/* Particles (right side only) */}
-      {PARTICLES.map((p) => (
+      {stableParticles.map((p) => (
         <motion.div
           key={p.id}
           className="absolute z-[2] rounded-full bg-cyan-400/50 pointer-events-none"
@@ -102,7 +125,7 @@ export default function PremiumHero() {
 
       {/* ── ARCS (upper right) ── */}
       <motion.div
-        style={{ x: arcsX, y: arcsY, position: 'absolute', top: 0, right: 0, width: '45%', height: '55%', zIndex: 3, pointerEvents: 'none' }}
+        style={{ x: shouldReduceMotion ? 0 : arcsX, y: shouldReduceMotion ? 0 : arcsY, position: 'absolute', top: 0, right: 0, width: '45%', height: '55%', zIndex: 3, pointerEvents: 'none' }}
       >
         <div className="absolute" style={{ top: 0, right: 0, width: '100%', height: '100%' }}>
           <svg width="100%" height="100%" viewBox="0 0 500 400" fill="none" overflow="visible"
@@ -147,7 +170,7 @@ export default function PremiumHero() {
         className="relative z-50 px-8 py-6 lg:px-14"
         dir={isRTL ? 'rtl' : 'ltr'}
       >
-        <div className="mx-auto flex max-w-[1700px] items-center justify-between">
+        <div className="mx-auto flex max-w-[1700px] items-center justify-between gap-4">
           {/* Logo — right side in RTL */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -167,6 +190,18 @@ export default function PremiumHero() {
             </div>
           </motion.div>
 
+          <div className="hidden items-center gap-4 xl:flex">
+            {menuItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="text-sm font-medium text-white/75 transition-colors hover:text-white"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+
           {/* Controls — left side in RTL */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -181,12 +216,42 @@ export default function PremiumHero() {
             >
               {t('switchLanguage')}
             </button>
-            <button className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/5 backdrop-blur-md transition-all hover:border-blue-400/40 hover:bg-blue-500/10">
-              <Menu className="h-4 w-4 text-white/75" />
+            <button
+              type="button"
+              onClick={() => setIsMenuOpen((value) => !value)}
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/5 backdrop-blur-md transition-all hover:border-blue-400/40 hover:bg-blue-500/10"
+            >
+              {isMenuOpen ? <X className="h-4 w-4 text-white/75" /> : <Menu className="h-4 w-4 text-white/75" />}
             </button>
           </motion.div>
         </div>
       </motion.nav>
+
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.2 }}
+            className="absolute inset-x-0 top-[88px] z-40 mx-auto w-[min(90vw,800px)] rounded-2xl border border-white/10 bg-[#0b1220]/90 p-4 shadow-2xl backdrop-blur-xl"
+          >
+            <div className="grid gap-2 sm:grid-cols-2">
+              {menuItems.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white/80 transition-colors hover:border-cyan-400/40 hover:bg-cyan-500/10 hover:text-white"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── MAIN CONTENT ── */}
       <div
@@ -197,7 +262,7 @@ export default function PremiumHero() {
 
           {/* ══ LEFT — TEXT ══ */}
           <motion.div
-            style={{ x: txtX }}
+            style={{ x: shouldReduceMotion ? 0 : txtX }}
             className="flex flex-col gap-5 lg:gap-6"
             dir={isRTL ? 'rtl' : 'ltr'}
           >
