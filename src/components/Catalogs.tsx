@@ -12,10 +12,10 @@ interface CatalogCardProps {
   fileName: string;
   color: string;
   t: (key: string) => string;
-  loadPreview?: boolean;
+  isActive?: boolean;
 }
 
-const CatalogCard = ({ title, description, fileSize, fileName, color, t, loadPreview = true }: CatalogCardProps) => {
+const CatalogCard = ({ title, description, fileSize, fileName, color, t, isActive = false }: CatalogCardProps) => {
   const handleDownload = () => {
     const link = document.createElement('a');
     link.href = `/catgs/${fileName}`;
@@ -26,45 +26,41 @@ const CatalogCard = ({ title, description, fileSize, fileName, color, t, loadPre
   };
 
   return (
-    <div className="group relative flex h-full w-full flex-col overflow-hidden rounded-3xl bg-white shadow-[0_20px_80px_rgba(10,13,26,0.12)] ring-1 ring-black/5">
+    <div
+      className={[
+        'group relative flex h-full w-full flex-col overflow-hidden rounded-[28px] bg-white shadow-[0_18px_45px_rgba(15,23,42,0.08)] ring-1 ring-slate-200 transition-all duration-300',
+        isActive ? 'scale-[1.02] shadow-[0_30px_70px_rgba(13,36,70,0.14)] ring-blue-200' : 'scale-100',
+      ].join(' ')}
+    >
       <div className={`h-1.5 ${color}`} />
 
-      <div className="flex h-full flex-col">
-        <div className="bg-[#f7f9fc] p-4 sm:p-5">
-          <div className="relative overflow-hidden rounded-2xl border border-black/10 bg-white shadow-inner">
-            <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between border-b border-black/10 bg-white/95 px-4 py-3 text-[11px] uppercase tracking-[0.3em] text-gray-500 backdrop-blur-sm">
-              <span>{t('pdfPreview')}</span>
-              <span>{fileSize}</span>
-            </div>
-
-            <div className="pt-11">
-              {loadPreview ? (
-                <iframe
-                  src={`/catgs/${encodeURIComponent(fileName)}#toolbar=0&navpanes=0&scrollbar=0`}
-                  title={`${title} PDF preview`}
-                  className="h-[280px] w-full bg-white sm:h-[300px] lg:h-[320px]"
-                />
-              ) : (
-                <div className="flex h-[280px] w-full items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 text-center text-xs font-medium uppercase tracking-[0.24em] text-slate-500 sm:h-[300px] lg:h-[320px]">
-                  {t('pdfPreview')}
-                </div>
-              )}
-            </div>
+      <div className="flex h-full flex-col p-4 sm:p-5">
+        <div className="relative overflow-hidden rounded-[22px] border border-slate-200 bg-gradient-to-br from-slate-50 to-slate-100 shadow-inner">
+          <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between border-b border-slate-200 bg-white/90 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500 backdrop-blur-sm">
+            <span>{t('pdfPreview')}</span>
+            <span>{fileSize}</span>
           </div>
+
+          <iframe
+            src={`/catgs/${encodeURIComponent(fileName)}#page=1&toolbar=0&navpanes=0&scrollbar=0`}
+            title={`${title} PDF preview`}
+            loading="lazy"
+            className="h-[280px] w-full bg-white sm:h-[300px] lg:h-[320px]"
+          />
         </div>
 
-        <div className="flex flex-1 flex-col justify-between gap-5 p-5 sm:p-6">
+        <div className="mt-5 flex flex-1 flex-col justify-between gap-5">
           <div>
-            <div className={`mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold ${color} bg-opacity-10`}>
+            <div className={`mb-4 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-bold ${color} bg-opacity-10`}>
               <span className={`h-2.5 w-2.5 rounded-full ${color}`} />
-              <span className="text-navy">{t('carouselCardLabel')}</span>
+              <span className="text-slate-700">{t('carouselCardLabel')}</span>
             </div>
 
-            <h3 className="text-2xl font-bold text-navy mb-3">
+            <h3 className="mb-3 text-xl font-bold text-slate-900 sm:text-2xl">
               {title}
             </h3>
 
-            <p className="text-base text-gray-600 leading-relaxed">
+            <p className="text-sm leading-relaxed text-slate-600 sm:text-base">
               {description}
             </p>
           </div>
@@ -73,7 +69,7 @@ const CatalogCard = ({ title, description, fileSize, fileName, color, t, loadPre
             onClick={handleDownload}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-blue-400 px-5 py-3.5 font-semibold text-white shadow-lg shadow-blue-500/25 transition-all"
+            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-500 to-blue-400 px-4 py-3 font-semibold text-white shadow-lg shadow-blue-500/25 transition-all"
           >
             <Download className="h-4 w-4" />
             {t('downloadPdf')}
@@ -317,7 +313,7 @@ const Catalogs = () => {
                     fileName={catalogs[activeIndex].fileName}
                     color={catalogs[activeIndex].color}
                     t={t}
-                    loadPreview={true}
+                    isActive
                   />
                 </div>
               </motion.div>
@@ -342,7 +338,7 @@ const Catalogs = () => {
                         fileName={catalog.fileName}
                         color={catalog.color}
                         t={t}
-                        loadPreview={offset === 0}
+                        isActive={offset === 0}
                       />
                     </div>
                   ))}
