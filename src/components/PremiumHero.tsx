@@ -56,25 +56,27 @@ export default function PremiumHero() {
           initial={{
             opacity: 0,
             y: 40,
-            rotate: -7,
+            rotate: isRTL ? 7 : -7,
             scale: 0.92,
           }}
           animate={{
             opacity: 1,
             y: 0,
-            rotate: -7,
+            rotate: isRTL ? 7 : -7,
             scale: 1,
           }}
           transition={{
-            duration: 1,
+            duration: 0.8,
             delay: 0.7,
             ease: 'easeOut',
           }}
           whileHover={{
-            rotate: -4,
+            rotate: isRTL ? 4 : -4,
             scale: 1.03,
           }}
-          className="pointer-events-auto absolute bottom-[8%] right-[4%] z-10 hidden w-[300px] overflow-visible md:block lg:w-[350px]"
+          className={`pointer-events-auto absolute bottom-[8%] z-10 hidden w-[300px] overflow-visible transition-[left,right] duration-700 md:block lg:w-[350px] ${
+            isRTL ? 'left-[4%]' : 'right-[4%]'
+          }`}
         >
           {/* ===================================================
               ANIMATED BLUE GLOW
@@ -163,7 +165,12 @@ export default function PremiumHero() {
               <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#020812]/95 via-[#020812]/45 to-transparent" />
 
               {/* CARD TEXT */}
-              <div className="absolute bottom-0 left-0 right-0 p-5">
+              <div
+                className={`absolute bottom-0 left-0 right-0 p-5 ${
+                  isRTL ? 'text-right' : 'text-left'
+                }`}
+                dir={isRTL ? 'rtl' : 'ltr'}
+              >
                 <motion.div
                   animate={{
                     opacity: [0.7, 1, 0.7],
