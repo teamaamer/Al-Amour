@@ -1,486 +1,596 @@
 'use client';
 
-import { AnimatePresence, motion, useMotionValue, useTransform, useSpring, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
-import { useMemo, useState } from 'react';
-import { Download, Menu, Shield, Award, Headphones, X } from 'lucide-react';
+import { useState } from 'react';
+import {
+  Download,
+  Menu,
+  Shield,
+  Award,
+  Headphones,
+  X,
+} from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
-
-const PARTICLES = [
-  { id: 0, x: 55, y: 20, s: 1.5, d: 9,  dl: 0.0 },
-  { id: 1, x: 72, y: 55, s: 2.0, d: 12, dl: 1.2 },
-  { id: 2, x: 85, y: 35, s: 1.0, d: 10, dl: 2.4 },
-  { id: 3, x: 63, y: 80, s: 1.5, d: 11, dl: 0.6 },
-  { id: 4, x: 90, y: 65, s: 1.0, d: 13, dl: 1.8 },
-  { id: 5, x: 78, y: 10, s: 1.5, d: 8,  dl: 3.0 },
-  { id: 6, x: 68, y: 90, s: 1.0, d: 10, dl: 0.3 },
-];
 
 export default function PremiumHero() {
   const { language, setLanguage, t } = useLanguage();
   const isRTL = language === 'ar';
-  const shouldReduceMotion = useReducedMotion();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [
     { label: t('home'), href: '#home' },
-    { label: t('about'), href: '#about' },
     { label: t('products'), href: '#products' },
-    { label: t('catalogs'), href: '#catalogs' },
-    { label: t('faqLabel'), href: '#faq' },
+    { label: t('technologies'), href: '#catalogs' },
+    { label: t('about'), href: '#about' },
     { label: t('contact'), href: '#contact' },
   ];
-
-  const stableParticles = useMemo(
-    () => PARTICLES,
-    []
-  );
-
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const spring = { stiffness: 35, damping: 22 };
-  const sX = useSpring(mouseX, spring);
-  const sY = useSpring(mouseY, spring);
-
-  const bgX   = useTransform(sX, [-1, 1], [-18, 18]);
-  const bgY   = useTransform(sY, [-1, 1], [-10, 10]);
-  const cardX = useTransform(sX, [-1, 1], [ 12, -12]);
-  const cardY = useTransform(sY, [-1, 1], [  8,  -8]);
-  const arcsX = useTransform(sX, [-1, 1], [ -8,   8]);
-  const arcsY = useTransform(sY, [-1, 1], [ -5,   5]);
-  const txtX  = useTransform(sX, [-1, 1], [  4,  -4]);
-
-  const onMove = shouldReduceMotion ? undefined : (e: React.MouseEvent<HTMLElement>) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    mouseX.set((e.clientX - r.left - r.width  / 2) / (r.width  / 2));
-    mouseY.set((e.clientY - r.top  - r.height / 2) / (r.height / 2));
-  };
 
   return (
     <section
       id="home"
-      className="relative h-screen w-full overflow-hidden bg-[#05030d]"
-      onMouseMove={onMove}
-      onMouseLeave={() => {
-        if (!shouldReduceMotion) {
-          mouseX.set(0);
-          mouseY.set(0);
-        }
-      }}
+      className="relative min-h-screen w-full overflow-hidden bg-[#050a18] lg:h-screen"
     >
-      {/* ── FULL SCREEN BACKGROUND IMAGE ── */}
-      <motion.div style={{ x: shouldReduceMotion ? 0 : bgX, y: shouldReduceMotion ? 0 : bgY }} className="absolute inset-[-4%] z-0">
-        <Image
-          src="/heroam.png"
-          alt="Al-Amour facility"
-          fill
-          className="object-cover"
-          priority
-          style={{ opacity: 0.60 }}
-        />
-      </motion.div>
-
-      {/* Left-side dark gradient so text is readable */}
-      <div className="absolute inset-0 z-[1] pointer-events-none" style={{
-        background: 'linear-gradient(to right, rgba(5,3,13,0.97) 0%, rgba(5,3,13,0.92) 30%, rgba(5,3,13,0.65) 55%, rgba(5,3,13,0.15) 75%, transparent 100%)',
-      }} />
-      {/* Top vignette */}
-      <div className="absolute inset-0 z-[1] pointer-events-none" style={{
-        background: 'linear-gradient(to bottom, rgba(5,3,13,0.88) 0%, transparent 30%)',
-      }} />
-      {/* Bottom vignette */}
-      <div className="absolute inset-0 z-[1] pointer-events-none" style={{
-        background: 'linear-gradient(to top, rgba(5,3,13,0.92) 0%, transparent 40%)',
-      }} />
-
-      {/* Blue ambient glow — center right */}
-      <div className="absolute z-[1] pointer-events-none" style={{
-        top: '25%', right: '15%', width: 600, height: 600, borderRadius: '50%',
-        background: 'radial-gradient(ellipse, rgba(0,151,215,0.16) 0%, transparent 65%)',
-        filter: 'blur(60px)',
-      }} />
-      {/* Bottom blue floor glow */}
-      <div className="absolute z-[1] pointer-events-none" style={{
-        bottom: '-5%', right: '10%', width: 500, height: 300, borderRadius: '50%',
-        background: 'radial-gradient(ellipse, rgba(0,151,215,0.18) 0%, transparent 70%)',
-        filter: 'blur(50px)',
-      }} />
-
-      {/* Subtle grid */}
-      <div className="absolute inset-0 z-[1] pointer-events-none opacity-[0.018]" style={{
-        backgroundImage: 'linear-gradient(rgba(0,151,215,1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,151,215,1) 1px, transparent 1px)',
-        backgroundSize: '60px 60px',
-      }} />
-
-      {/* Particles (right side only) */}
-      {stableParticles.map((p) => (
-        <motion.div
-          key={p.id}
-          className="absolute z-[2] rounded-full bg-cyan-400/50 pointer-events-none"
-          style={{ width: p.s, height: p.s, left: `${p.x}%`, top: `${p.y}%` }}
-          animate={{ y: [0, -22, 0], opacity: [0, 0.5, 0] }}
-          transition={{ duration: p.d, delay: p.dl, repeat: Infinity, ease: 'easeInOut' }}
-        />
-      ))}
-
-      {/* ── ARCS (upper right) ── */}
-      <motion.div
-        style={{ x: shouldReduceMotion ? 0 : arcsX, y: shouldReduceMotion ? 0 : arcsY, position: 'absolute', top: 0, right: 0, width: '45%', height: '55%', zIndex: 3, pointerEvents: 'none' }}
-      >
-        <div className="absolute" style={{ top: 0, right: 0, width: '100%', height: '100%' }}>
-          <svg width="100%" height="100%" viewBox="0 0 500 400" fill="none" overflow="visible"
-            style={{ position: 'absolute', top: 0, right: 0 }}>
-            <circle cx="420" cy="60"  r="220" stroke="rgba(0,151,215,0.10)" strokeWidth="0.6" />
-            <circle cx="420" cy="60"  r="170" stroke="rgba(0,151,215,0.14)" strokeWidth="0.5" strokeDasharray="6 12" />
-            <circle cx="420" cy="60"  r="120" stroke="rgba(6,182,212,0.10)" strokeWidth="0.5" />
-            <circle cx="420" cy="60"  r="75"  stroke="rgba(6,182,212,0.08)" strokeWidth="0.4" strokeDasharray="3 8" />
-            {/* Sweep */}
-            <motion.circle
-              cx="420" cy="60" r="170"
-              stroke="rgba(6,182,212,0.65)" strokeWidth="1.2" strokeLinecap="round"
-              pathLength={1} strokeDasharray="0.08 0.92"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 14, ease: 'linear', repeat: Infinity }}
-              style={{ transformOrigin: '420px 60px' }}
-            />
-            {/* Orbit dots */}
-            {[30, 120, 210, 300].map((angle, i) => {
-              const rad = (angle * Math.PI) / 180;
-              return (
-                <motion.circle
-                  key={i}
-                  cx={420 + 170 * Math.cos(rad)}
-                  cy={60  + 170 * Math.sin(rad)}
-                  r="2"
-                  fill="rgba(6,182,212,0.85)"
-                  animate={{ opacity: [0.2, 1, 0.2] }}
-                  transition={{ duration: 3, delay: i * 0.7, repeat: Infinity }}
-                />
-              );
-            })}
-          </svg>
+      {/* =========================================================
+          FULL SCREEN BACKGROUND IMAGE
+      ========================================================= */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/heroam2.png"
+            alt="Al-Amour facility"
+            fill
+            priority
+            className="object-cover"
+            style={{
+              objectPosition: 'center center',
+            }}
+            sizes="100vw"
+          />
         </div>
-      </motion.div>
 
-      {/* ── NAVBAR ── */}
+        {/* =====================================================
+            TILTED FLOATING CARD
+        ===================================================== */}
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 40,
+            rotate: -7,
+            scale: 0.92,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            rotate: -7,
+            scale: 1,
+          }}
+          transition={{
+            duration: 1,
+            delay: 0.7,
+            ease: 'easeOut',
+          }}
+          whileHover={{
+            rotate: -4,
+            scale: 1.03,
+          }}
+          className="pointer-events-auto absolute bottom-[8%] right-[4%] z-10 hidden w-[300px] overflow-visible md:block lg:w-[350px]"
+        >
+          {/* ===================================================
+              ANIMATED BLUE GLOW
+          =================================================== */}
+          <motion.div
+            className="absolute -inset-[3px] rounded-3xl"
+            style={{
+              background:
+                'linear-gradient(90deg, #38d9ff, #8beaff, #168cff, #38d9ff)',
+              backgroundSize: '300% 100%',
+              filter: 'blur(5px)',
+              opacity: 0.9,
+            }}
+            animate={{
+              backgroundPosition: [
+                '0% 50%',
+                '100% 50%',
+                '0% 50%',
+              ],
+              opacity: [0.55, 1, 0.55],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+          />
+
+          {/* ===================================================
+              CARD
+          =================================================== */}
+          <div className="relative overflow-hidden rounded-3xl border border-[#8beaff]/70 bg-[#071522]/80 backdrop-blur-md">
+
+            {/* MOVING LIGHT */}
+            <motion.div
+              className="pointer-events-none absolute -left-1/2 top-0 h-full w-1/2"
+              style={{
+                background:
+                  'linear-gradient(90deg, transparent, rgba(139,234,255,0.35), transparent)',
+                transform: 'skewX(-20deg)',
+              }}
+              animate={{
+                x: ['0%', '400%'],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: 'easeInOut',
+                repeatDelay: 1,
+              }}
+            />
+
+            {/* IMAGE */}
+            <div className="relative aspect-[4/3] w-full">
+              <Image
+                src="/heroam2.png"
+                alt="Al-Amour"
+                fill
+                className="object-cover"
+                sizes="350px"
+              />
+
+              {/* IMAGE SHINE */}
+              <motion.div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    'linear-gradient(110deg, transparent 25%, rgba(139,234,255,0.18) 50%, transparent 75%)',
+                  backgroundSize: '200% 100%',
+                }}
+                animate={{
+                  backgroundPosition: [
+                    '200% 0',
+                    '-100% 0',
+                  ],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: 'linear',
+                  repeatDelay: 1,
+                }}
+              />
+
+              {/* BOTTOM GRADIENT */}
+              <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#020812]/95 via-[#020812]/45 to-transparent" />
+
+              {/* CARD TEXT */}
+              <div className="absolute bottom-0 left-0 right-0 p-5">
+                <motion.div
+                  animate={{
+                    opacity: [0.7, 1, 0.7],
+                  }}
+                  transition={{
+                    duration: 2.5,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                  className="text-[10px] font-semibold tracking-[0.25em] text-[#8beaff]"
+                >
+                  AL-AMOUR
+                </motion.div>
+
+                <div className="mt-1 text-base font-bold tracking-wide text-white">
+                  PREMIUM MATERIALS
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* =========================================================
+          NAVIGATION
+      ========================================================= */}
       <motion.nav
-        initial={{ y: -60, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-50 px-8 py-6 lg:px-14"
+        initial={{
+          y: -40,
+          opacity: 0,
+        }}
+        animate={{
+          y: 0,
+          opacity: 1,
+        }}
+        transition={{
+          duration: 0.8,
+        }}
+        className="relative z-50 px-5 py-5 md:px-10 lg:px-14"
         dir={isRTL ? 'rtl' : 'ltr'}
       >
-        <div className="mx-auto flex max-w-[1700px] items-center justify-between gap-4">
-          {/* Logo — right side in RTL */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex items-center gap-3"
-          >
-            <div className="hidden md:block text-start">
-              <div className="text-lg font-bold tracking-[0.12em] text-white lg:text-xl">AL-AMOUR</div>
-              <div className="text-[10px] tracking-[0.28em] text-blue-400/80">GENERAL TRADING CO.</div>
-            </div>
-            <div
-              className="relative h-14 w-14 lg:h-16 lg:w-16"
-              style={{ filter: 'drop-shadow(0 0 14px rgba(0,151,215,0.50))' }}
-            >
-              <Image src="/logo.png" alt="Al-Amour Logo" fill className="object-contain" />
-            </div>
-          </motion.div>
+        <div className="mx-auto flex max-w-[1680px] items-center justify-between">
 
-          <div className="hidden items-center gap-4 xl:flex">
-            {menuItems.map((item) => (
+          {/* LOGO */}
+          <div className="flex items-center gap-3">
+            <div
+              className="relative h-11 w-11 shrink-0 lg:h-14 lg:w-14"
+              style={{
+                filter:
+                  'drop-shadow(0 0 10px rgba(0,170,255,0.55))',
+              }}
+            >
+              <Image
+                src="/logo.png"
+                alt="Al-Amour"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+
+            <div className="hidden leading-none sm:block">
+              <div className="text-[15px] font-bold tracking-[0.16em] text-white md:text-[17px]">
+                AL-AMOUR
+              </div>
+
+              <div className="mt-1 text-[8px] tracking-[0.22em] text-[#5bc4f0] md:text-[9px]">
+                .GENERAL TRADING CO.
+              </div>
+            </div>
+          </div>
+
+          {/* DESKTOP MENU */}
+          <div className="hidden items-center gap-8 xl:flex">
+            {menuItems.map((item, i) => (
               <a
-                key={item.href}
+                key={item.href + item.label}
                 href={item.href}
-                className="text-sm font-medium text-white/75 transition-colors hover:text-white"
+                className={`text-[13px] font-medium transition-colors hover:text-white ${
+                  i === 0
+                    ? 'text-white'
+                    : 'text-white/80'
+                }`}
               >
                 {item.label}
               </a>
             ))}
           </div>
 
-          {/* Controls — left side in RTL */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex items-center gap-3"
-          >
-            <button
-              onClick={() => setLanguage(isRTL ? 'en' : 'ar')}
-              lang={isRTL ? 'en' : 'ar'}
-              className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white/75 backdrop-blur-md transition-all hover:border-blue-400/40 hover:bg-blue-500/10 hover:text-white"
-            >
-              {t('switchLanguage')}
-            </button>
+          {/* RIGHT SIDE */}
+          <div className="flex items-center gap-2.5">
+
+            {/* LANGUAGE SWITCHER */}
             <button
               type="button"
-              onClick={() => setIsMenuOpen((value) => !value)}
-              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/5 backdrop-blur-md transition-all hover:border-blue-400/40 hover:bg-blue-500/10"
+              onClick={() =>
+                setLanguage(isRTL ? 'en' : 'ar')
+              }
+              aria-label="Switch language"
+              className="flex items-center overflow-hidden rounded-full text-[11px] font-bold tracking-wide"
+              style={{
+                border:
+                  '1px solid rgba(0,170,255,0.5)',
+                background:
+                  'rgba(0,30,60,0.45)',
+              }}
             >
-              {isMenuOpen ? <X className="h-4 w-4 text-white/75" /> : <Menu className="h-4 w-4 text-white/75" />}
+              <span
+                className="px-2.5 py-2"
+                style={{
+                  color: isRTL
+                    ? '#fff'
+                    : 'rgba(255,255,255,0.4)',
+                  background: isRTL
+                    ? 'rgba(0,150,220,0.55)'
+                    : 'transparent',
+                }}
+              >
+                AR
+              </span>
+
+              <span className="text-white/25">
+                |
+              </span>
+
+              <span
+                className="px-2.5 py-2"
+                style={{
+                  color: !isRTL
+                    ? '#fff'
+                    : 'rgba(255,255,255,0.4)',
+                  background: !isRTL
+                    ? 'rgba(0,150,220,0.55)'
+                    : 'transparent',
+                }}
+              >
+                EN
+              </span>
             </button>
-          </motion.div>
+
+            {/* MENU BUTTON */}
+            <button
+              type="button"
+              onClick={() =>
+                setIsMenuOpen((v) => !v)
+              }
+              aria-label={
+                isMenuOpen
+                  ? 'Close menu'
+                  : 'Open menu'
+              }
+              className="flex h-9 w-9 items-center justify-center text-white/85 hover:text-white"
+            >
+              {isMenuOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
+            </button>
+          </div>
         </div>
       </motion.nav>
 
+      {/* =========================================================
+          MOBILE MENU
+      ========================================================= */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.2 }}
-            className="absolute inset-x-0 top-[88px] z-40 mx-auto w-[min(90vw,800px)] rounded-2xl border border-white/10 bg-[#0b1220]/90 p-4 shadow-2xl backdrop-blur-xl"
+            initial={{
+              opacity: 0,
+              y: -10,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            exit={{
+              opacity: 0,
+              y: -10,
+            }}
+            className="absolute inset-x-4 top-[76px] z-40 mx-auto max-w-md rounded-2xl border border-white/10 bg-[#071018]/95 p-3 backdrop-blur-xl"
+            dir={isRTL ? 'rtl' : 'ltr'}
           >
-            <div className="grid gap-2 sm:grid-cols-2">
-              {menuItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white/80 transition-colors hover:border-cyan-400/40 hover:bg-cyan-500/10 hover:text-white"
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
+            {menuItems.map((item) => (
+              <a
+                key={item.href + item.label}
+                href={item.href}
+                onClick={() =>
+                  setIsMenuOpen(false)
+                }
+                className="block rounded-xl px-4 py-3 text-sm text-white/85 hover:bg-white/5"
+              >
+                {item.label}
+              </a>
+            ))}
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* ── MAIN CONTENT ── */}
+      {/* =========================================================
+          HERO CONTENT
+      ========================================================= */}
       <div
-        className="relative z-10 mx-auto flex h-[calc(100vh-88px)] max-w-[1700px] items-center px-8 lg:px-14"
+        className="relative z-20 mx-auto flex min-h-[calc(100vh-84px)] max-w-[1680px] items-center px-5 py-12 md:px-10 lg:px-14 lg:py-0"
         dir="ltr"
       >
-        <div className="grid w-full grid-cols-1 items-center lg:grid-cols-2">
+        <div
+          className="relative z-20 flex w-full"
+          dir={isRTL ? 'rtl' : 'ltr'}
+        >
+          <div className="flex max-w-[620px] flex-col gap-5 lg:gap-6">
 
-          {/* ══ LEFT — TEXT ══ */}
-          <motion.div
-            style={{ x: shouldReduceMotion ? 0 : txtX }}
-            className="flex flex-col gap-5 lg:gap-6"
-            dir={isRTL ? 'rtl' : 'ltr'}
-          >
-            {/* Eyebrow */}
+            {/* TITLE */}
             <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              className="flex items-center gap-3"
+              initial={{
+                opacity: 0,
+                y: 24,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0.2,
+              }}
             >
-              <span
-                className="text-xs font-bold tracking-[0.30em] text-cyan-400 lg:text-sm"
-                style={{ filter: 'drop-shadow(0 0 8px rgba(6,182,212,0.6))' }}
-              >
-                {t('heroSince')}
-              </span>
-              <div className="h-px w-14 bg-gradient-to-r rtl:bg-gradient-to-l from-cyan-400/60 to-transparent" />
-            </motion.div>
-
-            {/* Heading */}
-            <div className="flex flex-col gap-0">
-              <motion.h1
-                initial={{ opacity: 0, y: 28 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.85, delay: 0.55 }}
-                className="font-black leading-[1.08] text-white"
-                style={{ fontSize: 'clamp(2.4rem, 5vw, 4.2rem)', letterSpacing: '-0.02em' }}
+              <h1
+                className="font-black leading-[1.12] text-white"
+                style={{
+                  fontSize:
+                    'clamp(2.4rem, 5vw, 4.6rem)',
+                  textShadow:
+                    '0 4px 28px rgba(0,0,0,0.7)',
+                }}
               >
                 {t('heroTitleLine1')}
-              </motion.h1>
-              <motion.h1
-                initial={{ opacity: 0, y: 28 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.85, delay: 0.70 }}
-                className="font-black leading-[1.08]"
-                style={{ fontSize: 'clamp(2.4rem, 5vw, 4.2rem)', letterSpacing: '-0.02em' }}
-              >
-                <span className="text-white">{t('heroTitleLine2')}</span>
-                <span
-                  className="bg-gradient-to-l from-cyan-300 via-sky-400 to-cyan-400 bg-clip-text text-transparent"
-                  style={{ filter: 'drop-shadow(0 0 22px rgba(6,182,212,0.65))' }}
-                >
-                  {t('heroTitleHighlight')}
-                </span>
-              </motion.h1>
-            </div>
+              </h1>
 
-            {/* Subtitle */}
+              <h1
+                className="font-black leading-[1.12]"
+                style={{
+                  fontSize:
+                    'clamp(2.4rem, 5vw, 4.6rem)',
+                  color: '#3ec8f5',
+                  filter:
+                    'drop-shadow(0 0 16px rgba(62,200,245,0.55))',
+                }}
+              >
+                {t('heroTitleHighlight')}
+              </h1>
+            </motion.div>
+
+            {/* DESCRIPTION */}
             <motion.p
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.85 }}
-              className="max-w-[400px] text-sm leading-[1.80] text-white/55 lg:text-base"
+              initial={{
+                opacity: 0,
+                y: 16,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.7,
+                delay: 0.35,
+              }}
+              className="max-w-[500px] text-[14px] leading-[1.9] text-white/75 md:text-[15px]"
             >
               {t('premiumHeroDescription')}
             </motion.p>
 
-            {/* Buttons */}
+            {/* BUTTONS */}
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.0 }}
+              initial={{
+                opacity: 0,
+                y: 14,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.7,
+                delay: 0.5,
+              }}
               className="flex flex-wrap items-center gap-3"
             >
-              <motion.a
+              <a
                 href="#products"
-                whileHover={{ scale: 1.04, boxShadow: '0 0 40px rgba(6,182,212,0.50), 0 6px 24px rgba(0,151,215,0.40)' }}
-                whileTap={{ scale: 0.97 }}
-                className="relative overflow-hidden rounded-full px-7 py-3 text-sm font-bold text-white lg:px-9 lg:py-3.5"
+                className="rounded-full px-7 py-3 text-sm font-bold text-white transition-transform hover:scale-[1.03]"
                 style={{
-                  background: 'linear-gradient(135deg, #0097d7 0%, #06b6d4 55%, #0284c7 100%)',
-                  boxShadow: '0 0 20px rgba(6,182,212,0.35), 0 4px 16px rgba(0,151,215,0.30)',
+                  background:
+                    'linear-gradient(135deg, #0088cc 0%, #00a8e8 100%)',
+                  boxShadow:
+                    '0 0 28px rgba(0,170,240,0.45), 0 4px 14px rgba(0,100,180,0.35)',
                 }}
               >
-                <motion.div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{ background: 'linear-gradient(105deg, transparent 28%, rgba(255,255,255,0.18) 50%, transparent 72%)' }}
-                  animate={{ x: ['-100%', '220%'] }}
-                  transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 4, ease: 'easeInOut' }}
-                />
-                <span className="relative z-10">{t('exploreProducts')}</span>
-              </motion.a>
+                {t('exploreProducts')}
+              </a>
 
-              <motion.a
+              <a
                 href="#catalogs"
-                whileHover={{ scale: 1.04, borderColor: 'rgba(6,182,212,0.50)' }}
-                whileTap={{ scale: 0.97 }}
-                className="flex items-center gap-2 rounded-full border px-7 py-3 text-sm font-semibold text-white/80 backdrop-blur-sm transition-all duration-300 lg:px-9 lg:py-3.5"
-                style={{ background: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.16)' }}
+                className="flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-semibold text-white/90 transition-all hover:border-[#3ec8f5]/60"
+                style={{
+                  borderColor:
+                    'rgba(255,255,255,0.28)',
+                  background:
+                    'rgba(255,255,255,0.06)',
+                  backdropFilter: 'blur(8px)',
+                }}
               >
-                <Download className="h-3.5 w-3.5 text-cyan-400" />
+                <Download className="h-3.5 w-3.5 text-white/80" />
                 {t('downloadCatalogs')}
-              </motion.a>
+              </a>
             </motion.div>
 
-            {/* Trust badges */}
+            {/* TRUST BADGES */}
             <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.15 }}
-              className="flex flex-wrap items-center gap-5"
+              initial={{
+                opacity: 0,
+                y: 12,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.7,
+                delay: 0.65,
+              }}
+              className="flex flex-wrap items-center gap-x-5 gap-y-3"
             >
-              {([
-                [Shield,     t('trustedQuality')],
-                [Award,      t('premiumProductsBadge')],
-                [Headphones, t('technicalSupport')],
-              ] as const).map(([Icon, label]) => (
-                <div key={label} className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-500/20">
-                    <Icon className="h-4 w-4 text-blue-400" />
+              {(
+                [
+                  [
+                    Shield,
+                    t('trustedQuality'),
+                  ],
+                  [
+                    Award,
+                    t('premiumProductsBadge'),
+                  ],
+                  [
+                    Headphones,
+                    t('technicalSupport'),
+                  ],
+                ] as const
+              ).map(([Icon, label]) => (
+                <div
+                  key={label}
+                  className="flex items-center gap-2"
+                >
+                  <div
+                    className="flex h-8 w-8 items-center justify-center rounded-full"
+                    style={{
+                      background:
+                        'rgba(0,140,210,0.25)',
+                      backdropFilter:
+                        'blur(8px)',
+                    }}
+                  >
+                    <Icon
+                      className="h-3.5 w-3.5 text-[#4db8e8]"
+                      strokeWidth={2}
+                    />
                   </div>
-                  <span className="text-xs font-medium text-white/70">{label}</span>
+
+                  <span className="text-[12px] font-medium text-white/80">
+                    {label}
+                  </span>
                 </div>
               ))}
             </motion.div>
 
-            {/* Quick links */}
+            {/* QUICK LINKS */}
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.28 }}
-              className="flex flex-wrap gap-2"
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: 1,
+              }}
+              transition={{
+                duration: 0.7,
+                delay: 0.8,
+              }}
+              className="flex flex-wrap gap-2 pt-1"
             >
-              {([[t('products'),'#products'],[t('catalogs'),'#catalogs'],[t('contact'),'#contact']] as const).map(([label, href]) => (
+              {(
+                [
+                  [
+                    t('home'),
+                    '#home',
+                  ],
+                  [
+                    t('products'),
+                    '#products',
+                  ],
+                  [
+                    t('catalogs'),
+                    '#catalogs',
+                  ],
+                  [
+                    t('contact'),
+                    '#contact',
+                  ],
+                ] as const
+              ).map(([label, href]) => (
                 <a
                   key={label}
                   href={href}
-                  className="rounded-full border px-4 py-1.5 text-xs font-medium text-white/65 transition-all hover:border-white/30 hover:text-white/90"
-                  style={{ borderColor: 'rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.04)' }}
+                  className="rounded-full px-3.5 py-1.5 text-[11px] font-medium text-white/60 transition-colors hover:text-white/90"
+                  style={{
+                    background:
+                      'rgba(255,255,255,0.05)',
+                    border:
+                      '1px solid rgba(255,255,255,0.12)',
+                    backdropFilter:
+                      'blur(8px)',
+                  }}
                 >
                   {label}
                 </a>
               ))}
             </motion.div>
-          </motion.div>
-
-          {/* ══ RIGHT — FLOATING CARD ONLY ══ */}
-          <div className="relative hidden h-[82vh] lg:block">
-
-            {/* INDUSTRIAL COATINGS label — upper right */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.4, duration: 0.8 }}
-              className="absolute right-8 top-16 z-20 flex flex-col items-end gap-1"
-            >
-              <div className="flex items-center gap-2">
-                <div className="h-px w-16 bg-gradient-to-l from-cyan-400/50 to-transparent" />
-                <span className="text-[9px] font-bold tracking-[0.22em] text-cyan-400/75">INDUSTRIAL</span>
-              </div>
-              <span className="self-end text-[9px] font-bold tracking-[0.22em] text-cyan-400/75 mr-[4.5rem]">COATINGS</span>
-            </motion.div>
-
-            {/* Floating card — heroam1 bottom right */}
-            <motion.div
-              style={{ x: cardX, y: cardY }}
-              className="absolute bottom-[8%] right-[4%] z-20 w-[58%]"
-            >
-              <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 6, ease: 'easeInOut', repeat: Infinity }}
-                style={{
-                  rotate: 2.5,
-                  overflow: 'hidden',
-                  borderRadius: '22px',
-                  border: '1.5px solid rgba(255,255,255,0.55)',
-                  boxShadow: '0 0 0 1px rgba(0,151,215,0.40), 0 0 50px rgba(0,151,215,0.30), 0 0 100px rgba(0,151,215,0.12), 0 30px 70px rgba(0,0,0,0.75)',
-                }}
-                className="relative aspect-[4/3]"
-              >
-                <Image
-                  src="/heroam1.png"
-                  alt="Al-Amour building"
-                  fill
-                  className="object-cover"
-                  style={{ opacity: 0.95 }}
-                />
-                {/* Subtle bottom overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#05030d]/40 to-transparent" />
-                {/* Neon top edge */}
-                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent" />
-                {/* Shine sweep */}
-                <motion.div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{ background: 'linear-gradient(108deg, transparent 28%, rgba(255,255,255,0.06) 50%, transparent 72%)' }}
-                  animate={{ x: ['-120%', '220%'] }}
-                  transition={{ duration: 2, ease: 'easeInOut', repeat: Infinity, repeatDelay: 6 }}
-                />
-              </motion.div>
-            </motion.div>
-
-            {/* PREMIUM MATERIALS — bottom left with line */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.6, duration: 0.8 }}
-              className="absolute bottom-[22%] left-4 z-20 flex items-center gap-2"
-            >
-              <div className="flex flex-col">
-                <span className="text-[8px] font-bold tracking-[0.22em] text-blue-400/65">PREMIUM</span>
-                <span className="text-[8px] font-bold tracking-[0.22em] text-blue-400/65">MATERIALS</span>
-              </div>
-              <div className="h-px w-20 bg-gradient-to-r from-blue-400/50 to-transparent" />
-              <div className="h-1.5 w-1.5 rounded-full bg-blue-400/60" />
-            </motion.div>
-
-            {/* SINCE 1999 — bottom right with line */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.8, duration: 0.8 }}
-              className="absolute bottom-[5%] right-[62%] z-20 flex items-center gap-2"
-            >
-              <div className="h-1.5 w-1.5 rounded-full bg-cyan-400/60" />
-              <div className="h-px w-16 bg-gradient-to-r from-transparent to-cyan-400/50" />
-              <span className="text-[8px] font-bold tracking-[0.22em] text-cyan-400/70">SINCE 1999</span>
-            </motion.div>
-
           </div>
         </div>
       </div>

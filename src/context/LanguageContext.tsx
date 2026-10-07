@@ -160,11 +160,12 @@ const translations = {
 
     // Hero
     heroSince: 'منذ عام 1999',
-    heroTitleLine1: 'حلول طلاء و',
-    heroTitleLine2: 'منتجات ',
+    heroTitleLine1: 'حلول طلاء وراتنج',
+    heroTitleLine2: '',
     heroTitleHighlight: 'متقدمة',
-    premiumHeroDescription: 'منتجات متميزة وأنظمة تقنية للتطبيقات الصناعية والسيارات والبحرية وتشطيب الأثاث.',
+    premiumHeroDescription: 'منتجات متميزة وأنظمة تقنية للتطبيقات الصناعية والسيارات والبحرية.',
     premiumProductsBadge: 'منتجات متميزة',
+    technologies: 'التقنيات',
     switchLanguage: 'English',
 
     // Footer links
@@ -357,11 +358,12 @@ const translations = {
 
     // Hero
     heroSince: 'SINCE 1999',
-    heroTitleLine1: 'Advanced Coating',
-    heroTitleLine2: '& Product ',
+    heroTitleLine1: 'Advanced Coating & Resin',
+    heroTitleLine2: '',
     heroTitleHighlight: 'Solutions',
-    premiumHeroDescription: 'Premium products and technical systems for industrial, automotive, marine and furniture finishing applications.',
+    premiumHeroDescription: 'Premium products and technical systems for industrial, automotive, and marine applications.',
     premiumProductsBadge: 'Premium Products',
+    technologies: 'Technologies',
     switchLanguage: 'العربية',
 
     // Footer links
