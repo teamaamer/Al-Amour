@@ -5,6 +5,25 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-midnight-navy: #080F1F;
+  --color-deep-navy: #111D30;
+  --color-electric-cyan: #20BDF2;
+  --color-sky-blue: #42C8F5;
+  --color-pure-white: #FFFFFF;
+  --color-cool-gray: #B5BECC;
+  --color-steel-gray: #344255;
+  --color-charcoal-black: #101318;
+  --color-midnight-navy-rgb: 8 15 31;
+  --color-deep-navy-rgb: 17 29 48;
+  --color-electric-cyan-rgb: 32 189 242;
+  --color-sky-blue-rgb: 66 200 245;
+  --color-pure-white-rgb: 255 255 255;
+  --color-cool-gray-rgb: 181 190 204;
+  --color-steel-gray-rgb: 52 66 85;
+  --color-charcoal-black-rgb: 16 19 24;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -22,7 +41,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  background: linear-gradient(to bottom, #ffffff 0%, #f9fafb 100%);
+  color: var(--color-pure-white);
+  background: linear-gradient(to bottom, var(--color-midnight-navy) 0%, var(--color-deep-navy) 100%);
 }
 
 .font-arabic {
@@ -60,7 +80,7 @@ body {
 
 .about-video-player .plyr__video-wrapper {
   height: 100%;
-  background: #130F2D;
+  background: var(--color-midnight-navy);
 }
 
 .about-video-player .plyr video {
@@ -75,16 +95,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--color-deep-navy);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #0097D7;
+  background: var(--color-electric-cyan);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #007FB3;
+  background: var(--color-sky-blue);
 }
 
 @layer utilities {
@@ -100,9 +120,9 @@ button, a {
 
 /* Glassmorphism utility */
 .glass {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(181, 190, 204, 0.2);
 }
 
 /* Infinite logo marquee (LogoTicker) */

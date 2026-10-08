@@ -22,7 +22,7 @@ const FAQ = () => {
   };
 
   return (
-    <section id="faq" className="bg-white border-t border-gray-100 py-16 md:py-20">
+    <section id="faq" className="bg-white border-t border-steel/40 py-16 md:py-20">
       <div className="mx-auto max-w-[1280px] px-6">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
           {/* Intro */}
@@ -34,43 +34,43 @@ const FAQ = () => {
             className="lg:sticky lg:top-24 lg:self-start"
           >
             <div className="mb-4 flex items-center gap-3">
-              <span className="h-px w-10 bg-primary" />
-              <span className="text-sm font-semibold uppercase text-primary ltr:tracking-widest lg:text-base">
+              <span className="h-px w-10 bg-cyan" />
+              <span className="text-sm font-semibold uppercase text-midnight ltr:tracking-widest lg:text-base">
                 {t('faqLabel')}
               </span>
             </div>
 
-            <h2 className="mb-5 text-4xl font-bold leading-tight text-navy md:text-5xl">
+            <h2             className="mb-5 text-4xl font-bold leading-tight text-midnight md:text-5xl">
               {t('faqTitle')}
             </h2>
 
-            <p className="max-w-md text-lg leading-relaxed text-gray-600">
+            <p className="max-w-md text-lg leading-relaxed text-steel">
               {t('faqDescription')}
             </p>
 
             <a
               href="#contact"
-              className="group mt-8 inline-flex items-center gap-3 rounded-2xl border border-blue-100 bg-blue-50 px-5 py-4 transition-colors hover:border-primary/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="group mt-8 inline-flex items-center gap-3 rounded-2xl border border-steel/40 bg-white px-5 py-4 transition-colors hover:border-cyan focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan"
             >
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-white">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cyan text-midnight">
                 <MessageCircle className="h-5 w-5" />
               </span>
               <span className="text-start">
-                <span className="block text-sm font-semibold text-navy">{t('needHelp')}</span>
-                <span className="block text-xs text-gray-600">{t('contactSupport')}</span>
+                <span className="block text-sm font-semibold text-midnight">{t('needHelp')}</span>
+                <span className="block text-xs text-steel">{t('contactSupport')}</span>
               </span>
             </a>
           </motion.div>
 
           {/* Accordion */}
-          <div className="border-t border-gray-200">
+          <div className="border-t border-steel/40">
             {faqs.map((faq, index) => {
               const isOpen = openIndex === index;
               const buttonId = `faq-button-${index}`;
               const panelId = `faq-panel-${index}`;
 
               return (
-                <div key={index} className="border-b border-gray-200">
+                <div key={index} className="border-b border-steel/40">
                   <h3>
                     <button
                       id={buttonId}
@@ -78,15 +78,15 @@ const FAQ = () => {
                       onClick={() => toggle(index)}
                       aria-expanded={isOpen}
                       aria-controls={panelId}
-                      className="group flex w-full items-start gap-4 py-6 text-start focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary md:gap-6"
+                      className="group flex w-full items-start gap-4 py-6 text-start focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan md:gap-6"
                     >
-                      <span className="mt-1 w-7 shrink-0 text-sm font-semibold tabular-nums text-primary">
+                      <span                       className="mt-1 w-7 shrink-0 text-sm font-semibold tabular-nums text-midnight">
                         {String(index + 1).padStart(2, '0')}
                       </span>
 
                       <span
                         className={`flex-1 text-lg font-semibold leading-snug transition-colors duration-300 md:text-xl ${
-                          isOpen ? 'text-primary' : 'text-navy group-hover:text-primary'
+                          isOpen ? 'text-midnight' : 'text-midnight group-hover:text-steel'
                         }`}
                       >
                         {faq.question}
@@ -96,8 +96,8 @@ const FAQ = () => {
                         aria-hidden="true"
                         className={`relative mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-colors duration-300 ${
                           isOpen
-                            ? 'border-primary bg-primary text-white'
-                            : 'border-gray-200 text-navy group-hover:border-primary group-hover:text-primary'
+                            ? 'border-cyan bg-cyan text-midnight'
+                            : 'border-steel/50 text-steel group-hover:border-cyan group-hover:text-midnight'
                         }`}
                       >
                         <span className="absolute h-[2px] w-3 rounded-full bg-current" />
@@ -122,7 +122,7 @@ const FAQ = () => {
                         transition={{ duration: reduceMotion ? 0 : 0.35, ease: [0.22, 1, 0.36, 1] }}
                         className="overflow-hidden"
                       >
-                        <p className="pb-6 pe-12 ps-11 text-base leading-relaxed text-gray-600 md:pe-14 md:ps-[3.25rem] md:text-lg">
+                        <p className="pb-6 pe-12 ps-11 text-base leading-relaxed text-steel md:pe-14 md:ps-[3.25rem] md:text-lg">
                           {faq.answer}
                         </p>
                       </motion.div>

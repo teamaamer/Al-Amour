@@ -43,7 +43,7 @@ const Blog = () => {
   ];
 
   return (
-    <section id="blog" className="py-12 md:py-16 bg-white">
+    <section id="blog" className="py-12 md:py-16 bg-midnight text-white">
       <div className="max-w-[1280px] mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -52,10 +52,10 @@ const Blog = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-10"
         >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-sky mb-4">
             {t('latestUpdates')}
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-cool max-w-2xl mx-auto">
             {t('blogDescription')}
           </p>
         </motion.div>
@@ -71,12 +71,12 @@ const Blog = () => {
               whileHover={{ 
                 y: -12, 
                 scale: 1.02,
-                boxShadow: '0 25px 50px -12px rgba(1, 151, 215, 0.25)',
+                boxShadow: '0 18px 45px -16px rgba(32, 189, 242, 0.18)',
               }}
-              className="group bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 relative"
+              className="group bg-deep rounded-2xl overflow-hidden shadow-lg border border-steel relative"
             >
               {/* Gradient overlay on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/0 to-accent-cyan/0 group-hover:from-primary/5 group-hover:to-accent-cyan/5 transition-all duration-500 pointer-events-none z-10" />
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan/0 to-sky/0 group-hover:from-cyan/5 group-hover:to-sky/5 transition-all duration-500 pointer-events-none z-10" />
               {/* Image */}
               <div className="relative h-48 overflow-hidden">
                 <Image
@@ -85,31 +85,31 @@ const Blog = () => {
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center">
+                <div className="absolute top-4 right-4 w-10 h-10 bg-midnight/90 backdrop-blur-sm rounded-full flex items-center justify-center">
                   {post.platform === 'instagram' ? (
-                    <Instagram className="text-primary" size={20} />
+                    <Instagram className="text-sky" size={20} />
                   ) : (
-                    <Facebook className="text-primary" size={20} />
+                    <Facebook className="text-sky" size={20} />
                   )}
                 </div>
               </div>
 
               {/* Content */}
               <div className="p-6">
-                <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
+                <div className="flex items-center gap-2 text-sm text-cool mb-3">
                   <Calendar size={16} />
                   <span>{new Date(post.date).toLocaleDateString(language === 'ar' ? 'ar' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                 </div>
 
-                <h3 className="text-xl font-bold text-navy mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-sky transition-colors line-clamp-2">
                   {post.title}
                 </h3>
 
-                <p className="text-gray-600 text-sm line-clamp-3 mb-4">
+                <p className="text-cool text-sm line-clamp-3 mb-4">
                   {post.excerpt}
                 </p>
 
-                <button className="text-primary font-semibold text-sm flex items-center group-hover:gap-2 transition-all">
+                <button className="text-cyan font-semibold text-sm flex items-center group-hover:gap-2 transition-all">
                   {t('readMore')}
                   <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -128,7 +128,7 @@ const Blog = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center mt-10"
         >
-          <button className="bg-primary text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary-dark transition-all hover:shadow-xl inline-flex items-center gap-2">
+          <button className="bg-cyan text-midnight px-8 py-4 rounded-lg font-semibold text-lg hover:bg-sky transition-all hover:shadow-xl inline-flex items-center gap-2">
             {t('viewAllPosts')}
             <Instagram size={20} />
           </button>

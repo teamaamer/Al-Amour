@@ -43,7 +43,7 @@ const Hero = () => {
         
         {/* Animated gradient orbs */}
         <motion.div
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl"
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan/10 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.5, 0.3],
@@ -55,7 +55,7 @@ const Hero = () => {
           }}
         />
         <motion.div
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-cyan/20 rounded-full blur-3xl"
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-sky/10 rounded-full blur-3xl"
           animate={{
             scale: [1.2, 1, 1.2],
             opacity: [0.5, 0.3, 0.5],
@@ -116,9 +116,9 @@ const Hero = () => {
             className="flex gap-4 justify-center mt-8"
           >
             <motion.button
-              whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(1, 151, 215, 0.4)' }}
+              whileHover={{ scale: 1.05, boxShadow: '0 12px 28px rgba(32, 189, 242, 0.16)' }}
               whileTap={{ scale: 0.95 }}
-              className="bg-primary text-white px-8 py-4 rounded-full font-semibold text-lg shadow-xl hover:bg-primary-dark transition-all"
+              className="bg-cyan text-midnight px-8 py-4 rounded-full font-semibold text-lg shadow-xl hover:bg-sky transition-all"
             >
               {t('exploreProducts')}
             </motion.button>

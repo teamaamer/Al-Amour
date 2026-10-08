@@ -28,15 +28,15 @@ const CatalogCard = ({ title, description, fileSize, fileName, color, t, isActiv
   return (
     <div
       className={[
-        'group relative flex h-full w-full flex-col overflow-hidden rounded-[28px] bg-white shadow-[0_18px_45px_rgba(15,23,42,0.08)] ring-1 ring-slate-200 transition-all duration-300',
-        isActive ? 'scale-[1.02] shadow-[0_30px_70px_rgba(13,36,70,0.14)] ring-blue-200' : 'scale-100',
+        'group relative flex h-full w-full flex-col overflow-hidden rounded-[28px] bg-deep shadow-[0_18px_45px_rgba(8,15,31,0.32)] ring-1 ring-steel transition-all duration-300',
+        isActive ? 'scale-[1.02] shadow-[0_24px_55px_rgba(8,15,31,0.48)] ring-cyan/40' : 'scale-100',
       ].join(' ')}
     >
       <div className={`h-1.5 ${color}`} />
 
       <div className="flex h-full flex-col p-4 sm:p-5">
-        <div className="relative overflow-hidden rounded-[22px] border border-slate-200 bg-gradient-to-br from-slate-50 to-slate-100 shadow-inner">
-          <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between border-b border-slate-200 bg-white/90 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500 backdrop-blur-sm">
+        <div className="relative overflow-hidden rounded-[22px] border border-steel bg-gradient-to-br from-midnight to-deep shadow-inner">
+          <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between border-b border-steel bg-midnight/95 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-cool backdrop-blur-sm">
             <span>{t('pdfPreview')}</span>
             <span>{fileSize}</span>
           </div>
@@ -45,7 +45,7 @@ const CatalogCard = ({ title, description, fileSize, fileName, color, t, isActiv
             src={`/catgs/${encodeURIComponent(fileName)}#page=1&toolbar=0&navpanes=0&scrollbar=0`}
             title={`${title} PDF preview`}
             loading="lazy"
-            className="h-[280px] w-full bg-white sm:h-[300px] lg:h-[320px]"
+            className="h-[280px] w-full bg-midnight sm:h-[300px] lg:h-[320px]"
           />
         </div>
 
@@ -53,14 +53,14 @@ const CatalogCard = ({ title, description, fileSize, fileName, color, t, isActiv
           <div>
             <div className={`mb-4 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-bold ${color} bg-opacity-10`}>
               <span className={`h-2.5 w-2.5 rounded-full ${color}`} />
-              <span className="text-slate-700">{t('carouselCardLabel')}</span>
+              <span className="text-cool">{t('carouselCardLabel')}</span>
             </div>
 
-            <h3 className="mb-3 text-xl font-bold text-slate-900 sm:text-2xl">
+            <h3 className="mb-3 text-xl font-bold text-white sm:text-2xl">
               {title}
             </h3>
 
-            <p className="text-sm leading-relaxed text-slate-600 sm:text-base">
+            <p className="text-sm leading-relaxed text-cool sm:text-base">
               {description}
             </p>
           </div>
@@ -69,7 +69,7 @@ const CatalogCard = ({ title, description, fileSize, fileName, color, t, isActiv
             onClick={handleDownload}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-500 to-blue-400 px-4 py-3 font-semibold text-white shadow-lg shadow-blue-500/25 transition-all"
+            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-cyan to-sky px-4 py-3 font-semibold text-midnight shadow-lg shadow-cyan/10 transition-all"
           >
             <Download className="h-4 w-4" />
             {t('downloadPdf')}
@@ -91,7 +91,7 @@ const Catalogs = () => {
       descriptionKey: 'ilvaCatalogDesc',
       fileSize: '5.6 MB',
       fileName: 'ilva.pdf',
-      color: 'bg-emerald-500',
+      color: 'bg-cyan',
     },
     {
       id: 9,
@@ -99,7 +99,7 @@ const Catalogs = () => {
       descriptionKey: 'ercoCatalogDesc',
       fileSize: '4.8 MB',
       fileName: 'ERCO.pdf',
-      color: 'bg-orange-500',
+      color: 'bg-sky',
     },
     {
       id: 10,
@@ -184,7 +184,7 @@ const Catalogs = () => {
   };
 
   return (
-    <section id="catalogs" className="py-20 lg:py-32 bg-white overflow-hidden">
+    <section id="catalogs" className="py-20 lg:py-32 bg-midnight text-white overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         {/* Section Header */}
         <div className="text-center mb-16 lg:mb-20">
@@ -196,11 +196,11 @@ const Catalogs = () => {
             className="inline-block mb-4"
           >
             <div className="flex items-center gap-2">
-              <div className="h-px w-12 bg-gradient-to-r from-transparent to-blue-500" />
-              <span className="text-blue-500 text-sm lg:text-base font-semibold tracking-widest uppercase">
+              <div className="h-px w-12 bg-gradient-to-r from-transparent to-cyan" />
+              <span className="text-sky text-sm lg:text-base font-semibold tracking-widest uppercase">
                 {t('technicalResources')}
               </span>
-              <div className="h-px w-12 bg-gradient-to-l from-transparent to-blue-500" />
+              <div className="h-px w-12 bg-gradient-to-l from-transparent to-cyan" />
             </div>
           </motion.div>
 
@@ -209,7 +209,7 @@ const Catalogs = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-navy mb-6"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6"
           >
             {t('downloadCatalogs')}
           </motion.h2>
@@ -219,7 +219,7 @@ const Catalogs = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+            className="text-lg lg:text-xl text-cool max-w-3xl mx-auto leading-relaxed"
           >
             {t('catalogsDescription')}
           </motion.p>
@@ -227,13 +227,13 @@ const Catalogs = () => {
 
         {/* Catalogs Carousel */}
         <div className="relative mx-auto max-w-7xl">
-          <div className="sticky top-24 z-30 mb-6 rounded-2xl border border-white/70 bg-white/90 px-4 py-4 shadow-lg backdrop-blur-md">
+          <div className="sticky top-24 z-30 mb-6 rounded-2xl border border-steel bg-deep/95 px-4 py-4 shadow-lg backdrop-blur-md">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-blue-500">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-sky">
                   {t('carouselAutoRotate')}
                 </p>
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="mt-1 text-sm text-cool">
                   {t('catalogPage')} {String(activeIndex + 1).padStart(2, '0')} {t('catalogPageOf')} {String(catalogs.length).padStart(2, '0')} {t('catalogs')}
                 </p>
               </div>
@@ -246,8 +246,8 @@ const Catalogs = () => {
                     onClick={() => setActiveIndex(index)}
                     className={`flex h-8 min-w-8 items-center justify-center rounded-full border px-3 text-xs font-semibold transition-all duration-500 ${
                       index === activeIndex
-                        ? 'border-blue-500 bg-blue-500 text-white'
-                        : 'border-gray-200 bg-white text-gray-500 hover:border-gray-300 hover:bg-gray-50'
+                        ? 'border-cyan bg-cyan text-midnight'
+                        : 'border-steel bg-midnight text-cool hover:border-cyan hover:bg-deep'
                     }`}
                     aria-label={`${t('catalogPage')} ${index + 1}`}
                     aria-current={index === activeIndex ? 'true' : undefined}
@@ -264,7 +264,7 @@ const Catalogs = () => {
               <button
                 type="button"
                 onClick={goToPrevious}
-                className="pointer-events-auto flex h-14 w-14 items-center justify-center rounded-full border border-white/70 bg-white/90 text-navy shadow-lg backdrop-blur-md transition-transform hover:scale-105 hover:bg-white"
+                className="pointer-events-auto flex h-14 w-14 items-center justify-center rounded-full border border-steel bg-deep/95 text-white shadow-lg backdrop-blur-md transition-transform hover:scale-105 hover:bg-steel"
                 aria-label={t('carouselPrevious')}
               >
                 <ChevronLeft className="h-6 w-6" />
@@ -275,7 +275,7 @@ const Catalogs = () => {
               <button
                 type="button"
                 onClick={goToNext}
-                className="pointer-events-auto flex h-14 w-14 items-center justify-center rounded-full border border-white/70 bg-white/90 text-navy shadow-lg backdrop-blur-md transition-transform hover:scale-105 hover:bg-white"
+                className="pointer-events-auto flex h-14 w-14 items-center justify-center rounded-full border border-steel bg-deep/95 text-white shadow-lg backdrop-blur-md transition-transform hover:scale-105 hover:bg-steel"
                 aria-label={t('carouselNext')}
               >
                 <ChevronRight className="h-6 w-6" />
@@ -357,13 +357,13 @@ const Catalogs = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-16 text-center"
         >
-          <div className="inline-flex items-center gap-3 px-8 py-4 bg-blue-50 rounded-2xl border border-blue-100">
-            <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center">
-              <Download className="w-5 h-5 text-white" />
+          <div className="inline-flex items-center gap-3 px-8 py-4 bg-deep rounded-2xl border border-steel">
+            <div className="w-10 h-10 rounded-full bg-cyan flex items-center justify-center">
+              <Download className="w-5 h-5 text-midnight" />
             </div>
             <div className="text-left">
-              <p className="text-sm font-semibold text-navy">{t('needHelp')}</p>
-              <p className="text-xs text-gray-600">{t('contactSupport')}</p>
+              <p className="text-sm font-semibold text-white">{t('needHelp')}</p>
+              <p className="text-xs text-cool">{t('contactSupport')}</p>
             </div>
           </div>
         </motion.div>

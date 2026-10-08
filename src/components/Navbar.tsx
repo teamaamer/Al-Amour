@@ -32,7 +32,7 @@ const Navbar = () => {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.44, 0, 0.56, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-md"
+        className="fixed top-0 left-0 right-0 z-50 bg-midnight/95 backdrop-blur-md shadow-md border-b border-steel"
       >
         <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
           <div className="flex items-center justify-between h-28 lg:h-32">
@@ -44,7 +44,7 @@ const Navbar = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-navy hover:text-primary transition-colors duration-300"
+                  className="text-white hover:text-sky transition-colors duration-300"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                   aria-label={social.label}
@@ -81,7 +81,7 @@ const Navbar = () => {
                   onClick={() => setLanguage('ar')}
                   className={`px-4 py-2 rounded-full font-bold text-sm transition-all ${
                     language === 'ar'
-                      ? 'bg-white text-primary shadow-lg'
+                      ? 'bg-white text-midnight shadow-lg'
                       : 'text-white hover:bg-white/20'
                   }`}
                   whileTap={{ scale: 0.95 }}
@@ -92,7 +92,7 @@ const Navbar = () => {
                   onClick={() => setLanguage('en')}
                   className={`px-4 py-2 rounded-full font-bold text-sm transition-all ${
                     language === 'en'
-                      ? 'bg-white text-primary shadow-lg'
+                      ? 'bg-white text-midnight shadow-lg'
                       : 'text-white hover:bg-white/20'
                   }`}
                   whileTap={{ scale: 0.95 }}
@@ -113,14 +113,14 @@ const Navbar = () => {
                   y: isMenuOpen ? 8 : 0,
                 }}
                 transition={{ duration: 0.3 }}
-                className="w-12 h-1 bg-navy rounded-full"
+                className="w-12 h-1 bg-white rounded-full"
               />
               <motion.span
                 animate={{
                   opacity: isMenuOpen ? 0 : 1,
                 }}
                 transition={{ duration: 0.3 }}
-                className="w-12 h-1 bg-navy rounded-full"
+                className="w-12 h-1 bg-white rounded-full"
               />
               <motion.span
                 animate={{
@@ -128,7 +128,7 @@ const Navbar = () => {
                   y: isMenuOpen ? -8 : 0,
                 }}
                 transition={{ duration: 0.3 }}
-                className="w-12 h-1 bg-navy rounded-full"
+                className="w-12 h-1 bg-white rounded-full"
               />
             </button>
             </div>

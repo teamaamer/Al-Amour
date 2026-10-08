@@ -36,15 +36,15 @@ const ServicesNew = () => {
   };
 
   return (
-    <section id="products" className="bg-navy text-white py-24 overflow-hidden">
+    <section id="products" className="bg-white text-midnight py-24 overflow-hidden">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header row */}
         <div className="flex flex-wrap items-start justify-between gap-6 mb-14">
-          <h2 className="flex items-center gap-3 text-sm lg:text-base font-semibold text-[#6FD3F2]">
-            <span className="w-10 h-0.5 bg-[#6FD3F2] shrink-0" />
+          <h2 className="flex items-center gap-3 text-sm lg:text-base font-semibold text-midnight">
+            <span className="w-10 h-0.5 bg-cyan shrink-0" />
             {t('productCategories')}
           </h2>
-          <p className="text-lg lg:text-xl leading-relaxed text-[#C9CADB] max-w-[460px]">
+          <p className="text-lg lg:text-xl leading-relaxed text-steel max-w-[460px]">
             {t('productCategoriesDesc')}
           </p>
         </div>
@@ -52,38 +52,38 @@ const ServicesNew = () => {
         {/* Body */}
         <div className="flex flex-wrap items-center gap-[72px]">
           {/* Category list */}
-          <ul className="flex-[999_1_520px] min-w-0 border-t border-white/[0.18]">
+          <ul className="flex-[999_1_520px] min-w-0 border-t border-steel/40">
             {categories.map((category, i) => {
               const isActive = i === active;
               return (
-                <li key={category.id} className="border-b border-white/[0.18]">
+                <li key={category.id} className="border-b border-steel/40">
                   <button
                     type="button"
                     aria-pressed={isActive}
                     onMouseEnter={() => setActive(i)}
                     onFocus={() => setActive(i)}
                     onClick={() => handleClick(i)}
-                    className="w-full flex items-center gap-5 py-4 lg:py-5 text-start rounded-sm focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-[#6FD3F2] focus-visible:outline-offset-4"
+                    className="w-full flex items-center gap-5 py-4 lg:py-5 text-start rounded-sm focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-sky focus-visible:outline-offset-4"
                   >
-                    <span className="w-9 shrink-0 text-sm font-semibold text-[#6FD3F2]">
+                    <span className="w-9 shrink-0 text-sm font-semibold text-midnight">
                       {indexLabel(i)}
                     </span>
                     <span
                       className={`flex-1 min-w-0 font-bold text-2xl md:text-3xl lg:text-4xl leading-snug transition-[color,transform] [transition-duration:.3s,.45s] [transition-timing-function:ease,cubic-bezier(.2,.8,.2,1)] motion-reduce:transition-none ${
                         isActive
-                          ? 'text-[#6FD3F2] ltr:translate-x-[18px] rtl:-translate-x-[18px]'
-                          : 'text-[#8E8FAE]'
+                          ? 'text-midnight ltr:translate-x-[18px] rtl:-translate-x-[18px]'
+                          : 'text-steel'
                       }`}
                     >
                       {category.title}
                     </span>
                     <span
                       aria-hidden="true"
-                      className={`w-11 h-11 shrink-0 rounded-full bg-[#6FD3F2] flex items-center justify-center transition-opacity duration-300 motion-reduce:transition-none ${
+                      className={`w-11 h-11 shrink-0 rounded-full bg-cyan flex items-center justify-center transition-opacity duration-300 motion-reduce:transition-none ${
                         isActive ? 'opacity-100' : 'opacity-0'
                       }`}
                     >
-                      <ArrowUpRight className="w-5 h-5 text-navy rtl:-scale-x-100" strokeWidth={2.5} />
+                      <ArrowUpRight className="w-5 h-5 text-midnight rtl:-scale-x-100" strokeWidth={2.5} />
                     </span>
                   </button>
                 </li>
@@ -94,7 +94,7 @@ const ServicesNew = () => {
           {/* Preview stage */}
           <div className="relative flex-[1_1_340px] min-h-[420px] min-[761px]:min-h-[620px] flex items-center justify-center">
             {/* Blue back panel */}
-            <div className="absolute w-[78%] max-w-[360px] aspect-[3/4] rounded-[10px] bg-[#1B9CC4] rotate-[5deg] translate-y-[3%] ltr:translate-x-[6%] rtl:-translate-x-[6%]" />
+            <div className="absolute w-[78%] max-w-[360px] aspect-[3/4] rounded-[10px] bg-cyan rotate-[5deg] translate-y-[3%] ltr:translate-x-[6%] rtl:-translate-x-[6%]" />
 
             {/* Polaroid card — keyed so the entrance animation replays on change */}
             <motion.div
@@ -102,11 +102,11 @@ const ServicesNew = () => {
               initial={reduceMotion ? false : { opacity: 0, rotate: 3, y: 28, scale: 0.96 }}
               animate={{ opacity: 1, rotate: -3, y: 0, scale: 1 }}
               transition={{ duration: reduceMotion ? 0 : 0.55, ease: [0.2, 0.8, 0.2, 1] }}
-              className="relative w-[82%] max-w-[380px] bg-white text-navy rounded-[10px] p-3.5 shadow-[0_30px_60px_rgba(0,0,0,0.45)]"
+              className="relative w-[82%] max-w-[380px] bg-deep text-white rounded-[10px] p-3.5 shadow-[0_20px_45px_rgba(8,15,31,0.55)]"
             >
               <div className="relative w-full aspect-[4/4.2] rounded-md overflow-hidden">
                 <Image src={current.image} alt={current.title} fill sizes={IMAGE_SIZES} className="object-cover" />
-                <span className="absolute top-2 start-3 text-5xl leading-none font-extrabold text-navy drop-shadow-[0_2px_10px_rgba(255,255,255,0.6)]">
+                <span className="absolute top-2 start-3 text-5xl leading-none font-extrabold text-white drop-shadow-[0_2px_10px_rgba(8,15,31,0.7)]">
                   {indexLabel(active)}
                 </span>
               </div>
@@ -116,7 +116,7 @@ const ServicesNew = () => {
               <div className="mt-4 flex items-center justify-between gap-3">
                 <a
                   href={CATEGORY_HREF}
-                  className="inline-flex items-center min-h-[46px] px-6 rounded-full bg-[#6FD3F2] hover:bg-white border-2 border-navy text-navy font-bold text-sm transition-colors motion-reduce:transition-none focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-[#6FD3F2] focus-visible:outline-offset-2"
+                  className="inline-flex items-center min-h-[46px] px-6 rounded-full bg-cyan hover:bg-sky border-2 border-cyan text-midnight font-bold text-sm transition-colors motion-reduce:transition-none focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-cyan focus-visible:outline-offset-2"
                 >
                   {t('exploreCategory')}
                 </a>

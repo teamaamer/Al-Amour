@@ -54,10 +54,10 @@ const StatCard = ({ value, label, suffix = '', index }: StatCardProps) => {
       }}
       className="text-center px-4 py-2"
     >
-      <p className="text-xs uppercase tracking-wider text-white/60 mb-1 whitespace-pre-line leading-tight">
+      <p className="text-xs uppercase tracking-wider text-steel mb-1 whitespace-pre-line leading-tight">
         {label}
       </p>
-      <motion.div className="text-3xl md:text-4xl font-extrabold text-white tracking-tighter">
+      <motion.div className="text-3xl md:text-4xl font-extrabold text-midnight tracking-tighter">
         <motion.span
           key={displayValue}
           initial={{ y: 20, opacity: 0 }}
@@ -84,19 +84,19 @@ const Stats = () => {
   ];
 
   return (
-    <section className="bg-navy py-4 md:py-6">
+    <section className="bg-white py-4 md:py-6">
       <div className="w-full px-6 lg:px-12">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-xs uppercase tracking-widest text-white text-center mb-3"
+          className="text-xs uppercase tracking-widest text-midnight text-center mb-3"
         >
           {t('performanceSnapshot')}
         </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-5 items-center gap-4 md:gap-0 md:divide-x md:divide-white/10 rtl:md:divide-x-reverse">
+        <div className="grid grid-cols-1 md:grid-cols-5 items-center gap-4 md:gap-0 md:divide-x md:divide-steel/30 rtl:md:divide-x-reverse">
           {stats.map((stat, index) => (
             <StatCard
               key={index}

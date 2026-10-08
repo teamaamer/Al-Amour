@@ -29,7 +29,7 @@ export default function PremiumHero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen w-full overflow-hidden bg-[#050a18] lg:h-screen"
+      className="relative min-h-screen w-full overflow-hidden bg-midnight lg:h-screen"
     >
       {/* =========================================================
           FULL SCREEN BACKGROUND IMAGE
@@ -74,7 +74,7 @@ export default function PremiumHero() {
             rotate: isRTL ? 4 : -4,
             scale: 1.03,
           }}
-          className={`pointer-events-auto absolute bottom-[8%] z-10 hidden w-[300px] overflow-visible transition-[left,right] duration-700 md:block lg:w-[350px] ${
+          className={`pointer-events-auto absolute bottom-[8%] z-10 hidden w-[300px] overflow-visible transition-[left,right] duration-700 md:w-[360px] md:block lg:w-[420px] ${
             isRTL ? 'left-[4%]' : 'right-[4%]'
           }`}
         >
@@ -85,10 +85,10 @@ export default function PremiumHero() {
             className="absolute -inset-[3px] rounded-3xl"
             style={{
               background:
-                'linear-gradient(90deg, #38d9ff, #8beaff, #168cff, #38d9ff)',
+                'linear-gradient(90deg, #20BDF2, #42C8F5, #20BDF2)',
               backgroundSize: '300% 100%',
-              filter: 'blur(5px)',
-              opacity: 0.9,
+              filter: 'blur(3px)',
+              opacity: 0.35,
             }}
             animate={{
               backgroundPosition: [
@@ -96,7 +96,7 @@ export default function PremiumHero() {
                 '100% 50%',
                 '0% 50%',
               ],
-              opacity: [0.55, 1, 0.55],
+              opacity: [0.25, 0.4, 0.25],
             }}
             transition={{
               duration: 4,
@@ -108,14 +108,14 @@ export default function PremiumHero() {
           {/* ===================================================
               CARD
           =================================================== */}
-          <div className="relative overflow-hidden rounded-3xl border border-[#8beaff]/70 bg-[#071522]/80 backdrop-blur-md">
+          <div className="relative overflow-hidden rounded-3xl border border-sky/50 bg-deep/90 backdrop-blur-md">
 
             {/* MOVING LIGHT */}
             <motion.div
               className="pointer-events-none absolute -left-1/2 top-0 h-full w-1/2"
               style={{
                 background:
-                  'linear-gradient(90deg, transparent, rgba(139,234,255,0.35), transparent)',
+                  'linear-gradient(90deg, transparent, rgba(66,200,245,0.18), transparent)',
                 transform: 'skewX(-20deg)',
               }}
               animate={{
@@ -136,7 +136,7 @@ export default function PremiumHero() {
                 alt="Al-Amour"
                 fill
                 className="object-cover"
-                sizes="350px"
+                sizes="(min-width: 1024px) 420px, 360px"
               />
 
               {/* IMAGE SHINE */}
@@ -144,7 +144,7 @@ export default function PremiumHero() {
                 className="pointer-events-none absolute inset-0"
                 style={{
                   background:
-                    'linear-gradient(110deg, transparent 25%, rgba(139,234,255,0.18) 50%, transparent 75%)',
+                    'linear-gradient(110deg, transparent 25%, rgba(66,200,245,0.12) 50%, transparent 75%)',
                   backgroundSize: '200% 100%',
                 }}
                 animate={{
@@ -162,7 +162,7 @@ export default function PremiumHero() {
               />
 
               {/* BOTTOM GRADIENT */}
-              <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#020812]/95 via-[#020812]/45 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-midnight/95 via-midnight/45 to-transparent" />
 
               {/* CARD TEXT */}
               <div
@@ -180,7 +180,7 @@ export default function PremiumHero() {
                     repeat: Infinity,
                     ease: 'easeInOut',
                   }}
-                  className="text-[10px] font-semibold tracking-[0.25em] text-[#8beaff]"
+                  className="text-[10px] font-semibold tracking-[0.25em] text-sky"
                 >
                   AL-AMOUR
                 </motion.div>
@@ -216,13 +216,7 @@ export default function PremiumHero() {
 
           {/* LOGO */}
           <div className="flex items-center gap-3">
-            <div
-              className="relative h-11 w-11 shrink-0 lg:h-14 lg:w-14"
-              style={{
-                filter:
-                  'drop-shadow(0 0 10px rgba(0,170,255,0.55))',
-              }}
-            >
+            <div className="relative h-11 w-11 shrink-0 lg:h-14 lg:w-14">
               <Image
                 src="/logo.png"
                 alt="Al-Amour"
@@ -237,7 +231,7 @@ export default function PremiumHero() {
                 AL-AMOUR
               </div>
 
-              <div className="mt-1 text-[8px] tracking-[0.22em] text-[#5bc4f0] md:text-[9px]">
+              <div               className="mt-1 text-[8px] tracking-[0.22em] text-sky md:text-[9px]">
                 .GENERAL TRADING CO.
               </div>
             </div>
@@ -273,19 +267,19 @@ export default function PremiumHero() {
               className="flex items-center overflow-hidden rounded-full text-[11px] font-bold tracking-wide"
               style={{
                 border:
-                  '1px solid rgba(0,170,255,0.5)',
+                  '1px solid rgba(66,200,245,0.45)',
                 background:
-                  'rgba(0,30,60,0.45)',
+                  'rgba(17,29,48,0.88)',
               }}
             >
               <span
                 className="px-2.5 py-2"
                 style={{
                   color: isRTL
-                    ? '#fff'
+                    ? '#FFFFFF'
                     : 'rgba(255,255,255,0.4)',
                   background: isRTL
-                    ? 'rgba(0,150,220,0.55)'
+                    ? 'rgba(32,189,242,0.22)'
                     : 'transparent',
                 }}
               >
@@ -300,10 +294,10 @@ export default function PremiumHero() {
                 className="px-2.5 py-2"
                 style={{
                   color: !isRTL
-                    ? '#fff'
+                    ? '#FFFFFF'
                     : 'rgba(255,255,255,0.4)',
                   background: !isRTL
-                    ? 'rgba(0,150,220,0.55)'
+                    ? 'rgba(32,189,242,0.22)'
                     : 'transparent',
                 }}
               >
@@ -352,7 +346,7 @@ export default function PremiumHero() {
               opacity: 0,
               y: -10,
             }}
-            className="absolute inset-x-4 top-[76px] z-40 mx-auto max-w-md rounded-2xl border border-white/10 bg-[#071018]/95 p-3 backdrop-blur-xl"
+            className="absolute inset-x-4 top-[76px] z-40 mx-auto max-w-md rounded-2xl border border-steel bg-midnight/95 p-3 backdrop-blur-xl"
             dir={isRTL ? 'rtl' : 'ltr'}
           >
             {menuItems.map((item) => (
@@ -405,7 +399,7 @@ export default function PremiumHero() {
                   fontSize:
                     'clamp(2.4rem, 5vw, 4.6rem)',
                   textShadow:
-                    '0 4px 28px rgba(0,0,0,0.7)',
+                    '0 4px 28px rgba(8,15,31,0.75)',
                 }}
               >
                 {t('heroTitleLine1')}
@@ -416,9 +410,7 @@ export default function PremiumHero() {
                 style={{
                   fontSize:
                     'clamp(2.4rem, 5vw, 4.6rem)',
-                  color: '#3ec8f5',
-                  filter:
-                    'drop-shadow(0 0 16px rgba(62,200,245,0.55))',
+                  color: '#42C8F5',
                 }}
               >
                 {t('heroTitleHighlight')}
@@ -465,9 +457,10 @@ export default function PremiumHero() {
                 className="rounded-full px-7 py-3 text-sm font-bold text-white transition-transform hover:scale-[1.03]"
                 style={{
                   background:
-                    'linear-gradient(135deg, #0088cc 0%, #00a8e8 100%)',
+                    'linear-gradient(135deg, #20BDF2 0%, #42C8F5 100%)',
+                  color: '#080F1F',
                   boxShadow:
-                    '0 0 28px rgba(0,170,240,0.45), 0 4px 14px rgba(0,100,180,0.35)',
+                    '0 4px 14px rgba(8,15,31,0.35)',
                 }}
               >
                 {t('exploreProducts')}
@@ -475,12 +468,12 @@ export default function PremiumHero() {
 
               <a
                 href="#catalogs"
-                className="flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-semibold text-white/90 transition-all hover:border-[#3ec8f5]/60"
+                className="flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-semibold text-white/90 transition-all hover:border-sky/60"
                 style={{
                   borderColor:
-                    'rgba(255,255,255,0.28)',
+                    'rgba(181,190,204,0.3)',
                   background:
-                    'rgba(255,255,255,0.06)',
+                    'rgba(17,29,48,0.5)',
                   backdropFilter: 'blur(8px)',
                 }}
               >
@@ -529,13 +522,13 @@ export default function PremiumHero() {
                     className="flex h-8 w-8 items-center justify-center rounded-full"
                     style={{
                       background:
-                        'rgba(0,140,210,0.25)',
+                        'rgba(32,189,242,0.16)',
                       backdropFilter:
                         'blur(8px)',
                     }}
                   >
                     <Icon
-                      className="h-3.5 w-3.5 text-[#4db8e8]"
+                      className="h-3.5 w-3.5 text-sky"
                       strokeWidth={2}
                     />
                   </div>
@@ -587,9 +580,9 @@ export default function PremiumHero() {
                   className="rounded-full px-3.5 py-1.5 text-[11px] font-medium text-white/60 transition-colors hover:text-white/90"
                   style={{
                     background:
-                      'rgba(255,255,255,0.05)',
+                      'rgba(17,29,48,0.6)',
                     border:
-                      '1px solid rgba(255,255,255,0.12)',
+                      '1px solid rgba(181,190,204,0.18)',
                     backdropFilter:
                       'blur(8px)',
                   }}

@@ -39,7 +39,7 @@ const ServicesCarousel = () => {
   const totalWidth = services.length * (cardWidth + gap);
 
   return (
-    <section dir="ltr" className="py-16 md:py-24 bg-white overflow-hidden">
+    <section dir="ltr" className="py-16 md:py-24 bg-midnight text-white overflow-hidden">
       <div className="max-w-[1280px] mx-auto px-6 mb-12">
         <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-primary mb-6 text-center">
           Our Services
@@ -51,8 +51,8 @@ const ServicesCarousel = () => {
 
       <div className="relative">
         {/* Gradient Masks */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white via-white/80 to-transparent z-10" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white via-white/80 to-transparent z-10" />
+        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-midnight via-midnight/80 to-transparent z-10" />
+        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-midnight via-midnight/80 to-transparent z-10" />
 
         {/* Carousel */}
         <motion.div
@@ -76,7 +76,7 @@ const ServicesCarousel = () => {
               whileHover={{
                 y: -8,
                 scale: 1.03,
-                boxShadow: '0 8px 40px rgba(0,0,0,0.2)',
+                boxShadow: '0 8px 40px rgba(8,15,31,0.3)',
               }}
               transition={{ duration: 0.3 }}
             >
@@ -84,7 +84,7 @@ const ServicesCarousel = () => {
               <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient}`} />
 
               {/* Overlay Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-midnight/30 to-transparent" />
 
               {/* Content */}
               <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -98,7 +98,7 @@ const ServicesCarousel = () => {
 
               {/* Floating Arrow Button */}
               <motion.div
-                className="absolute bottom-4 right-4 w-12 h-12 rounded-full bg-black/80 group-hover:bg-primary flex items-center justify-center shadow-lg"
+                className="absolute bottom-4 right-4 w-12 h-12 rounded-full bg-midnight/90 group-hover:bg-cyan flex items-center justify-center shadow-lg"
                 whileHover={{ scale: 1.1, rotate: 12 }}
                 transition={{ duration: 0.3 }}
               >

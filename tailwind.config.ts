@@ -10,31 +10,62 @@ const config: Config = {
     extend: {
       colors: {
         blue: {
-          50: '#E6F5FB',
-          100: '#CDEAF7',
-          200: '#99D4EF',
-          300: '#66BEE6',
-          400: '#33A9E0',
-          500: '#0097D7',
-          600: '#007FB3',
-          700: '#00688F',
-          800: '#00516C',
-          900: '#003A4A',
+          50: 'rgb(var(--color-deep-navy-rgb) / <alpha-value>)',
+          100: 'rgb(var(--color-steel-gray-rgb) / <alpha-value>)',
+          200: 'rgb(var(--color-steel-gray-rgb) / <alpha-value>)',
+          300: 'rgb(var(--color-sky-blue-rgb) / <alpha-value>)',
+          400: 'rgb(var(--color-sky-blue-rgb) / <alpha-value>)',
+          500: 'rgb(var(--color-electric-cyan-rgb) / <alpha-value>)',
+          600: 'rgb(var(--color-electric-cyan-rgb) / <alpha-value>)',
+          700: 'rgb(var(--color-deep-navy-rgb) / <alpha-value>)',
+          800: 'rgb(var(--color-midnight-navy-rgb) / <alpha-value>)',
+          900: 'rgb(var(--color-midnight-navy-rgb) / <alpha-value>)',
         },
         primary: {
-          DEFAULT: '#0097D7',
-          light: '#33A9E0',
-          dark: '#007FB3'
+          DEFAULT: 'rgb(var(--color-electric-cyan-rgb) / <alpha-value>)',
+          light: 'rgb(var(--color-sky-blue-rgb) / <alpha-value>)',
+          dark: 'rgb(var(--color-sky-blue-rgb) / <alpha-value>)'
         },
         navy: {
-          DEFAULT: '#130F2D',
-          light: '#1D1A3D',
-          dark: '#0B091A'
+          DEFAULT: 'rgb(var(--color-midnight-navy-rgb) / <alpha-value>)',
+          light: 'rgb(var(--color-deep-navy-rgb) / <alpha-value>)',
+          dark: 'rgb(var(--color-midnight-navy-rgb) / <alpha-value>)'
         },
         accent: {
-          blue: '#0097d7',
-          cyan: '#33A9E0'
-        }
+          blue: 'rgb(var(--color-electric-cyan-rgb) / <alpha-value>)',
+          cyan: 'rgb(var(--color-sky-blue-rgb) / <alpha-value>)'
+        },
+        midnight: 'rgb(var(--color-midnight-navy-rgb) / <alpha-value>)',
+        deep: 'rgb(var(--color-deep-navy-rgb) / <alpha-value>)',
+        cyan: 'rgb(var(--color-electric-cyan-rgb) / <alpha-value>)',
+        sky: 'rgb(var(--color-sky-blue-rgb) / <alpha-value>)',
+        cool: 'rgb(var(--color-cool-gray-rgb) / <alpha-value>)',
+        steel: 'rgb(var(--color-steel-gray-rgb) / <alpha-value>)',
+        charcoal: 'rgb(var(--color-charcoal-black-rgb) / <alpha-value>)',
+        gray: {
+          50: 'rgb(var(--color-deep-navy-rgb) / <alpha-value>)',
+          100: 'rgb(var(--color-steel-gray-rgb) / <alpha-value>)',
+          200: 'rgb(var(--color-steel-gray-rgb) / <alpha-value>)',
+          300: 'rgb(var(--color-cool-gray-rgb) / <alpha-value>)',
+          400: 'rgb(var(--color-cool-gray-rgb) / <alpha-value>)',
+          500: 'rgb(var(--color-cool-gray-rgb) / <alpha-value>)',
+          600: 'rgb(var(--color-cool-gray-rgb) / <alpha-value>)',
+          700: 'rgb(var(--color-pure-white-rgb) / <alpha-value>)',
+          800: 'rgb(var(--color-pure-white-rgb) / <alpha-value>)',
+          900: 'rgb(var(--color-pure-white-rgb) / <alpha-value>)',
+        },
+        slate: {
+          50: 'rgb(var(--color-deep-navy-rgb) / <alpha-value>)',
+          100: 'rgb(var(--color-deep-navy-rgb) / <alpha-value>)',
+          200: 'rgb(var(--color-steel-gray-rgb) / <alpha-value>)',
+          300: 'rgb(var(--color-steel-gray-rgb) / <alpha-value>)',
+          400: 'rgb(var(--color-cool-gray-rgb) / <alpha-value>)',
+          500: 'rgb(var(--color-cool-gray-rgb) / <alpha-value>)',
+          600: 'rgb(var(--color-cool-gray-rgb) / <alpha-value>)',
+          700: 'rgb(var(--color-pure-white-rgb) / <alpha-value>)',
+          800: 'rgb(var(--color-pure-white-rgb) / <alpha-value>)',
+          900: 'rgb(var(--color-pure-white-rgb) / <alpha-value>)',
+        },
       },
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
