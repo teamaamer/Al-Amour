@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, MessageCircle, Instagram, Facebook, Twitter } from 'lucide-react';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
+import { CONTACT_EMAIL, FACEBOOK_URL, INSTAGRAM_URL, SALES, SUPPORT } from '@/lib/contact';
 
 const Footer = () => {
   const { t } = useLanguage();
@@ -30,14 +31,14 @@ const Footer = () => {
   };
 
   const socialLinks = [
-    { icon: MessageCircle, href: 'https://wa.me/970XXXXXXXX', label: 'WhatsApp' },
-    { icon: Instagram, href: '#', label: 'Instagram' },
-    { icon: Facebook, href: '#', label: 'Facebook' },
+    { icon: MessageCircle, href: `https://wa.me/${SALES.whatsapp}`, label: 'WhatsApp' },
+    { icon: Instagram, href: INSTAGRAM_URL, label: 'Instagram' },
+    { icon: Facebook, href: FACEBOOK_URL, label: 'Facebook' },
     { icon: Twitter, href: '#', label: 'Twitter' },
   ];
 
   return (
-    <footer id="contact" className="bg-navy text-white">
+    <footer className="bg-navy text-white">
       <div className="max-w-[1280px] mx-auto px-6 py-16">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
@@ -52,9 +53,9 @@ const Footer = () => {
               <Image
                 src="/logo.png"
                 alt={t('companyName')}
-                width={220}
-                height={110}
-                className="h-24 md:h-28 w-auto mb-4"
+                width={467}
+                height={480}
+                className="h-28 md:h-32 w-auto mb-4"
               />
             </div>
             <p className="text-white/80 mb-6 leading-relaxed">
@@ -134,22 +135,29 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <Mail size={20} className="text-primary flex-shrink-0 mt-0.5" />
                 <a
-                  href="mailto:info@alamour.ps"
+                  href={`mailto:${CONTACT_EMAIL}`}
+                  dir="ltr"
                   className="text-white/80 hover:text-white transition-colors"
                 >
-                  info@alamour.ps
+                  {CONTACT_EMAIL}
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <Phone size={20} className="text-primary flex-shrink-0 mt-0.5" />
-                <div className="text-white/80">
-                  <div dir="ltr">+970 2 XXX XXXX</div>
-                  <div dir="ltr">+970 59X XXX XXX</div>
+                <div className="space-y-1 text-white/80">
+                  <a href={`tel:${SALES.tel}`} className="block hover:text-white">
+                    <span className="text-white/50">{t('contactSales')}: </span>
+                    <span dir="ltr">{SALES.groups.join('-')}</span>
+                  </a>
+                  <a href={`tel:${SUPPORT.tel}`} className="block hover:text-white">
+                    <span className="text-white/50">{t('contactSupportLine')}: </span>
+                    <span dir="ltr">{SUPPORT.groups.join('-')}</span>
+                  </a>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin size={20} className="text-primary flex-shrink-0 mt-0.5" />
-                <span className="text-white/80">{t('palestine')}</span>
+                <span className="text-white/80">{t('aboutLocation')}</span>
               </li>
             </ul>
           </motion.div>

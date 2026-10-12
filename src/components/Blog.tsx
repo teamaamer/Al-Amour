@@ -1,46 +1,28 @@
 'use client';
 
+import { useEffect } from 'react';
+import Script from 'next/script';
 import { motion } from 'framer-motion';
-import { Instagram, Facebook, Calendar } from 'lucide-react';
-import Image from 'next/image';
+import { Instagram } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { INSTAGRAM_URL } from '@/lib/contact';
+
+// Instagram reel IDs (instagram.com/reel/<id>), newest first
+const REELS = ['DeHLa3FAs4u', 'DeOd5WIiM0R', 'DdY6ET7j3NQ', 'DdOT5KAFJ9d'];
+
+declare global {
+  interface Window {
+    instgrm?: { Embeds: { process: () => void } };
+  }
+}
 
 const Blog = () => {
-  const { t, language } = useLanguage();
-  const blogPosts = [
-    {
-      id: 1,
-      title: t('blogPost1Title'),
-      excerpt: t('blogPost1Excerpt'),
-      image: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=600&q=80',
-      date: '2026-04-05',
-      platform: 'instagram',
-    },
-    {
-      id: 2,
-      title: t('blogPost2Title'),
-      excerpt: t('blogPost2Excerpt'),
-      image: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=600&q=80',
-      date: '2026-04-03',
-      platform: 'facebook',
-    },
-    {
-      id: 3,
-      title: t('blogPost3Title'),
-      excerpt: t('blogPost3Excerpt'),
-      image: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&q=80',
-      date: '2026-04-01',
-      platform: 'instagram',
-    },
-    {
-      id: 4,
-      title: t('blogPost4Title'),
-      excerpt: t('blogPost4Excerpt'),
-      image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80',
-      date: '2026-03-28',
-      platform: 'facebook',
-    },
-  ];
+  const { t } = useLanguage();
+
+  // embed.js only scans the page when it first loads; re-scan if it was already loaded (e.g. client navigation)
+  useEffect(() => {
+    window.instgrm?.Embeds.process();
+  }, []);
 
   return (
     <section id="blog" className="py-12 md:py-16 bg-midnight text-white">
@@ -60,63 +42,27 @@ const Blog = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {blogPosts.map((post, index) => (
-            <motion.article
-              key={post.id}
+        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+          {REELS.map((id, index) => (
+            <motion.div
+              key={id}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ 
-                y: -12, 
-                scale: 1.02,
-                boxShadow: '0 18px 45px -16px rgba(32, 189, 242, 0.18)',
-              }}
-              className="group bg-deep rounded-2xl overflow-hidden shadow-lg border border-steel relative"
+              className="mx-auto w-full max-w-[400px] overflow-hidden rounded-2xl border border-steel bg-white shadow-lg [&_iframe]:!m-0 [&_iframe]:!min-w-0 [&_iframe]:!rounded-none [&_iframe]:!border-0"
             >
-              {/* Gradient overlay on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan/0 to-sky/0 group-hover:from-cyan/5 group-hover:to-sky/5 transition-all duration-500 pointer-events-none z-10" />
-              {/* Image */}
-              <div className="relative h-48 overflow-hidden">
-                <Image
-                  src={post.image}
-                  alt={post.title}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute top-4 right-4 w-10 h-10 bg-midnight/90 backdrop-blur-sm rounded-full flex items-center justify-center">
-                  {post.platform === 'instagram' ? (
-                    <Instagram className="text-sky" size={20} />
-                  ) : (
-                    <Facebook className="text-sky" size={20} />
-                  )}
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-6">
-                <div className="flex items-center gap-2 text-sm text-cool mb-3">
-                  <Calendar size={16} />
-                  <span>{new Date(post.date).toLocaleDateString(language === 'ar' ? 'ar' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-                </div>
-
-                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-sky transition-colors line-clamp-2">
-                  {post.title}
-                </h3>
-
-                <p className="text-cool text-sm line-clamp-3 mb-4">
-                  {post.excerpt}
-                </p>
-
-                <button className="text-cyan font-semibold text-sm flex items-center group-hover:gap-2 transition-all">
-                  {t('readMore')}
-                  <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </div>
-            </motion.article>
+              {/* Replaced by embed.js with an auto-sized iframe; the link is the no-JS fallback */}
+              <blockquote
+                className="instagram-media !m-0 !w-full !min-w-0 !max-w-none !border-0 !shadow-none"
+                data-instgrm-permalink={`https://www.instagram.com/reel/${id}/`}
+                data-instgrm-version="14"
+              >
+                <a href={`https://www.instagram.com/reel/${id}/`} target="_blank" rel="noopener noreferrer" className="block p-6 text-center font-semibold text-midnight">
+                  Instagram
+                </a>
+              </blockquote>
+            </motion.div>
           ))}
         </div>
 
@@ -128,12 +74,19 @@ const Blog = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center mt-10"
         >
-          <button className="bg-cyan text-midnight px-8 py-4 rounded-lg font-semibold text-lg hover:bg-sky transition-all hover:shadow-xl inline-flex items-center gap-2">
+          <a
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-cyan text-midnight px-8 py-4 rounded-lg font-semibold text-lg hover:bg-sky transition-all hover:shadow-xl inline-flex items-center gap-2"
+          >
             {t('viewAllPosts')}
             <Instagram size={20} />
-          </button>
+          </a>
         </motion.div>
       </div>
+
+      <Script src="https://www.instagram.com/embed.js" strategy="lazyOnload" onLoad={() => window.instgrm?.Embeds.process()} />
     </section>
   );
 };

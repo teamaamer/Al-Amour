@@ -1,0 +1,551 @@
+// Wood-coating products, transcribed from the ILVA and ERCO catalogs in public/catgs.
+// Images are the product shots cropped out of each catalog page (public/products).
+
+import type { Brand, CategoryPage, Product } from './catalogTypes';
+
+const brands: Brand[] = [
+  {
+    id: 'ilva',
+    name: 'ILVA',
+    origin: { ar: 'صناعة إيطالية', en: 'Made in Italy' },
+    country: 'it',
+    logo: '/ilva.png',
+    catalog: '/catgs/ilva.pdf',
+    tagline: {
+      ar: 'أنظمة دهانات خشب إيطالية متكاملة: أساسات، لكر، دهانات، منشفات وإضافات.',
+      en: 'A complete Italian wood-finishing system: primers, lacquers, paints, hardeners and additives.',
+    },
+  },
+  {
+    id: 'erco',
+    name: 'ERCO',
+    origin: { ar: 'صناعة تركية', en: 'Made in Türkiye' },
+    country: 'tr',
+    logo: '/erco.webp',
+    catalog: '/catgs/ERCO.pdf',
+    tagline: {
+      ar: 'دهانات خشب تركية بجودة عالمية: أساسات، لكر، دهانات، تنر ومنشفات.',
+      en: 'Turkish wood coatings to international standards: primers, lacquers, paints, thinners and hardeners.',
+    },
+  },
+];
+
+const productTypes: CategoryPage['productTypes'] = [
+  { id: 'primer', label: { ar: 'أساسات', en: 'Primers' } },
+  { id: 'lacquer', label: { ar: 'لكر', en: 'Lacquers' } },
+  { id: 'paint', label: { ar: 'دهانات', en: 'Paints' } },
+  { id: 'hardener', label: { ar: 'منشفات', en: 'Hardeners' } },
+  { id: 'thinner', label: { ar: 'تنر', en: 'Thinners' } },
+  { id: 'additive', label: { ar: 'إضافات', en: 'Additives' } },
+];
+
+const ilva = (n: number) => `/products/ilva/${String(n).padStart(2, '0')}.webp`;
+const erco = (n: number) => `/products/erco/${String(n).padStart(2, '0')}.webp`;
+
+const products: Product[] = [
+  // ───────────── ILVA (Italy) ─────────────
+  {
+    code: 'PAS5ABI',
+    brand: 'ilva',
+    type: 'primer',
+    name: { ar: 'أساس أبيض خشب', en: 'White Wood Primer' },
+    description: { ar: 'أساس أبيض عالي الجودة بمقاييس عالمية.', en: 'High-quality white primer made to international standards.' },
+    features: {
+      ar: ['تغطية ممتازة لضمان طبقة أساسية مثالية.', 'مثالي للاستخدام قبل الطلاء النهائي لضمان جودة عالية.'],
+      en: ['Excellent coverage for an ideal base coat.', 'Ideal before the top coat for a high-quality finish.'],
+    },
+    mix: { ar: 'أساس + منشف + تنر — 2:1:1', en: 'Primer + hardener + thinner — 2:1:1' },
+    sizes: { ar: '5 كغ · 25 كغ', en: '5 kg · 25 kg' },
+    image: ilva(1),
+  },
+  {
+    code: 'TA48',
+    brand: 'ilva',
+    type: 'primer',
+    name: { ar: 'أساس شفاف أكريليك', en: 'Clear Acrylic Primer' },
+    description: { ar: 'أساس شفاف عالي الجودة بمعايير عالمية.', en: 'High-quality clear primer made to international standards.' },
+    features: {
+      ar: ['يُغلَّف به الخشب لضمان طبقة أساس مثالية وجودة عالية عند تنفيذ الطبقة النهائية.'],
+      en: ['Seals the wood with an ideal base coat for a high-quality top coat.'],
+    },
+    mix: { ar: 'أساس + منشف + تنر — 2:1:1', en: 'Primer + hardener + thinner — 2:1:1' },
+    sizes: { ar: '10 لتر', en: '10 L' },
+    image: ilva(2),
+  },
+  {
+    code: 'TA12',
+    brand: 'ilva',
+    type: 'primer',
+    name: { ar: 'أساس شفاف أكريلي', en: 'Clear Acrylic Primer' },
+    description: {
+      ar: 'أساس أكريلي عالي الجودة لحماية الخشب والحفاظ على لونه الطبيعي.',
+      en: 'High-quality acrylic primer that protects wood and keeps its natural colour.',
+    },
+    features: {
+      ar: ['يمنع الاصفرار ويمنح الخشب صلابة أعلى.', 'له خاصية مقاومة الحريق ومدعوم بشهادة أوروبية.'],
+      en: ['Prevents yellowing and gives the wood extra hardness.', 'Fire-resistant, backed by a European certificate.'],
+    },
+    mix: { ar: 'أساس + منشف + تنر — 10:2:5', en: 'Primer + hardener + thinner — 10:2:5' },
+    sizes: { ar: '5 لتر', en: '5 L' },
+    image: ilva(3),
+  },
+  {
+    code: 'PIS510',
+    brand: 'ilva',
+    type: 'primer',
+    name: { ar: 'بوليستر أبيض', en: 'White Polyester' },
+    description: { ar: 'بوليستر أبيض عالي الجودة بمعايير عالمية.', en: 'High-quality white polyester made to international standards.' },
+    features: {
+      ar: [
+        'يمنح الخشب طبقة أساس مثالية قبل الطبقة النهائية، بصلابة أعلى ومقاومة أكبر للماء.',
+        'قدرة فائقة على تعبئة مسامات الخشب للحصول على سطح أنعم وأعلى جودة.',
+      ],
+      en: [
+        'An ideal base before the top coat, with greater hardness and water resistance.',
+        'Fills wood pores exceptionally well for a smoother, higher-quality surface.',
+      ],
+    },
+    mix: {
+      ar: 'بوليستر + مسرّع + أسيتون + منشف — 50:1:10:1',
+      en: 'Polyester + accelerator + acetone + hardener — 50:1:10:1',
+    },
+    sizes: { ar: '25 كغ', en: '25 kg' },
+    image: ilva(14),
+  },
+  {
+    code: 'TF25',
+    brand: 'ilva',
+    type: 'primer',
+    name: { ar: 'مادة انزولاسيا', en: 'Insulation Sealer' },
+    description: {
+      ar: 'طبقة بلاستيكية عالية الجودة لتغليف الأثاث وعزل الخشب ضد الماء.',
+      en: 'High-quality plastic layer that seals furniture and waterproofs wood.',
+    },
+    features: {
+      ar: [
+        'تُستخدم قبل مرحلة الأساس لتكوين حاجز يمنع تسرب الرطوبة ويحافظ على جودة الخشب.',
+        'مناسبة خاصةً للأماكن عالية الرطوبة مثل المطابخ ودورات المياه.',
+      ],
+      en: [
+        'Applied before the primer to form a moisture barrier that protects the wood.',
+        'Especially suited to humid areas such as kitchens and bathrooms.',
+      ],
+    },
+    mix: { ar: 'مادة + منشف + تنر — 10:1:7', en: 'Sealer + hardener + thinner — 10:1:7' },
+    sizes: { ar: '10 لتر', en: '10 L' },
+    image: ilva(15),
+  },
+  {
+    code: 'TO0X',
+    brand: 'ilva',
+    type: 'lacquer',
+    name: { ar: 'لكر شفاف', en: 'Clear Lacquer' },
+    description: { ar: 'لكر شفاف عالي الجودة بمعايير عالمية.', en: 'High-quality clear lacquer made to international standards.' },
+    features: {
+      ar: [
+        'يمنح الخشب طبقة نهائية مثالية مع الحفاظ على جماله ولونه الطبيعي.',
+        'يمكن تلوينه بالصبغات المائية للحصول على التصميم المطلوب.',
+      ],
+      en: [
+        'An ideal top coat that keeps the wood’s natural beauty and colour.',
+        'Can be tinted with water-based stains to achieve the desired look.',
+      ],
+    },
+    mix: { ar: 'لكر + منشف + تنر — 2:1:1', en: 'Lacquer + hardener + thinner — 2:1:1' },
+    gloss: ['5%', '15%', '25%', '35%', '50%', '100%'],
+    sizes: { ar: '10 لتر', en: '10 L' },
+    image: ilva(16),
+  },
+  {
+    code: 'TS15XX',
+    brand: 'ilva',
+    type: 'lacquer',
+    name: { ar: 'لكر شفاف أكريلي', en: 'Clear Acrylic Lacquer' },
+    description: { ar: 'لكر شفاف أكريلي عالي الجودة بمعايير عالمية.', en: 'High-quality clear acrylic lacquer made to international standards.' },
+    features: {
+      ar: [
+        'طبقة نهائية مثالية تحافظ على رونق الخشب ولونه الطبيعي، مع مقاومة الاصفرار وصلابة أعلى.',
+        'خاصية مقاومة الحريق ومدعوم بشهادة أوروبية.',
+      ],
+      en: [
+        'An ideal top coat that keeps the wood’s natural look, resists yellowing and adds hardness.',
+        'Fire-resistant, backed by a European certificate.',
+      ],
+    },
+    mix: { ar: 'لكر + منشف + تنر — 10:2:5', en: 'Lacquer + hardener + thinner — 10:2:5' },
+    sizes: { ar: '5 لتر', en: '5 L' },
+    image: ilva(18),
+  },
+  {
+    code: 'TM893',
+    brand: 'ilva',
+    type: 'lacquer',
+    name: { ar: 'لكر شفاف ضد الجرح', en: 'Scratch-Resistant Clear Lacquer' },
+    description: { ar: 'لكر شفاف ضد الجرح عالي الجودة بمعايير عالمية.', en: 'High-quality scratch-resistant clear lacquer.' },
+    features: {
+      ar: ['يُطبَّق على الخشب المعرّض لاحتكاك مستمر مثل الأدراج وأوجه طاولات السفرة، ليمنحه صلابة ومقاومة للخدوش.'],
+      en: ['For wood under constant wear such as drawers and dining-table tops; adds hardness and scratch resistance.'],
+    },
+    mix: { ar: 'لكر + منشف + تنر — 2:1:1', en: 'Lacquer + hardener + thinner — 2:1:1' },
+    sizes: { ar: '5 كغ', en: '5 kg' },
+    image: ilva(13),
+  },
+  {
+    code: 'HTM063',
+    brand: 'ilva',
+    type: 'lacquer',
+    name: { ar: 'لكر مائي خارجي', en: 'Exterior Water-Based Lacquer' },
+    description: { ar: 'لكر مائي خارجي عالي الجودة بمعايير عالمية.', en: 'High-quality exterior water-based lacquer.' },
+    features: {
+      ar: ['يحافظ على لون الخشب الطبيعي ويمنحه حماية فائقة ضد الماء وأشعة الشمس.', 'مناسب للاستخدام الداخلي والخارجي.'],
+      en: ['Keeps the wood’s natural colour with superior protection from water and sunlight.', 'Suitable for interior and exterior use.'],
+    },
+    mix: { ar: 'يُخلط مع الماء بنسبة 30%', en: 'Mix with 30% water' },
+    gloss: ['30%'],
+    sizes: { ar: '5 كغ', en: '5 kg' },
+    image: ilva(12),
+  },
+  {
+    code: 'PL720/X',
+    brand: 'ilva',
+    type: 'paint',
+    name: { ar: 'دهان أبيض', en: 'White Paint' },
+    description: { ar: 'دهان أبيض عالي الجودة بمعايير عالمية.', en: 'High-quality white paint made to international standards.' },
+    features: {
+      ar: ['يمنح الخشب طبقة نهائية مميزة بعد الأساس.', 'يمكن تحويله لأي لون مطلوب باستخدام الملونات حسب الكتالوج.'],
+      en: ['A distinctive top coat over the primer.', 'Can be tinted to any colour in the catalog using colourants.'],
+    },
+    mix: { ar: 'دهان + منشف + تنر — 2:1:1', en: 'Paint + hardener + thinner — 2:1:1' },
+    gloss: ['10%', '20%', '30%', '50%', '100%'],
+    sizes: { ar: '5 كغ · 25 كغ', en: '5 kg · 25 kg' },
+    image: ilva(17),
+  },
+  {
+    code: 'TX75',
+    brand: 'ilva',
+    type: 'hardener',
+    name: { ar: 'منشف دهان أبيض لميع', en: 'Gloss White Paint Hardener' },
+    description: {
+      ar: 'منشف دهان أبيض لميع عالي الجودة يمنح الدهان صلابة ومقاومة عالية للخدوش.',
+      en: 'High-quality hardener for gloss white paint; adds hardness and scratch resistance.',
+    },
+    features: {
+      ar: ['حماية من الاصفرار للحفاظ على اللون اللامع والجودة لفترة أطول.'],
+      en: ['Protects against yellowing to keep the gloss colour longer.'],
+    },
+    sizes: { ar: '2.5 لتر', en: '2.5 L' },
+    image: ilva(4),
+  },
+  {
+    code: 'TX39',
+    brand: 'ilva',
+    type: 'hardener',
+    name: { ar: 'منشف لكر شفاف لميع', en: 'Gloss Clear Lacquer Hardener' },
+    description: { ar: 'منشف لكر شفاف لميع عالي الجودة بمعايير عالمية.', en: 'High-quality hardener for gloss clear lacquer.' },
+    features: {
+      ar: ['منشف خاص للكر الشفاف اللميع يمنحه الصلابة ومقاومة الخدوش.'],
+      en: ['Made for gloss clear lacquer; adds hardness and scratch resistance.'],
+    },
+    sizes: { ar: '2.5 لتر', en: '2.5 L' },
+    image: ilva(5),
+  },
+  {
+    code: 'TX24',
+    brand: 'ilva',
+    type: 'hardener',
+    name: { ar: 'منشف للأساس الأبيض', en: 'White Primer Hardener' },
+    description: { ar: 'منشف عالي الجودة بمعايير عالمية.', en: 'High-quality hardener made to international standards.' },
+    features: {
+      ar: ['منشف للأساس الأبيض، يتميز عن TX50 بكونه بارداً، فيعطي المرونة والوقت الكافي لتمدد الأساس على سطح الخشب.'],
+      en: ['For white primer. Slower than TX50, giving the primer time to flow out evenly on the wood.'],
+    },
+    sizes: { ar: '5 لتر', en: '5 L' },
+    image: ilva(6),
+  },
+  {
+    code: 'TX50',
+    brand: 'ilva',
+    type: 'hardener',
+    name: { ar: 'منشف للأساس واللكر الشفاف', en: 'Clear Primer & Lacquer Hardener' },
+    description: { ar: 'منشف عالي الجودة بمعايير عالمية.', en: 'High-quality hardener made to international standards.' },
+    features: {
+      ar: ['منشف للأساس الشفاف واللكر الشفاف.'],
+      en: ['For clear primer and clear lacquer.'],
+    },
+    sizes: { ar: '5 لتر', en: '5 L' },
+    image: ilva(7),
+  },
+  {
+    code: 'TX70',
+    brand: 'ilva',
+    type: 'hardener',
+    name: { ar: 'منشف ضد الاصفرار وضد الجروح', en: 'Anti-Yellowing, Anti-Scratch Hardener' },
+    description: { ar: 'منشف ضد الاصفرار وضد الجرح عالي الجودة بمعايير عالمية.', en: 'High-quality anti-yellowing, anti-scratch hardener.' },
+    features: {
+      ar: ['منشف خاص للدهان الفاتح واللكر الشفاف، يمنع اصفرار اللون مع مرور الوقت ويمنح الطبقة النهائية صلابة أكبر ومقاومة للخدوش.'],
+      en: ['For light paints and clear lacquer; stops yellowing over time and gives a harder, scratch-resistant finish.'],
+    },
+    sizes: { ar: '5 لتر', en: '5 L' },
+    image: ilva(8),
+  },
+  {
+    code: 'TV19',
+    brand: 'ilva',
+    type: 'hardener',
+    name: { ar: 'منشف انزولاسيا', en: 'Insulation Sealer Hardener' },
+    description: { ar: 'منشف انزولاسيا عالي الجودة بمعايير عالمية.', en: 'High-quality hardener for insulation sealer.' },
+    features: { ar: ['منشف خاص للانزولاسيا.'], en: ['Made for insulation sealer (TF25).'] },
+    sizes: { ar: '1 لتر', en: '1 L' },
+    image: ilva(9),
+  },
+  {
+    code: 'TX90',
+    brand: 'ilva',
+    type: 'hardener',
+    name: { ar: 'منشف أكريلي', en: 'Acrylic Hardener' },
+    description: { ar: 'منشف أكريلي عالي الجودة بمعايير عالمية.', en: 'High-quality acrylic hardener.' },
+    features: { ar: ['منشف خاص للأساس الأكريلي واللكر الأكريلي.'], en: ['For acrylic primer and acrylic lacquer.'] },
+    sizes: { ar: '1 لتر', en: '1 L' },
+    image: ilva(10),
+  },
+  {
+    code: 'TZ14',
+    brand: 'ilva',
+    type: 'additive',
+    name: { ar: 'مبرد', en: 'Retarder' },
+    description: { ar: 'مبرد عالي الجودة بمعايير عالمية.', en: 'High-quality retarder made to international standards.' },
+    features: {
+      ar: [
+        'يُضاف إلى الخلطات بأنواعها في الأجواء الصيفية الحارة، فيبطئ النشفان ويمنح الخلطة مرونة ووقتاً كافياً لتعبئة سطح الخشب.',
+        'يُخلط بنسبة معينة مع التنر حسب نوع الخلطة.',
+      ],
+      en: [
+        'Added to any mix in hot summer weather to slow drying and give the coat time to level on the wood.',
+        'Mixed with thinner in a ratio that depends on the mix.',
+      ],
+    },
+    sizes: { ar: '5 لتر · 25 لتر', en: '5 L · 25 L' },
+    image: ilva(11),
+  },
+  {
+    code: 'PX940',
+    brand: 'ilva',
+    type: 'additive',
+    name: { ar: 'بودرة سيتزل', en: 'Texture Powder' },
+    description: { ar: 'بودرة تُضاف إلى الدهان (الطبقة النهائية).', en: 'Powder added to the top-coat paint.' },
+    features: {
+      ar: ['تمنح السطح ملمساً خشناً مميزاً، مع زيادة صلابة ومتانة طبقة الدهان النهائية.'],
+      en: ['Gives the surface a distinctive textured feel and makes the top coat harder and more durable.'],
+    },
+    mix: { ar: '50 غرام لكل 1 كغ من الدهان', en: '50 g per 1 kg of paint' },
+    image: ilva(19),
+  },
+
+  // ───────────── ERCO (Türkiye) ─────────────
+  {
+    code: 'P15-99',
+    brand: 'erco',
+    type: 'primer',
+    name: { ar: 'أساس شفاف', en: 'Clear Primer' },
+    description: { ar: 'أساس شفاف عالي الجودة بمعايير عالمية.', en: 'High-quality clear primer made to international standards.' },
+    features: {
+      ar: ['يُغلَّف به الخشب لضمان طبقة أساس مثالية وجودة عالية عند تنفيذ الطبقة النهائية.'],
+      en: ['Seals the wood with an ideal base coat for a high-quality top coat.'],
+    },
+    mix: { ar: 'أساس + منشف + تنر — 2:1:1', en: 'Primer + hardener + thinner — 2:1:1' },
+    sizes: { ar: '10 لتر', en: '10 L' },
+    image: erco(1),
+  },
+  {
+    code: 'P14-88',
+    brand: 'erco',
+    type: 'primer',
+    name: { ar: 'أساس أبيض', en: 'White Primer' },
+    description: {
+      ar: 'أساس أبيض عالي الجودة لتغليف الخشب وتجهيزه بطبقة أساس مثالية تضمن نتيجة نهائية ناعمة وثابتة واحترافية.',
+      en: 'High-quality white primer that prepares wood for a smooth, even, professional top coat.',
+    },
+    features: {
+      ar: ['جودة تركية بمعايير عالمية.', 'يعطي الخشب طبقة تأسيس قوية ومتجانسة.', 'يساعد على إبراز جمال وجودة التشطيب النهائي.'],
+      en: ['Turkish quality to international standards.', 'A strong, uniform base coat.', 'Brings out the quality of the final finish.'],
+    },
+    mix: { ar: 'أساس + منشف + تنر — 2:1:1', en: 'Primer + hardener + thinner — 2:1:1' },
+    sizes: { ar: '10 كغ', en: '10 kg' },
+    image: erco(2),
+  },
+  {
+    code: 'P47-XX',
+    brand: 'erco',
+    type: 'lacquer',
+    name: { ar: 'لكر شفاف', en: 'Clear Lacquer' },
+    description: {
+      ar: 'لكر بجودة عالية يحمي الخشب ويمنحه طبقة نهائية مثالية مع الحفاظ على لونه الطبيعي.',
+      en: 'High-quality lacquer that protects wood with an ideal top coat while keeping its natural colour.',
+    },
+    features: {
+      ar: ['مناسب لتغليف الخشب بطبقة نهائية شفافة.', 'يحافظ على جمال الخشب ولونه الطبيعي.', 'يمكن تلوين الخشب باستخدام الصبغات المائية.'],
+      en: ['A clear top coat for wood.', 'Keeps the wood’s natural beauty and colour.', 'Wood can be tinted with water-based stains.'],
+    },
+    mix: { ar: 'لكر + منشف + تنر — 2:1:1', en: 'Lacquer + hardener + thinner — 2:1:1' },
+    gloss: ['10%', '20%', '30%', '60%', '100%'],
+    sizes: { ar: '10 لتر', en: '10 L' },
+    image: erco(6),
+  },
+  {
+    code: 'P24-10 / P49-10',
+    brand: 'erco',
+    type: 'lacquer',
+    name: { ar: 'لكر شفاف ضد الجرح', en: 'Scratch-Resistant Clear Lacquer' },
+    description: { ar: 'حماية أقوى للخشب وجودة عالية بمعايير عالمية.', en: 'Stronger wood protection made to international standards.' },
+    features: {
+      ar: [
+        'يُطبَّق على الخشب المعرّض لاحتكاك مستمر مثل الأدراج وأوجه طاولات السفرة، ليمنحه صلابة ومقاومة للخدوش.',
+        'مناسب للأسطح كثيرة الاستخدام.',
+        'يعطي طبقة حماية قوية ومظهراً نهائياً أنيقاً.',
+      ],
+      en: [
+        'For wood under constant wear such as drawers and dining-table tops; adds hardness and scratch resistance.',
+        'Suited to heavily used surfaces.',
+        'A strong protective layer with an elegant finish.',
+      ],
+    },
+    mix: { ar: 'لكر + منشف + تنر — 2:2:1', en: 'Lacquer + hardener + thinner — 2:2:1' },
+    gloss: ['5%', '20%'],
+    sizes: { ar: '5 لتر', en: '5 L' },
+    image: erco(5),
+  },
+  {
+    code: 'P40-XX',
+    brand: 'erco',
+    type: 'paint',
+    name: { ar: 'دهان أبيض', en: 'White Paint' },
+    description: {
+      ar: 'دهان أبيض مصنّع وفق معايير عالمية، يمنح الخشب تشطيباً احترافياً كطبقة نهائية تجمع بين الجمال والمتانة.',
+      en: 'White top-coat paint made to international standards for a professional, durable finish.',
+    },
+    features: {
+      ar: ['قابل للتلوين حسب الكتالوج بإضافة الملونات المناسبة.'],
+      en: ['Can be tinted to catalog colours with the matching colourants.'],
+    },
+    mix: { ar: 'دهان + منشف + تنر — 2:1:1', en: 'Paint + hardener + thinner — 2:1:1' },
+    gloss: ['10%', '20%', '30%', '60%', '100%'],
+    sizes: { ar: '5 كغ', en: '5 kg' },
+    image: erco(4),
+  },
+  {
+    code: 'X20-15',
+    brand: 'erco',
+    type: 'paint',
+    name: { ar: 'دهان أسود للحديد', en: 'Black Metal Paint' },
+    description: { ar: 'دهان أسود عالي الجودة للحديد بمعايير عالمية.', en: 'High-quality black paint for iron.' },
+    features: {
+      ar: ['يُطبَّق على الحديد الأسود (وليس المجلفن).', 'لا يحتاج طبقة أساس، ويمكن تطبيقه فوق طبقة أساس موجودة.'],
+      en: ['For black (non-galvanised) iron.', 'Needs no primer, but can go over an existing one.'],
+    },
+    mix: { ar: 'يُخلط مع التنر بنسبة 3:1', en: 'Mix with thinner 3:1' },
+    sizes: { ar: '5 كغ', en: '5 kg' },
+    image: erco(3),
+  },
+  {
+    code: 'H60-97',
+    brand: 'erco',
+    type: 'hardener',
+    name: { ar: 'منشف ضد الاصفرار', en: 'Anti-Yellowing Hardener' },
+    description: {
+      ar: 'منشف عالي الجودة ضد الاصفرار والجرح، مخصص للدهانات الفاتحة واللكر الشفاف.',
+      en: 'High-quality anti-yellowing, anti-scratch hardener for light paints and clear lacquer.',
+    },
+    features: {
+      ar: ['يساعد على ثبات اللون مع مرور الوقت.', 'يمنح الطبقة النهائية صلابة أعلى ومقاومة ممتازة للخدوش.'],
+      en: ['Keeps colour stable over time.', 'A harder top coat with excellent scratch resistance.'],
+    },
+    sizes: { ar: '5 لتر', en: '5 L' },
+    image: erco(11),
+  },
+  {
+    code: 'H61-72',
+    brand: 'erco',
+    type: 'hardener',
+    name: { ar: 'منشف', en: 'Hardener' },
+    description: {
+      ar: 'منشف عالي الجودة بمعايير عالمية، مخصص للأساس الشفاف والأساس الأبيض.',
+      en: 'High-quality hardener for clear and white primers.',
+    },
+    features: { ar: ['يعطي صلابة أفضل وتشطيباً متقناً.'], en: ['Better hardness and a precise finish.'] },
+    sizes: { ar: '15 لتر', en: '15 L' },
+    image: erco(12),
+  },
+  {
+    code: 'T71-00',
+    brand: 'erco',
+    type: 'thinner',
+    name: { ar: 'تنر إكسترا برودة', en: 'Extra-Slow Thinner' },
+    description: {
+      ar: 'تنر عالي الجودة مخصص للدهان الأبيض واللكر الشفاف ضمن خلطة الطبقة النهائية.',
+      en: 'High-quality thinner for white paint and clear lacquer in the top-coat mix.',
+    },
+    features: { ar: ['تشطيب متجانس ونتيجة احترافية.'], en: ['An even finish and a professional result.'] },
+    sizes: { ar: '15 لتر', en: '15 L' },
+    image: erco(7),
+  },
+  {
+    code: 'T75-00',
+    brand: 'erco',
+    type: 'thinner',
+    name: { ar: 'تنر إكسترا برودة', en: 'Extra-Slow Thinner' },
+    description: {
+      ar: 'تنر عالي الجودة مخصص للدهان الأبيض واللكر الشفاف.',
+      en: 'High-quality thinner for white paint and clear lacquer.',
+    },
+    features: { ar: ['تشطيب متجانس ونتائج احترافية بجودة عالية.'], en: ['An even finish and high-quality professional results.'] },
+    sizes: { ar: '15 لتر', en: '15 L' },
+    image: erco(8),
+  },
+  {
+    code: 'T30-00',
+    brand: 'erco',
+    type: 'thinner',
+    name: { ar: 'تنر معتدل البرودة', en: 'Medium-Slow Thinner' },
+    description: {
+      ar: 'تنر عالي الجودة مخصص للاستخدام مع الأساس الشفاف والأساس الأبيض.',
+      en: 'High-quality thinner for clear and white primers.',
+    },
+    features: { ar: ['خلط متجانس وتطبيق احترافي ونتائج ثابتة.'], en: ['Even mixing, professional application and consistent results.'] },
+    sizes: { ar: '15 لتر', en: '15 L' },
+    image: erco(9),
+  },
+  {
+    code: 'T39-00',
+    brand: 'erco',
+    type: 'thinner',
+    name: { ar: 'تنر معتدل البرودة', en: 'Medium-Slow Thinner' },
+    description: {
+      ar: 'تنر معتدل البرودة بجودة تركية ومعايير عالمية لنتيجة احترافية وتشطيب متوازن.',
+      en: 'Medium-slow thinner of Turkish quality for a professional, balanced finish.',
+    },
+    features: {
+      ar: ['مناسب للأساس الشفاف والأساس الأبيض.', 'يساعد على توزيع الطلاء بسلاسة وتحقيق تشطيب متجانس.'],
+      en: ['For clear and white primers.', 'Helps the coating spread smoothly for an even finish.'],
+    },
+    sizes: { ar: '15 لتر', en: '15 L' },
+    image: erco(10),
+  },
+];
+
+export const woodCoatingsPage: CategoryPage = {
+  index: '01',
+  title: { ar: 'طلاءات الخشب', en: 'Wood Coatings' },
+  intro: {
+    ar: 'أنظمة دهانات خشب متكاملة من ILVA الإيطالية و ERCO التركية، من العزل والأساس حتى الطبقة النهائية.',
+    en: 'Complete wood-finishing systems from Italy’s ILVA and Türkiye’s ERCO, from sealer and primer to the final top coat.',
+  },
+  steps: [
+    { icon: 'droplets', title: { ar: 'العزل', en: 'Seal' }, desc: { ar: 'انزولاسيا تحمي الخشب من الرطوبة', en: 'Insulation sealer protects wood from moisture' } },
+    { icon: 'layers', title: { ar: 'الأساس', en: 'Prime' }, desc: { ar: 'أساس شفاف أو أبيض أو بوليستر', en: 'Clear, white or polyester primer' } },
+    { icon: 'paintbrush', title: { ar: 'الطبقة النهائية', en: 'Top coat' }, desc: { ar: 'لكر شفاف أو دهان ملوّن', en: 'Clear lacquer or tinted paint' } },
+  ],
+  stepNote: { ar: 'كل طبقة تُخلط مع المنشف والتنر المناسبين', en: 'Each coat is mixed with the matching hardener and thinner' },
+  brands,
+  productTypes,
+  products,
+};

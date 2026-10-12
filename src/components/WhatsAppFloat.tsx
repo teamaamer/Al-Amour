@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
+import { SALES } from '@/lib/contact';
 
 const WhatsAppFloat = () => {
   const { t } = useLanguage();
@@ -22,7 +23,7 @@ const WhatsAppFloat = () => {
       />
       
       <motion.a
-        href="https://wa.me/970XXXXXXXX"
+        href={`https://wa.me/${SALES.whatsapp}`}
         target="_blank"
         rel="noopener noreferrer"
         initial={{ scale: 0, rotate: -180 }}

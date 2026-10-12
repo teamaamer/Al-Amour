@@ -4,31 +4,46 @@ import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useLanguage } from '@/context/LanguageContext';
 
 // No dedicated category pages yet — every category points to the catalogs section
 const CATEGORY_HREF = '#catalogs';
+const COLOR_MIXING_HREF = 'http://3.143.226.80:3000/';
+const WOOD_COATINGS_HREF = '/products/wood-coatings';
+const CAR_PAINTS_HREF = '/products/car-paints';
+const RESINS_HREF = '/products/resins-gelcoats';
+const CARPENTER_SUPPLIES_HREF = 'https://www.domicile.co.il/ar/';
 const IMAGE_SIZES = '(max-width: 760px) 80vw, 380px';
 
 const ServicesNew = () => {
   const { t } = useLanguage();
   const reduceMotion = useReducedMotion();
   const [active, setActive] = useState(0);
+  const router = useRouter();
 
-  const categories = [
-    { id: 1, title: t('woodCoatings'), description: t('woodCoatingsDesc'), image: '/cats/wood-coatings.png' },
-    { id: 2, title: t('carPaints'), description: t('carPaintsDesc'), image: '/cats/car-paints.png' },
-    { id: 3, title: t('resinsGelcoats'), description: t('resinsGelcoatsDesc'), image: '/cats/resins-and-gelcoats.png' },
-    { id: 4, title: t('toolingSystems'), description: t('toolingSystemsDesc'), image: '/cats/tooling.png' },
-    { id: 5, title: t('colorMixing'), description: t('colorMixingDescShort'), image: '/cats/color-mixing.png' },
-    { id: 6, title: t('carpenterSupplies'), description: t('carpenterSuppliesDescShort'), image: '/cats/carpenter.png' },
+  const categories: { id: number; title: string; description: string; image: string; href?: string }[] = [
+    { id: 1, title: t('woodCoatings'), description: t('woodCoatingsDesc'), image: '/cats/wood-coatings.png', href: WOOD_COATINGS_HREF },
+    { id: 2, title: t('carPaints'), description: t('carPaintsDesc'), image: '/cats/car-paints.png', href: CAR_PAINTS_HREF },
+    { id: 3, title: t('resinsGelcoats'), description: t('resinsGelcoatsDesc'), image: '/cats/resins-and-gelcoats.png', href: RESINS_HREF },
+    { id: 5, title: t('colorMixing'), description: t('colorMixingDescShort'), image: '/cats/color-mixing.png', href: COLOR_MIXING_HREF },
+    { id: 6, title: t('carpenterSupplies'), description: t('carpenterSuppliesDescShort'), image: '/cats/carpenter.png', href: CARPENTER_SUPPLIES_HREF },
   ];
 
   const current = categories[active];
   const indexLabel = (i: number) => String(i + 1).padStart(2, '0');
 
+  // Categories with their own page go there on the first click; external tools open in a new tab
+  const hrefOf = (category: (typeof categories)[number]) => category.href ?? CATEGORY_HREF;
+  const isExternal = (category: (typeof categories)[number]) => hrefOf(category).startsWith('http');
+
   const handleClick = (i: number) => {
-    if (i === active) {
+    const category = categories[i];
+    if (isExternal(category)) {
+      window.open(hrefOf(category), '_blank', 'noopener,noreferrer');
+    } else if (category.href) {
+      router.push(category.href);
+    } else if (i === active) {
       window.location.href = CATEGORY_HREF;
     } else {
       setActive(i);
@@ -115,7 +130,8 @@ const ServicesNew = () => {
 
               <div className="mt-4 flex items-center justify-between gap-3">
                 <a
-                  href={CATEGORY_HREF}
+                  href={hrefOf(current)}
+                  {...(isExternal(current) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                   className="inline-flex items-center min-h-[46px] px-6 rounded-full bg-cyan hover:bg-sky border-2 border-cyan text-midnight font-bold text-sm transition-colors motion-reduce:transition-none focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-cyan focus-visible:outline-offset-2"
                 >
                   {t('exploreCategory')}

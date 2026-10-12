@@ -12,6 +12,8 @@ import {
   X,
 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import Stats from '@/components/Stats';
+import LogoTicker from '@/components/LogoTicker';
 
 export default function PremiumHero() {
   const { language, setLanguage, t } = useLanguage();
@@ -29,7 +31,7 @@ export default function PremiumHero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen w-full overflow-hidden bg-midnight lg:h-screen"
+      className="relative flex min-h-screen w-full flex-col overflow-hidden bg-midnight"
     >
       {/* =========================================================
           FULL SCREEN BACKGROUND IMAGE
@@ -48,150 +50,6 @@ export default function PremiumHero() {
             sizes="100vw"
           />
         </div>
-
-        {/* =====================================================
-            TILTED FLOATING CARD
-        ===================================================== */}
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: 40,
-            rotate: isRTL ? 7 : -7,
-            scale: 0.92,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-            rotate: isRTL ? 7 : -7,
-            scale: 1,
-          }}
-          transition={{
-            duration: 0.8,
-            delay: 0.7,
-            ease: 'easeOut',
-          }}
-          whileHover={{
-            rotate: isRTL ? 4 : -4,
-            scale: 1.03,
-          }}
-          className={`pointer-events-auto absolute bottom-[8%] z-10 hidden w-[300px] overflow-visible transition-[left,right] duration-700 md:w-[360px] md:block lg:w-[420px] ${
-            isRTL ? 'left-[4%]' : 'right-[4%]'
-          }`}
-        >
-          {/* ===================================================
-              ANIMATED BLUE GLOW
-          =================================================== */}
-          <motion.div
-            className="absolute -inset-[3px] rounded-3xl"
-            style={{
-              background:
-                'linear-gradient(90deg, #20BDF2, #42C8F5, #20BDF2)',
-              backgroundSize: '300% 100%',
-              filter: 'blur(3px)',
-              opacity: 0.35,
-            }}
-            animate={{
-              backgroundPosition: [
-                '0% 50%',
-                '100% 50%',
-                '0% 50%',
-              ],
-              opacity: [0.25, 0.4, 0.25],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: 'linear',
-            }}
-          />
-
-          {/* ===================================================
-              CARD
-          =================================================== */}
-          <div className="relative overflow-hidden rounded-3xl border border-sky/50 bg-deep/90 backdrop-blur-md">
-
-            {/* MOVING LIGHT */}
-            <motion.div
-              className="pointer-events-none absolute -left-1/2 top-0 h-full w-1/2"
-              style={{
-                background:
-                  'linear-gradient(90deg, transparent, rgba(66,200,245,0.18), transparent)',
-                transform: 'skewX(-20deg)',
-              }}
-              animate={{
-                x: ['0%', '400%'],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                repeatDelay: 1,
-              }}
-            />
-
-            {/* IMAGE */}
-            <div className="relative aspect-[4/3] w-full">
-              <Image
-                src="/heroam2.png"
-                alt="Al-Amour"
-                fill
-                className="object-cover"
-                sizes="(min-width: 1024px) 420px, 360px"
-              />
-
-              {/* IMAGE SHINE */}
-              <motion.div
-                className="pointer-events-none absolute inset-0"
-                style={{
-                  background:
-                    'linear-gradient(110deg, transparent 25%, rgba(66,200,245,0.12) 50%, transparent 75%)',
-                  backgroundSize: '200% 100%',
-                }}
-                animate={{
-                  backgroundPosition: [
-                    '200% 0',
-                    '-100% 0',
-                  ],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: 'linear',
-                  repeatDelay: 1,
-                }}
-              />
-
-              {/* BOTTOM GRADIENT */}
-              <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-midnight/95 via-midnight/45 to-transparent" />
-
-              {/* CARD TEXT */}
-              <div
-                className={`absolute bottom-0 left-0 right-0 p-5 ${
-                  isRTL ? 'text-right' : 'text-left'
-                }`}
-                dir={isRTL ? 'rtl' : 'ltr'}
-              >
-                <motion.div
-                  animate={{
-                    opacity: [0.7, 1, 0.7],
-                  }}
-                  transition={{
-                    duration: 2.5,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                  }}
-                  className="text-[10px] font-semibold tracking-[0.25em] text-sky"
-                >
-                  AL-AMOUR
-                </motion.div>
-
-                <div className="mt-1 text-base font-bold tracking-wide text-white">
-                  PREMIUM MATERIALS
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
       </div>
 
       {/* =========================================================
@@ -209,33 +67,22 @@ export default function PremiumHero() {
         transition={{
           duration: 0.8,
         }}
-        className="relative z-50 px-5 py-5 md:px-10 lg:px-14"
+        className="relative z-50 px-5 py-3 md:px-10 lg:px-14"
         dir={isRTL ? 'rtl' : 'ltr'}
       >
         <div className="mx-auto flex max-w-[1680px] items-center justify-between">
 
           {/* LOGO */}
-          <div className="flex items-center gap-3">
-            <div className="relative h-11 w-11 shrink-0 lg:h-14 lg:w-14">
-              <Image
-                src="/logo.png"
-                alt="Al-Amour"
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
-
-            <div className="hidden leading-none sm:block">
-              <div className="text-[15px] font-bold tracking-[0.16em] text-white md:text-[17px]">
-                AL-AMOUR
-              </div>
-
-              <div               className="mt-1 text-[8px] tracking-[0.22em] text-sky md:text-[9px]">
-                .GENERAL TRADING CO.
-              </div>
-            </div>
-          </div>
+          <a href="#home" className="shrink-0">
+            <Image
+              src="/logo.png"
+              alt="Al-Amour General Trading Co."
+              width={467}
+              height={480}
+              className="h-20 w-auto lg:h-24"
+              priority
+            />
+          </a>
 
           {/* DESKTOP MENU */}
           <div className="hidden items-center gap-8 xl:flex">
@@ -369,14 +216,14 @@ export default function PremiumHero() {
           HERO CONTENT
       ========================================================= */}
       <div
-        className="relative z-20 mx-auto flex min-h-[calc(100vh-84px)] max-w-[1680px] items-center px-5 py-12 md:px-10 lg:px-14 lg:py-0"
+        className="relative z-20 mx-auto flex w-full max-w-[1680px] flex-1 items-center px-5 py-6 md:px-10 lg:px-14"
         dir="ltr"
       >
         <div
-          className="relative z-20 flex w-full"
+          className="relative z-20 flex w-full items-center justify-between gap-10"
           dir={isRTL ? 'rtl' : 'ltr'}
         >
-          <div className="flex max-w-[620px] flex-col gap-5 lg:gap-6">
+          <div className="flex max-w-[760px] flex-col gap-4 lg:gap-5">
 
             {/* TITLE */}
             <motion.div
@@ -397,7 +244,7 @@ export default function PremiumHero() {
                 className="font-black leading-[1.12] text-white"
                 style={{
                   fontSize:
-                    'clamp(2.4rem, 5vw, 4.6rem)',
+                    'clamp(2rem, 4.2vw, 3.9rem)',
                   textShadow:
                     '0 4px 28px rgba(8,15,31,0.75)',
                 }}
@@ -409,7 +256,7 @@ export default function PremiumHero() {
                 className="font-black leading-[1.12]"
                 style={{
                   fontSize:
-                    'clamp(2.4rem, 5vw, 4.6rem)',
+                    'clamp(2rem, 4.2vw, 3.9rem)',
                   color: '#42C8F5',
                 }}
               >
@@ -552,7 +399,7 @@ export default function PremiumHero() {
                 duration: 0.7,
                 delay: 0.8,
               }}
-              className="flex flex-wrap gap-2 pt-1"
+              className="hidden flex-wrap gap-2 pt-1 sm:flex [@media(max-height:820px)]:!hidden"
             >
               {(
                 [
@@ -592,8 +439,167 @@ export default function PremiumHero() {
               ))}
             </motion.div>
           </div>
+
+            {/* =====================================================
+                TILTED FLOATING CARD
+            ===================================================== */}
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 40,
+                rotate: isRTL ? 7 : -7,
+                scale: 0.92,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                rotate: isRTL ? 7 : -7,
+                scale: 1,
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0.7,
+                ease: 'easeOut',
+              }}
+              whileHover={{
+                rotate: isRTL ? 4 : -4,
+                scale: 1.03,
+              }}
+              className="relative z-10 hidden w-[340px] shrink-0 overflow-visible lg:block xl:w-[420px]"
+            >
+              {/* ===================================================
+                  ANIMATED BLUE GLOW
+              =================================================== */}
+              <motion.div
+                className="absolute -inset-[3px] rounded-3xl"
+                style={{
+                  background:
+                    'linear-gradient(90deg, #20BDF2, #42C8F5, #20BDF2)',
+                  backgroundSize: '300% 100%',
+                  filter: 'blur(3px)',
+                  opacity: 0.35,
+                }}
+                animate={{
+                  backgroundPosition: [
+                    '0% 50%',
+                    '100% 50%',
+                    '0% 50%',
+                  ],
+                  opacity: [0.25, 0.4, 0.25],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: 'linear',
+                }}
+              />
+
+              {/* ===================================================
+                  CARD
+              =================================================== */}
+              <div className="relative overflow-hidden rounded-3xl border border-sky/50 bg-deep/90 backdrop-blur-md">
+
+                {/* MOVING LIGHT */}
+                <motion.div
+                  className="pointer-events-none absolute -left-1/2 top-0 h-full w-1/2"
+                  style={{
+                    background:
+                      'linear-gradient(90deg, transparent, rgba(66,200,245,0.18), transparent)',
+                    transform: 'skewX(-20deg)',
+                  }}
+                  animate={{
+                    x: ['0%', '400%'],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                    repeatDelay: 1,
+                  }}
+                />
+
+                {/* IMAGE */}
+                <div className="relative aspect-[4/3] w-full">
+                  <Image
+                    src="/heroam2.png"
+                    alt="Al-Amour"
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 420px, 360px"
+                  />
+
+                  {/* IMAGE SHINE */}
+                  <motion.div
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                      background:
+                        'linear-gradient(110deg, transparent 25%, rgba(66,200,245,0.12) 50%, transparent 75%)',
+                      backgroundSize: '200% 100%',
+                    }}
+                    animate={{
+                      backgroundPosition: [
+                        '200% 0',
+                        '-100% 0',
+                      ],
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: 'linear',
+                      repeatDelay: 1,
+                    }}
+                  />
+
+                  {/* BOTTOM GRADIENT */}
+                  <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-midnight/95 via-midnight/45 to-transparent" />
+
+                  {/* CARD TEXT */}
+                  <div
+                    className={`absolute bottom-0 left-0 right-0 p-5 ${
+                      isRTL ? 'text-right' : 'text-left'
+                    }`}
+                    dir={isRTL ? 'rtl' : 'ltr'}
+                  >
+                    <motion.div
+                      animate={{
+                        opacity: [0.7, 1, 0.7],
+                      }}
+                      transition={{
+                        duration: 2.5,
+                        repeat: Infinity,
+                        ease: 'easeInOut',
+                      }}
+                      className="text-[10px] font-semibold tracking-[0.25em] text-sky"
+                    >
+                      AL-AMOUR
+                    </motion.div>
+
+                    <div className="mt-1 text-base font-bold tracking-wide text-white">
+                      PREMIUM MATERIALS
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
         </div>
       </div>
+
+      {/* =========================================================
+          STATS + BRANDS (visible without scrolling)
+      ========================================================= */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.9 }}
+        className="relative z-20 mx-auto w-full max-w-[1680px] px-5 pb-5 md:px-10 lg:px-14"
+        dir={isRTL ? 'rtl' : 'ltr'}
+      >
+        <div className="rounded-3xl border border-white/10 bg-midnight/70 px-4 py-4 backdrop-blur-md md:px-6">
+          <Stats embedded />
+          <div className="my-3 h-px bg-white/10" />
+          <LogoTicker embedded />
+        </div>
+      </motion.div>
     </section>
   );
 }

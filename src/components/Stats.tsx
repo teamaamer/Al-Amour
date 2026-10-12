@@ -9,9 +9,10 @@ interface StatCardProps {
   label: string;
   suffix?: string;
   index: number;
+  embedded?: boolean;
 }
 
-const StatCard = ({ value, label, suffix = '', index }: StatCardProps) => {
+const StatCard = ({ value, label, suffix = '', index, embedded = false }: StatCardProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const [displayValue, setDisplayValue] = useState(0);
@@ -52,12 +53,17 @@ const StatCard = ({ value, label, suffix = '', index }: StatCardProps) => {
         delay: index * 0.1,
         ease: [0.44, 0, 0.56, 1],
       }}
-      className="text-center px-4 py-2"
+      // Embedded: bottom-align so single-line labels don't lift their number
+      className={embedded ? 'flex h-full flex-col justify-end text-center px-1 py-1 md:px-2' : 'text-center px-4 py-2'}
     >
-      <p className="text-xs uppercase tracking-wider text-steel mb-1 whitespace-pre-line leading-tight">
+      <p className={`uppercase tracking-wider mb-1 whitespace-pre-line leading-tight ${embedded ? 'text-[10px] md:text-xs text-white/60' : 'text-xs text-steel'}`}>
         {label}
       </p>
-      <motion.div className="text-3xl md:text-4xl font-extrabold text-midnight tracking-tighter">
+      <motion.div
+        className={`font-extrabold tracking-tighter ${
+          embedded ? 'text-xl md:text-3xl text-white' : 'text-3xl md:text-4xl text-midnight'
+        }`}
+      >
         <motion.span
           key={displayValue}
           initial={{ y: 20, opacity: 0 }}
@@ -72,7 +78,8 @@ const StatCard = ({ value, label, suffix = '', index }: StatCardProps) => {
   );
 };
 
-const Stats = () => {
+// `embedded` renders just the counters, styled for the dark hero background
+const Stats = ({ embedded = false }: { embedded?: boolean }) => {
   const { t } = useLanguage();
   
   const stats = [
@@ -82,6 +89,23 @@ const Stats = () => {
     { value: 600, label: t('satisfiedClients'), suffix: '+' },
     { value: 100, label: t('qualityAssured'), suffix: '%' },
   ];
+
+  if (embedded) {
+    return (
+      <div className="grid grid-cols-5 divide-x divide-white/15 rtl:divide-x-reverse">
+        {stats.map((stat, index) => (
+          <StatCard
+            key={index}
+            value={stat.value}
+            label={stat.label}
+            suffix={stat.suffix}
+            index={index}
+            embedded
+          />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <section className="bg-white py-4 md:py-6">

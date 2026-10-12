@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Download } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Download, Phone } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { HELP_LINE } from '@/lib/contact';
 
 interface CatalogCardProps {
   title: string;
@@ -82,7 +83,17 @@ const CatalogCard = ({ title, description, fileSize, fileName, color, t, isActiv
 
 const Catalogs = () => {
   const { t } = useLanguage();
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [page, setPage] = useState(0);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Desktop shows 4 cards per page, mobile 1; paging by whole pages avoids repeating cards
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
 
   const catalogs = [
     {
@@ -103,8 +114,8 @@ const Catalogs = () => {
     },
     {
       id: 10,
-      titleKey: 'politekFullCatalogTitle',
-      descriptionKey: 'politekFullCatalogDesc',
+      titleKey: 'polytekCatalogTitle',
+      descriptionKey: 'polytekCatalogDesc',
       fileSize: '7.6 MB',
       fileName: 'politek (1).pdf',
       color: 'bg-cyan-600',
@@ -157,30 +168,27 @@ const Catalogs = () => {
       fileName: 'TOOLING SYSTEM (1).pdf',
       color: 'bg-primary',
     },
-    {
-      id: 7,
-      titleKey: 'polytekCatalogTitle',
-      descriptionKey: 'polytekCatalogDesc',
-      fileSize: '22 MB',
-      fileName: 'POLITEK CATALOG.pdf',
-      color: 'bg-cyan-500',
-    },
   ];
+
+  const perPage = isDesktop ? 4 : 1;
+  const pageCount = Math.ceil(catalogs.length / perPage);
+  const currentPage = Math.min(page, pageCount - 1);
+  const pageItems = catalogs.slice(currentPage * perPage, currentPage * perPage + perPage);
 
   useEffect(() => {
     const interval = window.setInterval(() => {
-      setActiveIndex((currentIndex) => (currentIndex + 1) % catalogs.length);
+      setPage((p) => (Math.min(p, pageCount - 1) + 1) % pageCount);
     }, 10000);
 
     return () => window.clearInterval(interval);
-  }, [catalogs.length]);
+  }, [pageCount]);
 
   const goToPrevious = () => {
-    setActiveIndex((currentIndex) => (currentIndex - 1 + catalogs.length) % catalogs.length);
+    setPage((p) => (Math.min(p, pageCount - 1) - 1 + pageCount) % pageCount);
   };
 
   const goToNext = () => {
-    setActiveIndex((currentIndex) => (currentIndex + 1) % catalogs.length);
+    setPage((p) => (Math.min(p, pageCount - 1) + 1) % pageCount);
   };
 
   return (
@@ -234,23 +242,24 @@ const Catalogs = () => {
                   {t('carouselAutoRotate')}
                 </p>
                 <p className="mt-1 text-sm text-cool">
-                  {t('catalogPage')} {String(activeIndex + 1).padStart(2, '0')} {t('catalogPageOf')} {String(catalogs.length).padStart(2, '0')} {t('catalogs')}
+                  {isDesktop ? t('catalogsPageLabel') : t('catalogPage')} {String(currentPage + 1).padStart(2, '0')} {t('catalogPageOf')}{' '}
+                  {String(pageCount).padStart(2, '0')}
                 </p>
               </div>
 
               <div className="flex flex-wrap items-center gap-2">
-                {catalogs.map((catalog, index) => (
+                {Array.from({ length: pageCount }, (_, index) => (
                   <button
-                    key={catalog.id}
+                    key={index}
                     type="button"
-                    onClick={() => setActiveIndex(index)}
+                    onClick={() => setPage(index)}
                     className={`flex h-8 min-w-8 items-center justify-center rounded-full border px-3 text-xs font-semibold transition-all duration-500 ${
-                      index === activeIndex
+                      index === currentPage
                         ? 'border-cyan bg-cyan text-midnight'
                         : 'border-steel bg-midnight text-cool hover:border-cyan hover:bg-deep'
                     }`}
-                    aria-label={`${t('catalogPage')} ${index + 1}`}
-                    aria-current={index === activeIndex ? 'true' : undefined}
+                    aria-label={`${isDesktop ? t('catalogsPageLabel') : t('catalogPage')} ${index + 1}`}
+                    aria-current={index === currentPage ? 'true' : undefined}
                   >
                     {index + 1}
                   </button>
@@ -284,7 +293,7 @@ const Catalogs = () => {
 
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
-                key={activeIndex}
+                key={currentPage}
                 initial={{ opacity: 0, x: 80 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -80 }}
@@ -307,11 +316,11 @@ const Catalogs = () => {
               >
                 <div className="h-full">
                   <CatalogCard
-                    title={t(catalogs[activeIndex].titleKey)}
-                    description={t(catalogs[activeIndex].descriptionKey)}
-                    fileSize={catalogs[activeIndex].fileSize}
-                    fileName={catalogs[activeIndex].fileName}
-                    color={catalogs[activeIndex].color}
+                    title={t(pageItems[0].titleKey)}
+                    description={t(pageItems[0].descriptionKey)}
+                    fileSize={pageItems[0].fileSize}
+                    fileName={pageItems[0].fileName}
+                    color={pageItems[0].color}
                     t={t}
                     isActive
                   />
@@ -322,15 +331,15 @@ const Catalogs = () => {
             <div className="hidden lg:block">
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
-                  key={activeIndex}
+                  key={currentPage}
                   initial={{ opacity: 0, x: 80 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -80 }}
                   transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                  className="grid grid-cols-4 gap-6"
+                  className="flex justify-center gap-6"
                 >
-                  {Array.from({ length: 4 }, (_, offset) => catalogs[(activeIndex + offset) % catalogs.length]).map((catalog, offset) => (
-                    <div key={`${catalog.id}-${activeIndex}`} className="h-full">
+                  {pageItems.map((catalog, offset) => (
+                    <div key={catalog.id} className="h-full w-[calc((100%-4.5rem)/4)] shrink-0">
                       <CatalogCard
                         title={t(catalog.titleKey)}
                         description={t(catalog.descriptionKey)}
@@ -357,15 +366,22 @@ const Catalogs = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-16 text-center"
         >
-          <div className="inline-flex items-center gap-3 px-8 py-4 bg-deep rounded-2xl border border-steel">
+          <a
+            href={`tel:${HELP_LINE.tel}`}
+            className="inline-flex items-center gap-3 px-8 py-4 bg-deep rounded-2xl border border-steel transition-colors hover:border-cyan"
+          >
             <div className="w-10 h-10 rounded-full bg-cyan flex items-center justify-center">
-              <Download className="w-5 h-5 text-midnight" />
+              <Phone className="w-5 h-5 text-midnight" />
             </div>
-            <div className="text-left">
+            <div className="text-start">
               <p className="text-sm font-semibold text-white">{t('needHelp')}</p>
               <p className="text-xs text-cool">{t('contactSupport')}</p>
+              <p dir="ltr" className="mt-1 flex gap-1.5 text-base font-bold text-cyan">
+                <span>{HELP_LINE.code}</span>
+                <span>{HELP_LINE.number}</span>
+              </p>
             </div>
-          </div>
+          </a>
         </motion.div>
       </div>
     </section>

@@ -5,17 +5,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, Instagram, Facebook, Twitter, Mail, Languages } from 'lucide-react';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
+import { CONTACT_EMAIL, FACEBOOK_URL, INSTAGRAM_URL, SALES } from '@/lib/contact';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
 
   const socialLinks = [
-    { icon: MessageCircle, href: 'https://wa.me/970XXXXXXXX', label: 'WhatsApp' },
-    { icon: Instagram, href: '#', label: 'Instagram' },
-    { icon: Facebook, href: '#', label: 'Facebook' },
+    { icon: MessageCircle, href: `https://wa.me/${SALES.whatsapp}`, label: 'WhatsApp' },
+    { icon: Instagram, href: INSTAGRAM_URL, label: 'Instagram' },
+    { icon: Facebook, href: FACEBOOK_URL, label: 'Facebook' },
     { icon: Twitter, href: '#', label: 'Twitter' },
-    { icon: Mail, href: 'mailto:info@alamour.ps', label: 'Email' },
+    { icon: Mail, href: `mailto:${CONTACT_EMAIL}`, label: 'Email' },
   ];
 
   const menuItems = [
@@ -64,8 +65,8 @@ const Navbar = () => {
               <Image
                 src="/logo.png"
                 alt="Al-Amour Company"
-                width={250}
-                height={125}
+                width={467}
+                height={480}
                 className="h-28 md:h-32 w-auto"
                 priority
               />

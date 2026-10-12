@@ -6,18 +6,20 @@ import Image from 'next/image';
 // Intrinsic sizes of the source files. Height is scaled by aspect ratio so wide
 // and square logos read at a similar visual weight.
 const logos = [
-  { name: 'ILVA', src: '/ilva.png', width: 290, height: 215, boost: 1.25 }, // file has extra padding
-  { name: 'POLITEK', src: '/politek.png', width: 376, height: 134 },
+  { name: 'ILVA', src: '/ilva.png', width: 136, height: 178 },
+  { name: 'POLITEK', src: '/politek.png', width: 275, height: 119 },
   { name: 'ERCO', src: '/erco.webp', width: 768, height: 417 },
 ];
 
 const REFERENCE_RATIO = 1.6;
-const heightFactor = (w: number, h: number, boost = 1) => boost * Math.sqrt(REFERENCE_RATIO / (w / h));
+const heightFactor = (w: number, h: number) => Math.sqrt(REFERENCE_RATIO / (w / h));
 
 // Each half must be wider than the widest screen so the loop never shows a gap
 const REPEATS_PER_HALF = 6;
 
-const LogoTicker = () => {
+// `embedded` drops the section background and puts the label beside the logos,
+// for use inside the hero
+const LogoTicker = ({ embedded = false }: { embedded?: boolean }) => {
   const { t } = useLanguage();
 
   const half = Array.from({ length: REPEATS_PER_HALF }, () => logos).flat();
@@ -31,23 +33,58 @@ const LogoTicker = () => {
         <li
           key={`${copy}-${logo.name}-${index}`}
           // Hide repeats when motion is reduced so each logo shows once
-          className={`flex shrink-0 items-center justify-center px-6 sm:px-9 lg:px-12 ${
+          className={`flex shrink-0 items-center justify-center ${embedded ? 'px-2 sm:px-3' : 'px-6 sm:px-9 lg:px-12'} ${
             index >= logos.length ? 'motion-reduce:hidden' : ''
           }`}
         >
-          <Image
-            src={logo.src}
-            alt={copy === 0 && index < logos.length ? logo.name : ''}
-            width={logo.width}
-            height={logo.height}
-            sizes="200px"
-            className="w-auto max-w-none object-contain brightness-0 invert opacity-80 transition-opacity duration-300 hover:opacity-100"
-            style={{ height: `calc(var(--logo-h) * ${heightFactor(logo.width, logo.height, 'boost' in logo ? logo.boost : 1).toFixed(3)})` }}
-          />
+          {/* Embedded: full-colour logos on a white chip so dark brand colours stay legible on the hero */}
+          <div
+            className={
+              embedded
+                ? 'flex h-12 w-28 items-center justify-center rounded-xl bg-white px-3 py-1.5 shadow-sm sm:h-14 sm:w-32 lg:h-16 lg:w-40'
+                : 'contents'
+            }
+          >
+            <Image
+              src={logo.src}
+              alt={copy === 0 && index < logos.length ? logo.name : ''}
+              width={logo.width}
+              height={logo.height}
+              sizes="200px"
+              className={
+                embedded
+                  ? 'h-full w-auto max-w-full object-contain'
+                  : 'w-auto max-w-none object-contain brightness-0 invert opacity-80 transition-opacity duration-300 hover:opacity-100'
+              }
+              style={embedded ? undefined : { height: `calc(var(--logo-h) * ${heightFactor(logo.width, logo.height).toFixed(3)})` }}
+            />
+          </div>
         </li>
       ))}
     </ul>
   );
+
+  if (embedded) {
+    return (
+      // Right padding keeps the label clear of the fixed WhatsApp button in RTL
+      <div className="flex flex-col items-center gap-2 lg:flex-row lg:gap-6 lg:pr-16">
+        <p className="shrink-0 text-xs uppercase tracking-widest text-white/60">
+          {t('trustedByLeadingBrands')}
+        </p>
+
+        {/* Edges fade via mask so it works over the photo background */}
+        <div
+          dir="ltr"
+          className="logo-marquee relative w-full min-w-0 flex-1 overflow-hidden py-2 [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]"
+        >
+          <div className="logo-marquee-track flex w-max">
+            {renderHalf(0)}
+            {renderHalf(1)}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <section className="bg-navy py-6 overflow-hidden">
