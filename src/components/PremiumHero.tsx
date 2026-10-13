@@ -33,13 +33,15 @@ export default function PremiumHero() {
       id="home"
       className="relative flex min-h-screen w-full flex-col overflow-hidden bg-midnight"
     >
+      {/* Photo area: the background covers only this part, the stats band sits below it */}
+      <div className="relative flex flex-1 flex-col">
       {/* =========================================================
           FULL SCREEN BACKGROUND IMAGE
       ========================================================= */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/heroam2.png"
+            src="/hero-building.webp"
             alt="Al-Amour facility"
             fill
             priority
@@ -50,6 +52,9 @@ export default function PremiumHero() {
             sizes="100vw"
           />
         </div>
+        {/* Daylight photo: darken the text side and the bottom so white copy and the stats band stay readable */}
+        <div className="absolute inset-0 bg-gradient-to-b from-midnight/45 via-transparent to-midnight/70" />
+        <div className="absolute inset-0 from-midnight/85 via-midnight/35 to-transparent ltr:bg-gradient-to-r rtl:bg-gradient-to-l" />
       </div>
 
       {/* =========================================================
@@ -465,7 +470,7 @@ export default function PremiumHero() {
                 rotate: isRTL ? 4 : -4,
                 scale: 1.03,
               }}
-              className="relative z-10 hidden w-[340px] shrink-0 overflow-visible lg:block xl:w-[420px]"
+              className="relative z-10 hidden w-[220px] shrink-0 overflow-visible lg:block xl:w-[260px]"
             >
               {/* ===================================================
                   ANIMATED BLUE GLOW
@@ -521,11 +526,11 @@ export default function PremiumHero() {
                 {/* IMAGE */}
                 <div className="relative aspect-[4/3] w-full">
                   <Image
-                    src="/heroam2.png"
+                    src="/hero-card.webp"
                     alt="Al-Amour"
                     fill
                     className="object-cover"
-                    sizes="(min-width: 1024px) 420px, 360px"
+                    sizes="260px"
                   />
 
                   {/* IMAGE SHINE */}
@@ -584,6 +589,8 @@ export default function PremiumHero() {
         </div>
       </div>
 
+      </div>
+
       {/* =========================================================
           STATS + BRANDS (visible without scrolling)
       ========================================================= */}
@@ -591,10 +598,10 @@ export default function PremiumHero() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.9 }}
-        className="relative z-20 mx-auto w-full max-w-[1680px] px-5 pb-5 md:px-10 lg:px-14"
+        className="relative z-20 mx-auto w-full max-w-[1680px] px-5 py-4 md:px-10 lg:px-14"
         dir={isRTL ? 'rtl' : 'ltr'}
       >
-        <div className="rounded-3xl border border-white/10 bg-midnight/70 px-4 py-4 backdrop-blur-md md:px-6">
+        <div className="px-1 md:px-2">
           <Stats embedded />
           <div className="my-3 h-px bg-white/10" />
           <LogoTicker embedded />

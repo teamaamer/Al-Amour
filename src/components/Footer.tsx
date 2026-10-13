@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, MessageCircle, Instagram, Facebook, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, MessageCircle, Instagram, Facebook } from 'lucide-react';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import { CONTACT_EMAIL, FACEBOOK_URL, INSTAGRAM_URL, SALES, SUPPORT } from '@/lib/contact';
@@ -34,7 +34,6 @@ const Footer = () => {
     { icon: MessageCircle, href: `https://wa.me/${SALES.whatsapp}`, label: 'WhatsApp' },
     { icon: Instagram, href: INSTAGRAM_URL, label: 'Instagram' },
     { icon: Facebook, href: FACEBOOK_URL, label: 'Facebook' },
-    { icon: Twitter, href: '#', label: 'Twitter' },
   ];
 
   return (
