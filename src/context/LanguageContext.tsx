@@ -199,7 +199,7 @@ const translations = {
     // Founder
     founderEyebrow: 'المؤسس',
     founderName: 'هيثم صالح العامور',
-    founderRole: 'مؤسس شركة العامور للتجارة العامة',
+    founderRole: 'المدير العام',
     founderBio: 'من مدينة بديا في محافظة سلفيت، أسّس هيثم صالح العامور شركة العامور عام 1999، وبنى على مدى أكثر من 25 عامًا شركةً موثوقة في توريد الدهانات وحلول التشطيب في فلسطين، بشراكات مع علامات عالمية مثل ILVA و POLITEK و ERCO.',
     founderHometownLabel: 'مسقط الرأس',
     founderHometown: 'بديا – محافظة سلفيت',
@@ -448,7 +448,7 @@ const translations = {
     // Founder
     founderEyebrow: 'Founder',
     founderName: 'Haitham Saleh Al‑Amour',
-    founderRole: 'Founder of Al-Amour General Trading Co.',
+    founderRole: 'General Manager',
     founderBio: 'Born in the town of Bidya in the Salfit Governorate, Haitham Saleh Al‑Amour founded Al‑Amour in 1999. Over more than 25 years he has built a trusted supplier of paints and finishing solutions in Palestine, partnering with international brands such as ILVA, POLITEK and ERCO.',
     founderHometownLabel: 'Hometown',
     founderHometown: 'Bidya – Salfit Governorate',

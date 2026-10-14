@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Download, Phone } from 'lucide-react';
+import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import { HELP_LINE } from '@/lib/contact';
 
@@ -42,12 +43,16 @@ const CatalogCard = ({ title, description, fileSize, fileName, color, t, isActiv
             <span>{fileSize}</span>
           </div>
 
-          <iframe
-            src={`/catgs/${encodeURIComponent(fileName)}#page=1&toolbar=0&navpanes=0&scrollbar=0`}
-            title={`${title} PDF preview`}
-            loading="lazy"
-            className="h-[280px] w-full bg-midnight sm:h-[300px] lg:h-[320px]"
-          />
+          {/* Static cover image: an embedded PDF makes many browsers download the file on page load */}
+          <div className="relative h-[280px] w-full bg-white sm:h-[300px] lg:h-[320px]">
+            <Image
+              src={`/catalog-covers/${encodeURIComponent(fileName.replace(/\.pdf$/i, '.webp'))}`}
+              alt={`${title} cover`}
+              fill
+              sizes="(min-width: 1024px) 300px, 90vw"
+              className="object-cover object-top"
+            />
+          </div>
         </div>
 
         <div className="mt-5 flex flex-1 flex-col justify-between gap-5">
