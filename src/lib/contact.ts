@@ -22,7 +22,8 @@ export interface ContactLine {
 export const SALES: ContactLine = {
   groups: ['059', '308', '0909'],
   tel: '+970593080909',
-  whatsapp: '972593080909',
+  // WhatsApp runs on a separate number from the call line
+  whatsapp: '972568340482',
 };
 
 export const SUPPORT: ContactLine = {

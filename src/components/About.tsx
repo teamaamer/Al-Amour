@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useInView, useReducedMotion } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { MapPin, Pause, Play, Quote, Volume2, VolumeX } from 'lucide-react';
 
@@ -18,14 +18,20 @@ const About = () => {
   const reduceMotion = useReducedMotion();
   const videoRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<HTMLVideoElement | null>(null);
-  const [playing, setPlaying] = useState(true);
+  // Starts false and only flips on the real `play` event, so a blocked autoplay shows the play button
+  const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
 
   const togglePlay = () => {
     const v = playerRef.current;
     if (!v) return;
-    if (v.paused) v.play().catch(() => {});
-    else v.pause();
+    if (v.paused) {
+      delete v.dataset.userPaused;
+      v.play().catch(() => {});
+    } else {
+      v.dataset.userPaused = '1';
+      v.pause();
+    }
   };
 
   const toggleMute = () => {
@@ -37,6 +43,42 @@ const About = () => {
     if (!v.muted && v.paused) v.play().catch(() => {});
   };
   const shouldLoadVideo = useInView(videoRef, { once: true, margin: '200px 0px' });
+
+  // Autoplay is refused on some devices (iOS Low Power Mode, Android data saver, and browsers
+  // that miss React's `muted` prop). Set muted on the element itself, try to play, and if that
+  // fails start on the visitor's first touch or click anywhere on the page.
+  useEffect(() => {
+    const v = playerRef.current;
+    if (!shouldLoadVideo || !v) return;
+
+    v.muted = true;
+    v.defaultMuted = true;
+    v.setAttribute('muted', '');
+    v.setAttribute('playsinline', '');
+    v.setAttribute('webkit-playsinline', '');
+
+    const events = ['touchend', 'click', 'keydown'] as const;
+    const removeGestureListeners = () => events.forEach((e) => document.removeEventListener(e, onGesture));
+    function onGesture() {
+      removeGestureListeners();
+      if (v && v.paused) v.play().catch(() => {});
+    }
+
+    v.play()
+      .then(removeGestureListeners)
+      .catch(() => events.forEach((e) => document.addEventListener(e, onGesture, { passive: true })));
+
+    // Some browsers only start once data is available
+    const onCanPlay = () => {
+      if (v.paused && !v.dataset.userPaused) v.play().catch(() => {});
+    };
+    v.addEventListener('canplay', onCanPlay, { once: true });
+
+    return () => {
+      removeGestureListeners();
+      v.removeEventListener('canplay', onCanPlay);
+    };
+  }, [shouldLoadVideo]);
 
   const milestones = SWATCHES.map((s, i) => ({
     ...s,
@@ -102,23 +144,37 @@ const About = () => {
               {shouldLoadVideo ? (
                 <video
                   ref={playerRef}
-                  src="/aboutus.mp4"
                   autoPlay
                   muted
                   loop
                   playsInline
-                  preload="none"
+                  preload="auto"
                   poster="/heroam2.png"
                   onPlay={() => setPlaying(true)}
+                  onPlaying={() => setPlaying(true)}
                   onPause={() => setPlaying(false)}
                   onClick={togglePlay}
                   className="h-full w-full cursor-pointer object-cover"
-                />
+                >
+                  <source src="/about-video.mp4" type="video/mp4" />
+                </video>
               ) : (
                 <div className="h-full w-full bg-gradient-to-br from-deep to-midnight" />
               )}
 
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-midnight/85 via-transparent to-midnight/30" />
+
+              {/* Shown whenever the video isn't running (e.g. autoplay blocked) so it never looks like a still image */}
+              {shouldLoadVideo && !playing && (
+                <button
+                  type="button"
+                  onClick={togglePlay}
+                  aria-label={t('videoPlay')}
+                  className="absolute left-1/2 top-1/2 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-cyan text-midnight shadow-[0_12px_30px_rgba(8,15,31,0.45)] transition-transform hover:scale-105"
+                >
+                  <Play className="h-8 w-8 translate-x-0.5 fill-current" />
+                </button>
+              )}
 
               <span className="absolute start-5 top-5 rounded-full bg-white/95 px-4 py-1.5 text-sm font-black text-midnight">
                 {t('aboutSince')}

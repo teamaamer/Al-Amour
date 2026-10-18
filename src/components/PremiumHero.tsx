@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Download,
   Menu,
@@ -14,6 +14,62 @@ import {
 import { useLanguage } from '@/context/LanguageContext';
 import Stats from '@/components/Stats';
 import LogoTicker from '@/components/LogoTicker';
+
+// Background video. Autoplay is refused on some devices (iOS Low Power Mode, Android data
+// saver, browsers that miss React's `muted` prop), so mute the element directly, try to play,
+// and fall back to starting on the visitor's first touch or click. The poster is the video's
+// first frame, so a blocked start still looks right.
+function HeroVideo() {
+  const ref = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+
+    v.muted = true;
+    v.defaultMuted = true;
+    v.setAttribute('muted', '');
+    v.setAttribute('playsinline', '');
+    v.setAttribute('webkit-playsinline', '');
+
+    const events = ['touchend', 'click', 'keydown', 'scroll'] as const;
+    const removeGestureListeners = () => events.forEach((e) => document.removeEventListener(e, onGesture));
+    function onGesture() {
+      removeGestureListeners();
+      if (v && v.paused) v.play().catch(() => {});
+    }
+
+    v.play()
+      .then(removeGestureListeners)
+      .catch(() => events.forEach((e) => document.addEventListener(e, onGesture, { passive: true })));
+
+    const onCanPlay = () => {
+      if (v.paused) v.play().catch(() => {});
+    };
+    v.addEventListener('canplay', onCanPlay, { once: true });
+
+    return () => {
+      removeGestureListeners();
+      v.removeEventListener('canplay', onCanPlay);
+    };
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+      poster="/hero-video-poster.jpg"
+      aria-hidden="true"
+      className="h-full w-full object-cover"
+    >
+      <source src="/hero-video.mp4" type="video/mp4" />
+    </video>
+  );
+}
 
 export default function PremiumHero() {
   const { language, setLanguage, t } = useLanguage();
@@ -40,17 +96,7 @@ export default function PremiumHero() {
       ========================================================= */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <div className="absolute inset-0">
-          <Image
-            src="/hero-building.webp"
-            alt="Al-Amour facility"
-            fill
-            priority
-            className="object-cover"
-            style={{
-              objectPosition: 'center center',
-            }}
-            sizes="100vw"
-          />
+          <HeroVideo />
         </div>
         {/* Daylight photo: darken the text side and the bottom so white copy and the stats band stay readable */}
         <div className="absolute inset-0 bg-gradient-to-b from-midnight/45 via-transparent to-midnight/70" />
@@ -444,148 +490,6 @@ export default function PremiumHero() {
               ))}
             </motion.div>
           </div>
-
-            {/* =====================================================
-                TILTED FLOATING CARD
-            ===================================================== */}
-            <motion.div
-              initial={{
-                opacity: 0,
-                y: 40,
-                rotate: isRTL ? 7 : -7,
-                scale: 0.92,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-                rotate: isRTL ? 7 : -7,
-                scale: 1,
-              }}
-              transition={{
-                duration: 0.8,
-                delay: 0.7,
-                ease: 'easeOut',
-              }}
-              whileHover={{
-                rotate: isRTL ? 4 : -4,
-                scale: 1.03,
-              }}
-              className="relative z-10 hidden w-[220px] shrink-0 overflow-visible lg:block xl:w-[260px]"
-            >
-              {/* ===================================================
-                  ANIMATED BLUE GLOW
-              =================================================== */}
-              <motion.div
-                className="absolute -inset-[3px] rounded-3xl"
-                style={{
-                  background:
-                    'linear-gradient(90deg, #20BDF2, #42C8F5, #20BDF2)',
-                  backgroundSize: '300% 100%',
-                  filter: 'blur(3px)',
-                  opacity: 0.35,
-                }}
-                animate={{
-                  backgroundPosition: [
-                    '0% 50%',
-                    '100% 50%',
-                    '0% 50%',
-                  ],
-                  opacity: [0.25, 0.4, 0.25],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: 'linear',
-                }}
-              />
-
-              {/* ===================================================
-                  CARD
-              =================================================== */}
-              <div className="relative overflow-hidden rounded-3xl border border-sky/50 bg-deep/90 backdrop-blur-md">
-
-                {/* MOVING LIGHT */}
-                <motion.div
-                  className="pointer-events-none absolute -left-1/2 top-0 h-full w-1/2"
-                  style={{
-                    background:
-                      'linear-gradient(90deg, transparent, rgba(66,200,245,0.18), transparent)',
-                    transform: 'skewX(-20deg)',
-                  }}
-                  animate={{
-                    x: ['0%', '400%'],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                    repeatDelay: 1,
-                  }}
-                />
-
-                {/* IMAGE */}
-                <div className="relative aspect-[4/3] w-full">
-                  <Image
-                    src="/hero-card.webp"
-                    alt="Al-Amour"
-                    fill
-                    className="object-cover"
-                    sizes="260px"
-                  />
-
-                  {/* IMAGE SHINE */}
-                  <motion.div
-                    className="pointer-events-none absolute inset-0"
-                    style={{
-                      background:
-                        'linear-gradient(110deg, transparent 25%, rgba(66,200,245,0.12) 50%, transparent 75%)',
-                      backgroundSize: '200% 100%',
-                    }}
-                    animate={{
-                      backgroundPosition: [
-                        '200% 0',
-                        '-100% 0',
-                      ],
-                    }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      ease: 'linear',
-                      repeatDelay: 1,
-                    }}
-                  />
-
-                  {/* BOTTOM GRADIENT */}
-                  <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-midnight/95 via-midnight/45 to-transparent" />
-
-                  {/* CARD TEXT */}
-                  <div
-                    className={`absolute bottom-0 left-0 right-0 p-5 ${
-                      isRTL ? 'text-right' : 'text-left'
-                    }`}
-                    dir={isRTL ? 'rtl' : 'ltr'}
-                  >
-                    <motion.div
-                      animate={{
-                        opacity: [0.7, 1, 0.7],
-                      }}
-                      transition={{
-                        duration: 2.5,
-                        repeat: Infinity,
-                        ease: 'easeInOut',
-                      }}
-                      className="text-[10px] font-semibold tracking-[0.25em] text-sky"
-                    >
-                      AL-AMOUR
-                    </motion.div>
-
-                    <div className="mt-1 text-base font-bold tracking-wide text-white">
-                      PREMIUM MATERIALS
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
         </div>
       </div>
 

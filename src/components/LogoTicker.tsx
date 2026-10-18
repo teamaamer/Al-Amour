@@ -27,15 +27,12 @@ const LogoTicker = ({ embedded = false }: { embedded?: boolean }) => {
   const renderHalf = (copy: number) => (
     <ul
       aria-hidden={copy === 1 ? true : undefined}
-      className={`flex shrink-0 items-center ${copy === 1 ? 'motion-reduce:hidden' : 'motion-reduce:flex-wrap motion-reduce:justify-center'}`}
+      className="flex shrink-0 items-center"
     >
       {half.map((logo, index) => (
         <li
           key={`${copy}-${logo.name}-${index}`}
-          // Hide repeats when motion is reduced so each logo shows once
-          className={`flex shrink-0 items-center justify-center ${embedded ? 'px-2 sm:px-3' : 'px-6 sm:px-9 lg:px-12'} ${
-            index >= logos.length ? 'motion-reduce:hidden' : ''
-          }`}
+          className={`flex shrink-0 items-center justify-center ${embedded ? 'px-2 sm:px-3' : 'px-6 sm:px-9 lg:px-12'}`}
         >
           {/* Embedded: full-colour logos on a white chip so dark brand colours stay legible on the hero */}
           <div

@@ -131,21 +131,20 @@ button, a {
   to { transform: translate3d(-50%, 0, 0); }
 }
 
+/* Runs regardless of prefers-reduced-motion: the client wants it moving on every
+   device, and many phones/PCs have reduced motion on by default */
 .logo-marquee-track {
+  -webkit-animation: logo-marquee 60s linear infinite;
   animation: logo-marquee 60s linear infinite;
   will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
-@media (hover: hover) {
+/* Pause on hover only for real mouse pointers — touch devices can leave a
+   sticky :hover after a tap, which would freeze the marquee */
+@media (hover: hover) and (pointer: fine) {
   .logo-marquee:hover .logo-marquee-track {
     animation-play-state: paused;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .logo-marquee-track {
-    animation: none;
-    width: 100%;
-    justify-content: center;
   }
 }
