@@ -62,11 +62,11 @@ function HeroVideo() {
       loop
       playsInline
       preload="auto"
-      poster="/hero-video-poster.jpg"
+      poster="/hero-video-v2-poster.jpg"
       aria-hidden="true"
       className="h-full w-full object-cover"
     >
-      <source src="/hero-video.mp4" type="video/mp4" />
+      <source src="/hero-video-v2.mp4" type="video/mp4" />
     </video>
   );
 }
