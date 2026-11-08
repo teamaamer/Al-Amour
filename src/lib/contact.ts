@@ -22,12 +22,11 @@ export interface ContactLine {
 export const SALES: ContactLine = {
   groups: ['059', '308', '0909'],
   tel: '+970593080909',
-  // WhatsApp runs on a separate number from the call line
-  whatsapp: '972568340482',
+  whatsapp: '972593080909',
 };
 
 export const SUPPORT: ContactLine = {
   groups: ['059', '422', '5209'],
   tel: '+970594225209',
-  whatsapp: '972594225209',
+  whatsapp: '972568340482',
 };

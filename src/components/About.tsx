@@ -156,7 +156,7 @@ const About = () => {
                   onClick={togglePlay}
                   className="h-full w-full cursor-pointer object-cover"
                 >
-                  <source src="/about-video.mp4" type="video/mp4" />
+                  <source src="/alamour-about-v2.mp4" type="video/mp4" />
                 </video>
               ) : (
                 <div className="h-full w-full bg-gradient-to-br from-deep to-midnight" />

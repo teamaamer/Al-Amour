@@ -4,7 +4,7 @@ import { LanguageProvider } from "@/context/LanguageContext";
 
 export const metadata: Metadata = {
   title: "شركة العامور - منتجات دهانات متميزة وحلول تجارية | Al-Amour Company",
-  description: "مورد رائد لمنتجات الدهانات المتميزة وحلول التشطيب في فلسطين | Leading supplier of premium paint products in Palestine",
+  description: "مورد رائد للأخشاب والدهانات وبوليستر الريزن ولوازمه وحلول التشطيب في فلسطين | Leading supplier of timber, paints, polyester resin and finishing solutions in Palestine",
 };
 
 export default function RootLayout({

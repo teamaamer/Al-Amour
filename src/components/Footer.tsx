@@ -23,6 +23,7 @@ const Footer = () => {
       { label: t('footerFurnitureFinishing'), href: '#' },
       { label: t('footerCarpenterSupplies'), href: '#' },
       { label: t('footerColorMixing'), href: '#' },
+      { label: t('footerPolyesterResin'), href: '/products/resins-gelcoats' },
     ],
     legal: [
       { label: t('privacyPolicy'), href: '#' },
